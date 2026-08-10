@@ -1,0 +1,3483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0f14">
+<title>HAFID DOUCHE | نظام الإدارة الاحترافي v11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ============================================================
+   HAFID DOUCHE — PREMIUM DESIGN SYSTEM
+   Theme: "Steam & Slate" — deep ink-blue night with aqua/emerald
+   steam-glow accents and a warm brass tone for money/receipts.
+   ============================================================ */
+:root{
+  --bg:#080c11;
+  --bg-grad: radial-gradient(1200px 600px at 50% -10%, #10202a 0%, #080c11 55%);
+  --surface:#111820;
+  --surface-2:#161f29;
+  --surface-3:#1c2733;
+  --border: rgba(255,255,255,0.06);
+  --border-strong: rgba(255,255,255,0.1);
+  --text:#eef3f6;
+  --text-dim:#8ba0ad;
+  --text-faint:#5b6b76;
+
+  --aqua:#22e0b8;
+  --aqua-dark:#0fae8c;
+  --aqua-glow: rgba(34,224,184,0.35);
+
+  --amber:#f5b942;
+  --amber-dark:#d99a24;
+  --amber-glow: rgba(245,185,66,0.35);
+
+  --red:#ff5468;
+  --red-dark:#e0384f;
+  --red-glow: rgba(255,84,104,0.4);
+
+  --brass:#e3b673;
+
+  --blue:#4d8dff;
+  --blue-dark:#2f6fe0;
+  --blue-glow: rgba(77,141,255,0.35);
+
+  --font-display:'Cairo', 'Tajawal', sans-serif;
+  --font-body:'Tajawal', 'Cairo', sans-serif;
+
+  --r-sm:12px;
+  --r-md:18px;
+  --r-lg:24px;
+  --r-xl:32px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; -webkit-user-select:none; user-select:none; }
+input, textarea, select{ -webkit-user-select:text; user-select:text; }
+
+body{
+  background: var(--bg-grad), var(--bg);
+  font-family: var(--font-body);
+  color: var(--text);
+  min-height:100vh; min-height:100dvh;
+  display:flex; justify-content:center; align-items:flex-start;
+  padding: 14px;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+::-webkit-scrollbar{ width:4px; height:4px; }
+::-webkit-scrollbar-thumb{ background:#2a3542; border-radius:10px; }
+
+.app{ width:100%; max-width:560px; display:flex; flex-direction:column; gap:16px; padding-bottom:36px; }
+
+/* ---------- Header ---------- */
+.app-header{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:14px 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border:1px solid var(--border); border-radius: var(--r-lg);
+  backdrop-filter: blur(10px);
+}
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-mark{
+  width:38px; height:38px; border-radius:12px;
+  background: linear-gradient(145deg, var(--aqua), var(--aqua-dark));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.15rem; box-shadow:0 6px 18px var(--aqua-glow);
+  flex-shrink:0;
+}
+.brand-text{ display:flex; flex-direction:column; line-height:1.15; }
+.brand-title{
+  font-family:var(--font-display); font-weight:900; font-size:1.05rem; letter-spacing:0.5px;
+  background:linear-gradient(135deg,#fff 20%, #b9c6cd 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.brand-sub{ font-size:0.62rem; color:var(--text-faint); letter-spacing:1.5px; font-weight:600; }
+
+.header-actions{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+.icon-btn{
+  position:relative;
+  width:38px; height:38px; border-radius:13px;
+  background:var(--surface-2); border:1px solid var(--border);
+  color:#fff; font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition: transform .18s var(--ease-bounce), background .18s ease, border-color .18s ease;
+}
+.icon-btn:active{ transform:scale(0.88); background:var(--surface-3); }
+.icon-btn .badge{
+  position:absolute; top:-4px; left:-4px; min-width:17px; height:17px; padding:0 3px;
+  border-radius:20px; background:var(--red); font-size:0.6rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; color:#fff; border:2px solid var(--bg);
+}
+
+/* ---------- Stats strip ---------- */
+.stats-strip{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.stat-pill{
+  background: linear-gradient(160deg, var(--surface-2), var(--surface));
+  border:1px solid var(--border); border-radius: var(--r-md);
+  padding:12px 10px; display:flex; flex-direction:column; gap:6px;
+  position:relative; overflow:hidden;
+}
+.stat-pill::after{
+  content:''; position:absolute; inset:0; opacity:0.08; pointer-events:none;
+  background: radial-gradient(60px 60px at 100% 0%, currentColor, transparent 70%);
+}
+.stat-pill.vacant{ color:var(--aqua); }
+.stat-pill.busy{ color:var(--red); }
+.stat-pill.revenue{ color:var(--brass); }
+.stat-icon{ font-size:1.1rem; }
+.stat-value{ font-family:var(--font-display); font-weight:900; font-size:1.3rem; color:#fff; line-height:1; }
+.stat-label{ font-size:0.65rem; color:var(--text-dim); font-weight:600; letter-spacing:0.3px; }
+
+/* ---------- Waiting queue widget ---------- */
+.queue-widget{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  background: linear-gradient(160deg, var(--surface-2), var(--surface));
+  border:1px solid var(--border); border-radius: var(--r-md);
+  padding:10px 14px;
+}
+.queue-info{ display:flex; align-items:center; gap:8px; }
+.queue-icon{ font-size:1.15rem; }
+.queue-label{ font-size:0.72rem; color:var(--text-dim); font-weight:700; }
+.queue-value{ font-family:var(--font-display); font-weight:900; font-size:1.2rem; color:#fff; min-width:22px; text-align:center; }
+.queue-controls{ display:flex; align-items:center; gap:8px; }
+.queue-btn{
+  width:32px; height:32px; border-radius:10px; border:none; cursor:pointer;
+  background:var(--surface-3); color:#fff; font-size:1rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; transition:transform .15s var(--ease-bounce);
+}
+.queue-btn:active{ transform:scale(0.85); }
+.queue-btn.plus{ background:linear-gradient(150deg, var(--aqua), var(--aqua-dark)); color:#052620; }
+
+/* ---------- Rooms ---------- */
+.section-label{
+  display:flex; align-items:center; gap:8px; padding:0 4px; color:var(--text-faint);
+  font-size:0.7rem; letter-spacing:2px; font-weight:700; text-transform:uppercase;
+}
+.section-label::after{ content:''; flex:1; height:1px; background:var(--border); }
+
+.rooms-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+@media (min-width:420px){ .rooms-grid{ grid-template-columns:repeat(3,1fr); } }
+
+.room-card{
+  position:relative; border-radius: var(--r-lg); overflow:hidden;
+  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 100%);
+  border:1px solid var(--border);
+  min-height:150px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:8px; padding:16px 10px; cursor:pointer;
+  transition: transform .2s var(--ease-bounce), border-color .2s ease, box-shadow .3s ease;
+}
+.room-card:active{ transform:scale(0.95); }
+.room-card.ready{ border-color: rgba(34,224,184,0.18); }
+.room-card.ready:active{ border-color: var(--aqua); }
+.room-card.busy{
+  border-color: var(--red-glow);
+  box-shadow: 0 0 0 1px rgba(255,84,104,0.12), 0 10px 30px -12px rgba(255,84,104,0.35);
+  animation: roomPulse 2.4s ease-in-out infinite;
+}
+.room-card.busy.tier-mid{ border-color: var(--amber-glow); box-shadow:0 0 0 1px rgba(245,185,66,0.12), 0 10px 30px -12px rgba(245,185,66,0.35); animation:none; }
+.room-card.busy.tier-low{ border-color: var(--aqua-glow); box-shadow:0 0 0 1px rgba(34,224,184,0.12), 0 10px 30px -12px rgba(34,224,184,0.35); animation:none; }
+.room-card.busy.tier-high{ animation: roomPulse 1.5s ease-in-out infinite; }
+.room-card.paused{ border-color: var(--border-strong); filter:saturate(0.6); }
+.room-card.maintenance{ opacity:0.5; filter:grayscale(0.6); cursor:not-allowed; }
+.room-card.reserved{
+  border-color: var(--blue-glow);
+  background: linear-gradient(160deg, rgba(77,141,255,0.14) 0%, var(--surface) 100%);
+  box-shadow: 0 0 0 1px rgba(77,141,255,0.12);
+}
+.room-status-chip.reserved{ background:rgba(77,141,255,0.18); color:var(--blue); }
+.reserve-mini-row{ display:flex; gap:6px; width:100%; }
+.reserve-mini-row button{ flex:1; width:auto; height:38px; border-radius:11px; font-size:0.72rem; }
+@keyframes roomPulse{
+  0%,100%{ box-shadow:0 0 0 1px rgba(255,84,104,0.12), 0 10px 30px -12px rgba(255,84,104,0.35); }
+  50%{ box-shadow:0 0 0 1px rgba(255,84,104,0.3), 0 14px 40px -10px rgba(255,84,104,0.55); }
+}
+
+.room-ring-wrap{ position:relative; width:74px; height:74px; }
+.room-ring-wrap svg{ position:absolute; inset:0; transform:rotate(-90deg); }
+.ring-track{ fill:none; stroke:rgba(255,255,255,0.06); stroke-width:6; }
+.ring-fill{ fill:none; stroke-width:6; stroke-linecap:round; transition:stroke-dashoffset .5s var(--ease-smooth), stroke .3s ease; }
+.room-ring-center{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1px; }
+.room-num{ font-family:var(--font-display); font-weight:900; font-size:1.15rem; color:#fff; }
+.room-emoji-tiny{ font-size:1.05rem; }
+
+.room-meta{ text-align:center; }
+.room-timer{ font-family:var(--font-display); font-weight:800; font-size:0.85rem; color:var(--text); letter-spacing:0.5px; }
+.room-price-tag{ font-size:0.65rem; color:var(--text-dim); font-weight:600; }
+.room-status-chip{
+  font-size:0.6rem; font-weight:800; padding:2px 9px; border-radius:20px; letter-spacing:0.3px;
+}
+.room-status-chip.paused{ background:#2a2f36; color:#c8d0d6; }
+
+.start-btn{
+  width:52px; height:52px; border-radius:50%; border:none; cursor:pointer;
+  background: linear-gradient(150deg, var(--aqua), var(--aqua-dark));
+  color:#052620; font-size:1.35rem; display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 8px 22px var(--aqua-glow), inset 0 1px 0 rgba(255,255,255,0.4);
+  transition: transform .18s var(--ease-bounce);
+}
+.start-btn:active{ transform:scale(0.85); }
+.room-label-empty{ font-family:var(--font-display); font-weight:800; font-size:0.95rem; color:var(--text-dim); }
+.room-sub-empty{ font-size:0.62rem; color:var(--text-faint); font-weight:600; letter-spacing:0.5px; }
+
+.room-card.maintenance .room-label-empty{ color:var(--text-faint); }
+
+.ripple{
+  position:absolute; border-radius:50%; background:rgba(255,255,255,0.25);
+  transform:scale(0); animation: rippleAnim .6s ease-out forwards; pointer-events:none; z-index:5;
+}
+@keyframes rippleAnim{ to{ transform:scale(3.4); opacity:0; } }
+
+/* ---------- Modals ---------- */
+.overlay{
+  position:fixed; inset:0; background:rgba(4,6,9,0.82); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  z-index:200; display:none; align-items:flex-end; justify-content:center; padding:0;
+  animation: overlayIn .25s ease;
+  overscroll-behavior:contain;
+}
+@media (min-width:560px){ .overlay{ align-items:center; padding:16px; } }
+.overlay.active{ display:flex; }
+.overlay.closing{ animation: overlayOut .2s ease forwards; }
+@keyframes overlayIn{ from{opacity:0;} to{opacity:1;} }
+@keyframes overlayOut{ from{opacity:1;} to{opacity:0;} }
+
+/* Confirm dialog must always render above every other modal, regardless of DOM order,
+   otherwise a confirm opened from a modal that appears later in the document (e.g. Settings,
+   Products admin) paints underneath it and swallows every tap — this was why "Reset All"
+   and "Delete product" appeared unresponsive. */
+#modalConfirm{ z-index:500; }
+/* Invoice details can be opened while invoice/sales lists are still visible.
+   JS dynamically stacks every newly opened modal above the current one. */
+#modalInvoice{ isolation:isolate; }
+
+/* Lock the page behind an open modal so the background never scrolls together with the sheet
+   (this is what caused the janky / unresponsive swipe on Android). The sheet itself keeps
+   scrolling normally because overflow is only removed from <body>, not from .sheet. */
+body.modal-open{ position:fixed; inset:0; overflow:hidden; width:100%; }
+
+.sheet{
+  background: linear-gradient(180deg, #131b23, #0e141a);
+  width:100%; max-width:480px; max-height:92vh;
+  overflow-y:auto; overflow-x:hidden;
+  -webkit-overflow-scrolling:touch; /* smooth momentum scroll on iOS/older Android webviews */
+  overscroll-behavior:contain; /* keep scroll from chaining into the page behind the sheet */
+  touch-action:pan-y; /* allow natural vertical swipe/scroll gestures inside the sheet */
+  border-radius: 28px 28px 0 0;
+  border:1px solid var(--border-strong); border-bottom:none;
+  padding:10px 18px 22px; display:flex; flex-direction:column; gap:14px;
+  box-shadow: 0 -20px 60px rgba(0,0,0,0.6);
+  animation: sheetUp .35s var(--ease-out);
+  position:relative;
+}
+/* Inner scrollable lists inside sheets (invoices, products, inventory, etc.) also need
+   independent, smooth touch scrolling without locking the outer sheet scroll. */
+.sheet [style*="overflow-y:auto"], .tab-panel, .product-grid, .chart-wrap{
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  touch-action:pan-y;
+}
+@media (min-width:560px){ .sheet{ border-radius:28px; border-bottom:1px solid var(--border-strong); } }
+.sheet.closing{ animation: sheetDown .2s ease forwards; }
+@keyframes sheetUp{ from{ transform:translateY(60px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+@keyframes sheetDown{ from{ transform:translateY(0); opacity:1;} to{transform:translateY(40px); opacity:0;} }
+
+.sheet-handle{ width:40px; height:4px; border-radius:4px; background:#2a3542; margin:2px auto 0; }
+
+.sheet-header{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.sheet-title{ font-family:var(--font-display); font-weight:800; font-size:1.15rem; color:#fff; display:flex; align-items:center; gap:8px; }
+.sheet-close{
+  width:34px; height:34px; border-radius:50%; background:var(--surface-3); border:none; color:#fff;
+  font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform .15s;
+}
+.sheet-close:active{ transform:scale(0.88); }
+
+/* Big timer (room modal) */
+.big-timer-wrap{ display:flex; flex-direction:column; align-items:center; gap:6px; padding:6px 0 2px; }
+.big-ring{ position:relative; width:172px; height:172px; }
+.big-ring svg{ position:absolute; inset:0; transform:rotate(-90deg); }
+.big-ring .ring-track{ stroke-width:7; }
+.big-ring .ring-fill{ stroke-width:7; }
+.big-ring-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; }
+.big-timer-text{ font-family:var(--font-display); font-weight:900; font-size:2.3rem; color:#fff; letter-spacing:1px; }
+.big-timer-tier{ font-size:0.68rem; font-weight:800; padding:3px 12px; border-radius:20px; }
+.tier-badge-low{ background:rgba(34,224,184,0.15); color:var(--aqua); }
+.tier-badge-mid{ background:rgba(245,185,66,0.15); color:var(--amber); }
+.tier-badge-high{ background:rgba(255,84,104,0.15); color:var(--red); }
+.tier-badge-paused{ background:rgba(255,255,255,0.08); color:#c8d0d6; }
+
+.control-row{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.control-row.three{ grid-template-columns:1fr 1fr 1fr; }
+
+.info-line{ display:flex; justify-content:space-between; align-items:center; width:100%; font-size:0.86rem; padding:2px 2px; }
+.info-line .k{ color:var(--text-dim); }
+.info-line .v{ font-weight:800; color:#fff; font-family:var(--font-display); }
+.divider{ height:1px; width:100%; background:var(--border); margin:2px 0; }
+
+.btn{
+  border:none; border-radius: var(--r-md); font-family:var(--font-display); font-weight:800; font-size:0.85rem;
+  cursor:pointer; padding:13px 10px; display:flex; align-items:center; justify-content:center; gap:6px;
+  color:#fff; transition: transform .15s var(--ease-bounce), filter .15s ease; position:relative;
+}
+.btn:active{ transform:scale(0.95); }
+.btn-primary{ background:linear-gradient(150deg, var(--aqua), var(--aqua-dark)); color:#052620; box-shadow:0 6px 18px var(--aqua-glow); }
+.btn-secondary{ background:var(--surface-3); color:#dfe6ea; border:1px solid var(--border-strong); }
+.btn-danger{ background:linear-gradient(150deg, var(--red), var(--red-dark)); box-shadow:0 6px 18px var(--red-glow); }
+.btn-warning{ background:linear-gradient(150deg, var(--amber), var(--amber-dark)); color:#3a2400; box-shadow:0 6px 18px var(--amber-glow); }
+.btn-ghost{ background:transparent; border:1px dashed var(--border-strong); color:var(--text-dim); }
+.btn-sm{ padding:8px; font-size:0.72rem; border-radius:10px; }
+.btn:disabled{ opacity:0.4; pointer-events:none; }
+.btn-full{ grid-column:1/-1; }
+
+/* Product mini list inside room modal */
+.mini-product-row{ display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid var(--border); font-size:0.83rem; }
+.mini-product-row img, .mini-product-row .ph{
+  width:32px; height:32px; border-radius:9px; object-fit:cover; background:var(--surface-3); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:0.85rem;
+}
+.mini-product-row .pname{ flex:1; color:var(--text); font-weight:600; }
+.mini-product-row .pprice{ color:var(--brass); font-weight:800; font-family:var(--font-display); }
+.mini-product-row .qty-adj{ display:flex; align-items:center; gap:4px; }
+.qty-btn{ width:22px; height:22px; border-radius:7px; background:var(--surface-3); border:none; color:#fff; font-size:0.75rem; cursor:pointer; }
+.room-item-remove{
+  width:30px;
+  height:30px;
+  flex:0 0 30px;
+  border:none;
+  border-radius:9px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:.82rem;
+  font-weight:900;
+  color:#ff9aa3;
+  background:rgba(255,84,104,.10);
+  border:1px solid rgba(255,84,104,.18);
+  -webkit-tap-highlight-color:transparent;
+}
+.room-item-remove:active{ transform:scale(.92); background:rgba(255,84,104,.18); }
+
+.empty-note{ color:var(--text-faint); text-align:center; padding:14px 0; font-size:0.85rem; }
+
+/* Forms */
+.field{ display:flex; flex-direction:column; gap:5px; }
+.field label{ font-size:0.72rem; color:var(--text-dim); font-weight:700; padding:0 2px; }
+.input{
+  background:var(--surface-3); border:1px solid var(--border-strong); border-radius: var(--r-sm);
+  padding:11px 13px; color:#fff; font-family:var(--font-body); font-size:0.88rem; transition:border-color .2s;
+}
+.input:focus{ outline:none; border-color:var(--aqua); }
+.input::placeholder{ color:var(--text-faint); }
+.grid-2{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; }
+.grid-2 > *, .field, .field .input{ min-width:0; }
+.field .input{ width:100%; }
+.barcode-row{ display:grid; grid-template-columns:1fr; gap:10px; width:100%; }
+#prodFormBarcode{ min-height:58px; font-size:1.05rem; padding:14px 16px; direction:ltr; text-align:center; letter-spacing:1px; font-family:var(--font-display); font-weight:800; }
+.barcode-scan-btn{ width:100% !important; min-height:54px; padding:12px 14px !important; white-space:nowrap; font-size:.95rem !important; border-radius:14px !important; }
+.grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+
+/* Search bar */
+.search-bar{ position:relative; }
+.search-bar .input{ padding-right:38px; width:100%; }
+.search-bar .search-icon{ position:absolute; right:13px; top:50%; transform:translateY(-50%); color:var(--text-faint); pointer-events:none; }
+
+/* Category chips */
+.chip-row{ display:flex; gap:6px; overflow-x:auto; padding-bottom:2px; }
+.chip{
+  flex-shrink:0; padding:7px 14px; border-radius:20px; background:var(--surface-3); border:1px solid var(--border-strong);
+  color:var(--text-dim); font-size:0.75rem; font-weight:700; cursor:pointer; white-space:nowrap; transition:all .18s;
+}
+.chip.active{ background:linear-gradient(150deg, var(--aqua), var(--aqua-dark)); color:#052620; border-color:transparent; }
+
+/* Product grid (selector) */
+.product-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; max-height:320px; overflow-y:auto; padding:2px; }
+.pcard{
+  background:var(--surface-2); border:1px solid var(--border); border-radius: var(--r-md);
+  padding:10px; display:flex; flex-direction:column; gap:6px; position:relative;
+}
+.pcard .pimg{ width:100%; height:64px; border-radius:10px; object-fit:cover; background:var(--surface-3); }
+.pcard .pimg.ph{ display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+.pcard .pname{ font-weight:700; font-size:0.82rem; color:#fff; }
+.pcard .pdetail{ font-size:0.68rem; color:var(--text-dim); }
+.pcard .pqty{ font-size:0.7rem; font-weight:700; }
+.pcard .pqty.low{ color:var(--amber); } .pcard .pqty.critical{ color:var(--red); }
+.pcard .add-mini{
+  position:absolute; top:8px; left:8px; width:28px; height:28px; border-radius:50%; border:none;
+  background:linear-gradient(150deg, var(--aqua), var(--aqua-dark)); color:#052620; font-weight:900; font-size:1rem;
+  display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 12px var(--aqua-glow);
+}
+.pcard .add-mini:active{ transform:scale(0.85); }
+.pcard.oos{ opacity:0.45; }
+
+
+/* Product selector — compact controls + manual amount entry */
+#modalProductSelector .sheet{ gap:10px; }
+#modalProductSelector .sheet-title{ font-size:1.08rem; }
+#modalProductSelector .btn{ padding:10px 9px; font-size:0.80rem; border-radius:12px; min-height:40px; line-height:1.2; }
+#modalProductSelector .chip{
+  min-height:36px;
+  padding:8px 13px;
+  font-size:0.74rem;
+  line-height:1.2;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  overflow:visible;
+  color:#dfe6ea;
+  border-color:rgba(255,255,255,.12);
+}
+#modalProductSelector .chip.active{
+  color:#052620;
+  font-weight:900;
+}
+#modalProductSelector #categoryChips{
+  min-height:40px;
+  align-items:center;
+  padding:2px 0 4px;
+  overflow-x:auto;
+  overflow-y:visible;
+}
+#modalProductSelector .pcard{ padding:6px; gap:2px; border-radius:12px; }
+#modalProductSelector .pcard .pimg{ height:40px; border-radius:8px; }
+#modalProductSelector .pcard .add-mini{ width:22px; height:22px; top:5px; left:5px; font-size:0.78rem; }
+#modalProductSelector .product-grid{ gap:6px; }
+#modalProductSelector .pcard .pname{ font-size:0.74rem; line-height:1.15; margin-top:1px; }
+#modalProductSelector .pcard .pdetail{ font-size:0.66rem; line-height:1.15; font-weight:700; color:var(--text-dim); }
+#modalProductSelector .pcard .pqty{ font-size:0.64rem; line-height:1.15; }
+#modalProductSelector .pcard .pimg.ph{ font-size:1.15rem; }
+
+#modalProductSelector .search-bar .input{ padding-top:9px; padding-bottom:9px; font-size:0.82rem; }
+@media (max-width:559px){
+  #modalProductSelector .sheet-close{ width:36px; height:36px; min-width:36px; font-size:1rem; }
+}
+.manual-charge-box{
+  background:linear-gradient(155deg,rgba(34,224,184,.08),rgba(255,255,255,.02));
+  border:1px solid rgba(34,224,184,.18); border-radius:14px; padding:10px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.manual-charge-title{ color:#fff; font-family:var(--font-display); font-size:.82rem; font-weight:850; display:flex; align-items:center; gap:6px; }
+.manual-charge-grid{ display:grid; grid-template-columns:minmax(0,.75fr) minmax(0,1.35fr) auto; gap:7px; align-items:center; }
+.manual-charge-grid .input{ min-width:0; padding:9px 10px; font-size:.78rem; }
+.manual-charge-add{ white-space:nowrap; padding-inline:12px !important; }
+@media (max-width:390px){
+  .manual-charge-grid{ grid-template-columns:1fr 1fr; }
+  .manual-charge-add{ grid-column:1/-1; }
+}
+.manual-charge-row .ph{ background:rgba(34,224,184,.08); color:var(--aqua); }
+.manual-charge-row .pname::before{ content:'💵 '; }
+
+.scanner-box{ background:#000; border-radius:var(--r-md); overflow:hidden; min-height:220px; position:relative; }
+.scanner-box video{ width:100% !important; height:100% !important; min-height:220px; display:block; object-fit:cover; }
+.scan-frame-wrap{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:5; }
+.scan-frame{ width:84%; height:104px; border:2px solid rgba(34,224,184,0.9); border-radius:14px; box-shadow:0 0 0 999px rgba(0,0,0,.22),0 0 30px rgba(34,224,184,.22); position:relative; overflow:hidden; }
+.scan-frame::after{ content:''; position:absolute; left:7%; right:7%; top:50%; height:2px; background:var(--aqua); box-shadow:0 0 12px var(--aqua); animation:barcodeSweep 1.35s ease-in-out infinite; }
+@keyframes barcodeSweep{ 0%,100%{ transform:translateY(-34px); opacity:.7; } 50%{ transform:translateY(34px); opacity:1; } }
+.scan-live-hint{ position:absolute; left:50%; bottom:10px; transform:translateX(-50%); z-index:6; width:calc(100% - 24px); text-align:center; color:#fff; font-size:.72rem; font-weight:800; background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:7px 8px; pointer-events:none; }
+
+/* Stat cards dashboard */
+.dash-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+.dash-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-md); padding:12px; display:flex; flex-direction:column; gap:4px; }
+.dash-card .dl{ font-size:0.68rem; color:var(--text-dim); font-weight:600; }
+.dash-card .dv{ font-family:var(--font-display); font-weight:900; font-size:1.25rem; color:#fff; }
+.dash-card.accent .dv{ color:var(--aqua); }
+.chart-wrap{ background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-md); padding:14px 10px; height:190px; }
+.top-row{ display:flex; align-items:center; justify-content:space-between; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-sm); padding:10px 12px; font-size:0.82rem; }
+.top-row .k{ color:var(--text-dim); } .top-row .v{ font-weight:800; color:#fff; }
+
+/* Lists */
+.list-row{ display:flex; align-items:center; justify-content:space-between; padding:10px 4px; border-bottom:1px solid var(--border); }
+.list-row .li{ display:flex; flex-direction:column; gap:2px; }
+.list-row .li .name{ color:#fff; font-weight:700; font-size:0.86rem; }
+.list-row .li .sub{ color:var(--text-faint); font-size:0.7rem; }
+.list-row .amount{ font-weight:800; color:var(--brass); font-family:var(--font-display); }
+.list-row .actions{ display:flex; gap:6px; }
+.list-row .actions button{ width:30px; height:30px; border-radius:9px; background:var(--surface-3); border:none; color:#fff; cursor:pointer; font-size:0.78rem; }
+.list-row .actions button.danger{ color:#ff8a94; }
+.list-row .actions button.primary{ color:var(--aqua); }
+
+/* Tabs */
+.tabs{ display:flex; gap:4px; background:var(--surface-3); border-radius:var(--r-sm); padding:4px; }
+.tab{ flex:1; padding:9px 4px; border-radius:9px; border:none; background:transparent; color:var(--text-dim); font-family:var(--font-display); font-weight:700; font-size:0.75rem; cursor:pointer; transition:all .18s; }
+.tab.active{ background:var(--surface-2); color:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.3); }
+.tab-panel{ display:none; }
+.tab-panel.active{ display:block; }
+
+.badge-status{ font-size:0.62rem; font-weight:800; padding:3px 10px; border-radius:20px; }
+.badge-status.ready{ background:rgba(34,224,184,0.15); color:var(--aqua); }
+.badge-status.busy{ background:rgba(255,84,104,0.15); color:var(--red); }
+.badge-status.maintenance{ background:rgba(255,255,255,0.08); color:var(--text-dim); }
+
+.settings-row{ display:flex; align-items:center; justify-content:space-between; padding:9px 2px; border-bottom:1px solid var(--border); gap:10px; }
+.settings-row .label{ color:var(--text-dim); font-size:0.82rem; }
+.settings-row input{ width:88px; background:var(--surface-3); border:1px solid var(--border-strong); border-radius:8px; padding:7px 8px; color:#fff; text-align:center; font-family:var(--font-body); font-size:0.85rem; }
+.settings-row input:focus{ outline:none; border-color:var(--aqua); }
+
+/* Invoice */
+.invoice-paper{ background:#fff; color:#111; border-radius:var(--r-md); padding:18px 16px; font-family:'Courier New',monospace; }
+.invoice-paper .ihead{ text-align:center; margin-bottom:8px; }
+.invoice-paper .ihead .shop{ font-weight:900; font-size:1.05rem; letter-spacing:1px; }
+.invoice-paper .ihead .num{ font-size:0.72rem; color:#555; }
+.invoice-paper hr{ border:none; border-top:1px dashed #999; margin:8px 0; }
+.invoice-paper .row{ display:flex; justify-content:space-between; font-size:0.78rem; padding:2px 0; }
+.invoice-paper .row.total{ font-weight:900; font-size:0.95rem; border-top:1px dashed #999; margin-top:4px; padding-top:6px; }
+.qr-wrap{ display:flex; justify-content:center; padding:10px 0 2px; }
+
+/* Toasts */
+.toast-stack{ position:fixed; top:14px; left:50%; transform:translateX(-50%); z-index:400; display:flex; flex-direction:column; gap:8px; width:92%; max-width:400px; pointer-events:none; }
+.toast{
+  padding:11px 18px; border-radius:16px; background:#182028; color:#fff; font-family:var(--font-body); font-weight:700;
+  font-size:0.83rem; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.5); border:1px solid var(--border-strong);
+  animation: toastIn .3s var(--ease-bounce), toastOut .3s 2.1s ease forwards;
+}
+.toast.success{ border-color:rgba(34,224,184,0.4); color:var(--aqua); }
+.toast.error{ border-color:rgba(255,84,104,0.4); color:#ff8a94; }
+.toast.warning{ border-color:rgba(245,185,66,0.4); color:var(--amber); }
+@keyframes toastIn{ from{ transform:translateY(-24px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+@keyframes toastOut{ from{opacity:1;} to{opacity:0; transform:translateY(-16px);} }
+
+.confirm-box{ text-align:center; display:flex; flex-direction:column; gap:10px; padding:6px 0; }
+.confirm-icon{ font-size:2.4rem; }
+.confirm-text{ color:var(--text-dim); font-size:0.88rem; line-height:1.5; }
+
+@media (max-width:360px){
+  .room-card{ min-height:132px; padding:12px 8px; }
+  .room-ring-wrap{ width:64px; height:64px; }
+  .big-ring{ width:150px; height:150px; }
+}
+
+/* Mobile modal fix: keep the top header and close button visible */
+@media (max-width:559px){
+  .overlay{
+    align-items:flex-end;
+    padding-top:max(18px, env(safe-area-inset-top));
+  }
+
+  .sheet{
+    max-height:calc(100dvh - 72px);
+    padding-top:0;
+    scroll-padding-top:64px;
+  }
+
+  .sheet-handle{
+    flex-shrink:0;
+    margin-top:10px;
+  }
+
+  .sheet-header{
+    position:sticky;
+    top:0;
+    z-index:30;
+    min-height:58px;
+    padding:10px 2px 8px;
+    margin:0 -2px;
+    background:linear-gradient(180deg, #131b23 78%, rgba(19,27,35,0.94) 100%);
+    border-bottom:1px solid var(--border);
+  }
+
+  .sheet-close{
+    width:42px;
+    height:42px;
+    min-width:42px;
+    flex-shrink:0;
+    font-size:1.15rem;
+    box-shadow:0 4px 14px rgba(0,0,0,.3);
+  }
+}
+
+
+/* ---------- Debts: clean list + separate details ---------- */
+#modalDebts .debt-sheet{ max-height:calc(100dvh - 24px); }
+.debts-list{
+  max-height:58dvh; overflow-y:auto; padding:2px 2px 8px;
+  display:flex; flex-direction:column; gap:8px;
+  -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+}
+.debt-list-row{
+  background:linear-gradient(160deg,var(--surface-2),var(--surface));
+  border:1px solid var(--border); border-radius:16px;
+  padding:13px 14px; display:grid; grid-template-columns:minmax(0,1fr) auto;
+  align-items:center; gap:12px; cursor:pointer; transition:transform .15s var(--ease-bounce),border-color .15s ease;
+}
+.debt-list-row:active{ transform:scale(.975); border-color:var(--aqua-glow); }
+.debt-list-main{ min-width:0; display:flex; flex-direction:column; gap:4px; }
+.debt-customer{ font-family:var(--font-display); font-weight:900; font-size:1rem; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.debt-meta{ color:var(--text-faint); font-size:.69rem; line-height:1.4; direction:rtl; }
+.debt-list-side{ display:flex; align-items:center; gap:9px; }
+.debt-amount{ color:var(--brass); font-family:var(--font-display); font-weight:900; font-size:1.03rem; white-space:nowrap; }
+.debt-chevron{ color:var(--text-faint); font-size:1.05rem; transform:rotate(180deg); }
+.debt-detail-sheet{ max-width:460px; }
+.debt-profile{
+  background:linear-gradient(160deg,var(--surface-2),var(--surface)); border:1px solid var(--border-strong);
+  border-radius:var(--r-md); padding:15px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.debt-profile-name{ font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:#fff; }
+.debt-profile-time{ color:var(--text-faint);font-size:.72rem;margin-top:4px; }
+.debt-profile-amount{ color:var(--brass);font-family:var(--font-display);font-weight:900;font-size:1.25rem;white-space:nowrap; }
+.debt-detail-grid{ display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+.debt-info-box{ background:var(--surface-2);border:1px solid var(--border);border-radius:13px;padding:10px 11px;display:flex;flex-direction:column;gap:3px; }
+.debt-info-box .k{ color:var(--text-faint);font-size:.65rem;font-weight:700; }
+.debt-info-box .v{ color:#fff;font-size:.82rem;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.debt-details{
+  background:rgba(255,255,255,.025); border:1px solid var(--border);
+  border-radius:14px; padding:9px 11px; display:flex; flex-direction:column; gap:6px;
+}
+.debt-detail-line{ display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:.8rem; padding:3px 0; }
+.debt-detail-line .label{ color:var(--text-dim); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.debt-detail-line .value{ color:#fff; font-weight:800; white-space:nowrap; }
+.debt-note{ color:var(--text-dim); font-size:.78rem; line-height:1.6; background:var(--surface-2);border:1px solid var(--border);border-radius:13px;padding:10px 11px; }
+.debt-actions{ display:grid; grid-template-columns:1fr auto; gap:8px; }
+.debt-actions .pay-debt{ min-height:44px; }
+.debt-actions .delete-debt{ width:48px; min-width:48px; padding:0; }
+.debt-list-toolbar{ display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center; }
+.debt-list-toolbar .btn{ white-space:nowrap; min-height:44px; }
+@media (max-width:559px){
+  #modalDebts .debt-sheet{ max-height:calc(100dvh - 12px) !important; }
+  .debts-list{ max-height:61dvh; }
+  .debt-detail-sheet{ max-height:calc(100dvh - 12px) !important; }
+}
+
+
+/* ===== v13 — Product form mobile organization ===== */
+#productForm.product-form-card{
+  padding:16px;
+  gap:14px;
+  border-radius:22px;
+  background:linear-gradient(180deg,var(--surface-2),var(--surface));
+  border:1px solid var(--border-strong);
+}
+.product-image-row{
+  display:grid;
+  grid-template-columns:76px 1fr;
+  gap:12px;
+  align-items:center;
+  padding:10px;
+  border-radius:16px;
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--border);
+}
+.product-image-row #prodImgPreview{
+  width:76px !important;
+  height:76px !important;
+  border-radius:16px !important;
+  border:1px solid var(--border-strong);
+}
+.product-image-row .image-copy{display:flex;flex-direction:column;gap:7px;min-width:0;}
+.product-image-row .image-title{font-size:.78rem;font-weight:800;color:var(--text-dim);}
+.product-image-row .btn{min-height:44px;}
+.product-main-fields{display:flex;flex-direction:column;gap:12px;}
+.product-main-fields .field label{font-size:.78rem;margin-bottom:2px;}
+.product-main-fields .input{min-height:52px;font-size:.95rem;padding:13px 14px;}
+.product-name-field{width:100%;}
+.product-name-field #prodFormName{font-size:1rem;font-weight:700;}
+.product-barcode-block{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:12px;
+  border-radius:16px;
+  background:rgba(34,224,184,.035);
+  border:1px solid rgba(34,224,184,.14);
+}
+.product-barcode-block .field{gap:6px;}
+#prodFormBarcode{
+  width:100%;
+  min-height:60px;
+  font-size:1.08rem;
+  padding:14px 16px;
+  text-align:center;
+  letter-spacing:1.15px;
+}
+.product-barcode-block .barcode-scan-btn{
+  min-height:52px;
+  font-size:.95rem !important;
+  background:linear-gradient(150deg,rgba(77,141,255,.20),rgba(77,141,255,.10));
+  border-color:rgba(77,141,255,.30);
+}
+.product-price-grid,.product-stock-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.product-form-actions{
+  position:sticky;
+  bottom:-1px;
+  z-index:25;
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:10px;
+  margin:2px -4px -4px;
+  padding:12px 4px 4px;
+  background:linear-gradient(180deg,rgba(17,24,32,0),#111820 28%);
+}
+.product-form-actions .btn{min-height:54px;font-size:.95rem;}
+#modalProductsList .sheet{padding-bottom:max(20px,env(safe-area-inset-bottom));}
+#modalProductsList #productsAdminList{max-height:240px !important;}
+@media(max-width:380px){
+  .product-image-row{grid-template-columns:64px 1fr;}
+  .product-image-row #prodImgPreview{width:64px !important;height:64px !important;}
+  .product-price-grid,.product-stock-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  #productForm.product-form-card{padding:12px;gap:11px;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <!-- HEADER -->
+  <div class="app-header">
+    <div class="brand">
+      <div class="brand-mark">🚿</div>
+      <div class="brand-text">
+        <span class="brand-title">HAFID DOUCHE</span>
+        <span class="brand-sub">نظام الإدارة الاحترافي</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="btnDashboard" title="لوحة التحكم">📊</button>
+      <button class="icon-btn" id="btnSales" title="المبيعات">💰</button>
+      <button class="icon-btn" id="btnInvoices" title="الفواتير">🧾</button>
+      <button class="icon-btn" id="btnInventory" title="المخزون">📋</button>
+      <button class="icon-btn" id="btnDebts" title="الديون">💳</button>
+      <button class="icon-btn" id="btnCashbox" title="صندوق اليوم">💼</button>
+      <button class="icon-btn" id="btnExpenses" title="المصاريف">💸</button>
+      <button class="icon-btn" id="btnProducts" title="المنتجات">📦<span class="badge" id="lowStockBadge" style="display:none;">0</span></button>
+      <button class="icon-btn" id="btnSettings" title="الإعدادات">⚙️</button>
+    </div>
+  </div>
+
+  <!-- LIVE DATE & TIME -->
+  <div id="liveDateTime" style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(160deg,var(--surface-2),var(--surface));border:1px solid var(--border);border-radius:var(--r-md);padding:10px 14px;">
+    <span id="liveDate" style="color:var(--text-dim);font-size:.78rem;font-weight:700;">--/--/----</span>
+    <span id="liveClock" style="font-family:var(--font-display);font-size:1.15rem;font-weight:900;color:var(--aqua);direction:ltr;">--:--:--</span>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="stat-pill vacant">
+      <span class="stat-icon">🟢</span>
+      <span class="stat-value" id="statVacant">0</span>
+      <span class="stat-label">غرف شاغرة</span>
+    </div>
+    <div class="stat-pill busy">
+      <span class="stat-icon">🔴</span>
+      <span class="stat-value" id="statBusy">0</span>
+      <span class="stat-label">غرف مشغولة</span>
+    </div>
+    <div class="stat-pill revenue">
+      <span class="stat-icon">💵</span>
+      <span class="stat-value" id="statRevenue">0</span>
+      <span class="stat-label">صندوق اليوم (دج)</span>
+    </div>
+  </div>
+
+  <!-- WAITING QUEUE -->
+  <div class="queue-widget">
+    <div class="queue-info">
+      <span class="queue-icon">🧍‍♂️</span>
+      <span class="queue-label">بالانتظار</span>
+      <span class="queue-value" id="queueValue">0</span>
+    </div>
+    <div class="queue-controls">
+      <button class="queue-btn" id="queueMinusBtn">−</button>
+      <button class="queue-btn plus" id="queuePlusBtn">+</button>
+    </div>
+  </div>
+
+  <div class="section-label">الغرف</div>
+  <div class="rooms-grid" id="roomsGrid"></div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- ==================== MODAL: ROOM ==================== -->
+<div class="overlay" id="modalRoom">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title" id="modalRoomTitle">🚿 غرفة 00</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalRoom')">✕</button>
+    </div>
+
+    <div class="big-timer-wrap">
+      <div class="big-ring">
+        <svg viewBox="0 0 100 100">
+          <circle class="ring-track" cx="50" cy="50" r="44"/>
+          <circle class="ring-fill" id="bigRing" cx="50" cy="50" r="44" stroke="#22e0b8" stroke-dasharray="276.46" stroke-dashoffset="276.46"/>
+        </svg>
+        <div class="big-ring-center">
+          <span class="big-timer-text" id="bigTimerText">00:00</span>
+          <span class="big-timer-tier tier-badge-low" id="bigTimerTier">أقل من 25 د</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-line"><span class="k">سعر الدوش</span><span class="v" id="showerPriceDisplay">0 دج</span></div>
+    <div class="divider"></div>
+    <div class="info-line"><span class="k">المنتجات والإضافات</span><span class="v" id="productsTotal">0 دج</span></div>
+    <div id="productsListMini"></div>
+    <div class="divider"></div>
+    <div class="info-line" style="font-size:1.05rem;"><span class="k">الإجمالي</span><span class="v" style="color:var(--aqua);" id="grandTotal">0 دج</span></div>
+
+    <div class="control-row">
+      <button class="btn btn-secondary" onclick="UI.openProductSelector(AppState.currentRoomId)">➕ منتج / مبلغ</button>
+      <button class="btn btn-secondary" id="pauseResumeBtn" onclick="Rooms.togglePause(AppState.currentRoomId)">⏸ إيقاف مؤقت</button>
+    </div>
+    <div class="control-row">
+      <button class="btn btn-secondary" onclick="Rooms.adjustTime(AppState.currentRoomId, -300)">−5 دقائق</button>
+      <button class="btn btn-secondary" onclick="Rooms.adjustTime(AppState.currentRoomId, 300)">+5 دقائق</button>
+    </div>
+    <div class="control-row" id="alarmMuteRow" style="display:none;">
+      <button class="btn btn-warning btn-full" onclick="Rooms.muteAlarm(AppState.currentRoomId)">🔇 إيقاف الإنذار</button>
+    </div>
+    <button class="btn btn-secondary btn-full" onclick="UI.openMoveRoomModal(AppState.currentRoomId)">🔀 نقل الزبون لغرفة أخرى</button>
+    <div class="control-row">
+      <button class="btn btn-warning" onclick="UI.confirmCancelShower(AppState.currentRoomId)">↩ إلغاء بالخطأ</button>
+      <button class="btn btn-danger" onclick="UI.confirmEndShower(AppState.currentRoomId)">⏹ إنهاء الدوش</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: MOVE CUSTOMER ==================== -->
+<div class="overlay" id="modalMoveRoom">
+  <div class="sheet" style="max-width:400px;">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">🔀 نقل الزبون</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalMoveRoom')">✕</button>
+    </div>
+    <div style="font-size:0.82rem;color:var(--text-dim);">اختر الغرفة الشاغرة التي تريد نقل الزبون إليها — سيستمر المؤقت والمنتجات والفاتورة كما هي.</div>
+    <div class="product-grid" id="moveRoomGrid" style="grid-template-columns:repeat(3,1fr);"></div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: CONFIRM (generic) ==================== -->
+<div class="overlay" id="modalConfirm">
+  <div class="sheet" style="max-width:360px;">
+    <div class="sheet-handle"></div>
+    <div class="confirm-box">
+      <span class="confirm-icon" id="confirmIcon">⚠️</span>
+      <span class="sheet-title" id="confirmTitle" style="justify-content:center;">تأكيد</span>
+      <span class="confirm-text" id="confirmText">هل أنت متأكد؟</span>
+    </div>
+    <div class="control-row">
+      <button class="btn btn-secondary" onclick="UI.closeModal('modalConfirm')">إلغاء</button>
+      <button class="btn btn-danger" id="confirmActionBtn">تأكيد</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: INVOICE ==================== -->
+<div class="overlay" id="modalInvoice">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">🧾 الفاتورة</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalInvoice')">✕</button>
+    </div>
+    <div class="invoice-paper" id="invoicePaper">
+      <div class="ihead">
+        <div class="shop">HAFID DOUCHE</div>
+        <div class="num" id="invNum">#INV-000000</div>
+      </div>
+      <hr>
+      <div class="row"><span>الغرفة</span><span id="invRoomNum">--</span></div>
+      <div class="row"><span>الدخول</span><span id="invEntryTime">--</span></div>
+      <div class="row"><span>الخروج</span><span id="invExitTime">--</span></div>
+      <div class="row"><span>المدة</span><span id="invDuration">--</span></div>
+      <hr>
+      <div class="row"><span>سعر الدوش</span><span id="invShowerPrice">0 دج</span></div>
+      <div id="invoiceItems"></div>
+      <div class="row"><span>إجمالي المنتجات والإضافات</span><span id="invProductsTotal">0 دج</span></div>
+      <div class="row total"><span>الإجمالي</span><span id="invGrandTotal">0 دج</span></div>
+      <div class="row"><span>حالة الدفع</span><span id="invPaymentStatus">في الانتظار</span></div>
+      <div class="qr-wrap" id="invQrWrap"></div>
+      <div style="text-align:center;font-size:0.62rem;color:#777;margin-top:3px;">امسح QR لعرض بيانات الفاتورة</div>
+      <div style="text-align:center;font-size:0.68rem;color:#777;margin-top:4px;">شكراً لزيارتكم 🙏</div>
+    </div>
+    <div class="control-row" id="invoicePaymentActions">
+      <button class="btn btn-primary" id="invoicePaidBtn" onclick="Finance.markInvoicePaid()">✅ تم الدفع</button>
+      <button class="btn btn-warning" id="invoiceDebtBtn" onclick="Finance.markInvoiceDebt()">💳 دين</button>
+    </div>
+    <div class="control-row">
+      <button class="btn btn-secondary" onclick="UI.printInvoice()">🖨 طباعة PDF</button>
+      <button class="btn btn-secondary" onclick="UI.closeModal('modalInvoice')">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: PRODUCT SELECTOR ==================== -->
+<div class="overlay" id="modalProductSelector">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">📦 إضافة منتج أو مبلغ</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalProductSelector')">✕</button>
+    </div>
+    <div class="manual-charge-box">
+      <div class="manual-charge-title">💵 إضافة مبلغ يدوي</div>
+      <div class="manual-charge-grid">
+        <input class="input" id="manualChargeAmount" type="number" min="0" step="1" inputmode="decimal" placeholder="المبلغ (دج)">
+        <input class="input" id="manualChargeDetail" type="text" maxlength="80" placeholder="التفصيل... مثال: خدمة إضافية">
+        <button class="btn btn-primary manual-charge-add" onclick="UI.addManualChargeToRoom()">+ إضافة</button>
+      </div>
+    </div>
+    <div class="search-bar">
+      <input class="input" id="productSearchInput" placeholder="ابحث بالاسم أو الباركود..." oninput="UI.filterProducts()">
+      <span class="search-icon">🔍</span>
+    </div>
+    <div class="chip-row" id="categoryChips"></div>
+    <div class="scanner-box" id="scannerContainer" style="display:none;">
+      <div id="scannerReader"></div>
+      <div class="scan-frame-wrap"><div class="scan-frame"></div></div>
+      <div class="scan-live-hint">📷 وجّه خطوط الباركود داخل المستطيل — القراءة تلقائية</div>
+    </div>
+    <button class="btn btn-secondary" id="toggleScannerBtn" onclick="UI.smartBarcodeScan('selector')">📷 قراءة تلقائية</button>
+    <div class="product-grid" id="productSelectorGrid"></div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: DASHBOARD ==================== -->
+<div class="overlay" id="modalDashboard">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">📊 لوحة التحكم</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalDashboard')">✕</button>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card accent"><span class="dl">مبيعات اليوم</span><span class="dv" id="dashToday">0 دج</span></div>
+      <div class="dash-card accent"><span class="dl">مبيعات الأسبوع</span><span class="dv" id="dashWeek">0 دج</span></div>
+      <div class="dash-card accent"><span class="dl">مبيعات الشهر</span><span class="dv" id="dashMonth">0 دج</span></div>
+      <div class="dash-card"><span class="dl">عدد الزبائن</span><span class="dv" id="dashCustomers">0</span></div>
+      <div class="dash-card"><span class="dl">متوسط الفاتورة</span><span class="dv" id="dashAvgInvoice">0 دج</span></div>
+      <div class="dash-card accent"><span class="dl">صافي اليوم</span><span class="dv" id="dashNetToday">0 دج</span></div>
+    </div>
+    <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+    <div class="top-row"><span class="k">🏆 أكثر غرفة استعمالاً</span><span class="v" id="dashTopRoom">--</span></div>
+    <div class="top-row"><span class="k">🔥 أكثر منتج مبيعاً</span><span class="v" id="dashTopProduct">--</span></div>
+    <div class="top-row"><span class="k">⏰ أكثر ساعة ازدحاماً</span><span class="v" id="dashTopHour">--</span></div>
+    <div class="top-row"><span class="k">💹 أكثر يوم ربحاً</span><span class="v" id="dashTopDay">--</span></div>
+    <div class="top-row"><span class="k">🚿 نسبة الربح من الدوش</span><span class="v" id="dashShowerPct">--</span></div>
+    <div class="top-row"><span class="k">📦 نسبة الربح من المنتجات</span><span class="v" id="dashProductPct">--</span></div>
+    <div class="top-row"><span class="k">⚠️ منتجات منخفضة المخزون</span><span class="v" id="dashLowStock">0</span></div>
+    <div class="divider"></div>
+    <div class="section-label">آخر الفواتير</div>
+    <div style="max-height:180px;overflow-y:auto;" id="dashRecentInvoices"></div>
+    <button class="btn btn-secondary" onclick="UI.closeModal('modalDashboard')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ==================== MODAL: SALES ==================== -->
+<div class="overlay" id="modalSales">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">💰 المبيعات</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalSales')">✕</button>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card accent"><span class="dl">إجمالي المبيعات</span><span class="dv" id="salesTotalRevenue">0 دج</span></div>
+      <div class="dash-card"><span class="dl">عدد الفواتير</span><span class="dv" id="salesTotalCount">0</span></div>
+    </div>
+    <div class="divider"></div>
+    <div style="max-height:320px;overflow-y:auto;" id="salesList"></div>
+    <button class="btn btn-secondary" onclick="UI.closeModal('modalSales')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ==================== MODAL: INVOICES LIST ==================== -->
+<div class="overlay" id="modalInvoicesList">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">🧾 جميع الفواتير</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalInvoicesList')">✕</button>
+    </div>
+    <div class="search-bar">
+      <input class="input" id="invoiceSearchInput" placeholder="ابحث برقم الفاتورة أو التاريخ (يوم/شهر/سنة)..." oninput="UI.filterInvoices()">
+      <span class="search-icon">🔍</span>
+    </div>
+    <div style="max-height:400px;overflow-y:auto;" id="invoicesListContainer"></div>
+    <button class="btn btn-secondary" onclick="UI.closeModal('modalInvoicesList')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ==================== MODAL: INVENTORY ==================== -->
+<div class="overlay" id="modalInventory">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">📋 المخزون</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalInventory')">✕</button>
+    </div>
+    <div class="tabs" id="inventoryTabs">
+      <button class="tab active" data-tab="inv-products">المنتجات</button>
+      <button class="tab" data-tab="inv-low">منخفض</button>
+      <button class="tab" data-tab="inv-categories">فئات</button>
+    </div>
+    <div id="inv-products" class="tab-panel active" style="max-height:320px;overflow-y:auto;"></div>
+    <div id="inv-low" class="tab-panel" style="max-height:320px;overflow-y:auto;"></div>
+    <div id="inv-categories" class="tab-panel" style="max-height:320px;overflow-y:auto;"></div>
+    <button class="btn btn-secondary" onclick="UI.closeModal('modalInventory')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ==================== MODAL: PRODUCTS ADMIN ==================== -->
+<div class="overlay" id="modalProductsList">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">📦 إدارة المنتجات</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalProductsList')">✕</button>
+    </div>
+    <div class="grid-3">
+      <button class="btn btn-primary btn-sm" onclick="UI.showProductForm()">➕ إضافة</button>
+      <button class="btn btn-secondary btn-sm" onclick="UI.exportProductsJSON()">📤 تصدير</button>
+      <button class="btn btn-secondary btn-sm" onclick="document.getElementById('importProductsInput').click()">📥 استيراد</button>
+      <input type="file" id="importProductsInput" accept=".json" style="display:none" onchange="UI.importProducts(event)">
+    </div>
+
+    <div id="productForm" class="product-form-card" style="display:none;flex-direction:column;">
+      <div class="product-image-row">
+        <img id="prodImgPreview" class="pcard-preview" style="object-fit:cover;background:var(--surface-3);" src="">
+        <div class="image-copy">
+          <span class="image-title">صورة المنتج</span>
+          <button class="btn btn-secondary btn-sm" type="button" onclick="document.getElementById('prodImgInput').click()">🖼 اختيار صورة</button>
+          <input type="file" id="prodImgInput" accept="image/*" style="display:none" onchange="UI.handleProductImage(event)">
+        </div>
+      </div>
+
+      <div class="product-main-fields">
+        <div class="field product-name-field">
+          <label>اسم المنتج</label>
+          <input class="input" id="prodFormName" placeholder="مثال: عصير برتقال">
+        </div>
+
+        <div class="product-barcode-block">
+          <div class="field">
+            <label>الباركود</label>
+            <input class="input" id="prodFormBarcode" inputmode="numeric" autocomplete="off" placeholder="امسح الباركود أو أدخل الرقم">
+          </div>
+          <button type="button" class="btn btn-secondary barcode-scan-btn" onclick="UI.smartBarcodeScan('product')" id="prodScanBtn">📷 قراءة الباركود تلقائياً</button>
+        </div>
+
+        <div class="field">
+          <label>الفئة</label>
+          <input class="input" id="prodFormCategory" placeholder="مثال: مشروبات">
+        </div>
+
+        <div class="product-price-grid">
+          <div class="field"><label>سعر الشراء</label><input class="input" id="prodFormCost" type="number" min="0" inputmode="decimal" placeholder="0 دج"></div>
+          <div class="field"><label>سعر البيع</label><input class="input" id="prodFormPrice" type="number" min="0" inputmode="decimal" placeholder="0 دج"></div>
+        </div>
+
+        <div class="product-stock-grid">
+          <div class="field"><label>الكمية الحالية</label><input class="input" id="prodFormQty" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+          <div class="field"><label>تنبيه عند</label><input class="input" id="prodFormMinQty" type="number" min="0" inputmode="numeric" placeholder="5"></div>
+        </div>
+      </div>
+
+      <div class="scanner-box" id="prodScannerContainer" style="display:none;">
+        <div id="prodScannerReader"></div>
+        <div class="scan-frame-wrap"><div class="scan-frame"></div></div>
+        <div class="scan-live-hint">📷 وجّه خطوط الباركود داخل المستطيل — الرقم يدخل وحده</div>
+      </div>
+
+      <div class="product-form-actions">
+        <button class="btn btn-primary" onclick="UI.saveProduct()">💾 حفظ المنتج</button>
+        <button class="btn btn-secondary" onclick="UI.hideProductForm()">إلغاء</button>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <input class="input" id="adminSearchInput" placeholder="بحث سريع..." oninput="UI.renderProductsAdmin()">
+      <span class="search-icon">🔍</span>
+    </div>
+    <div style="max-height:280px;overflow-y:auto;" id="productsAdminList"></div>
+    <button class="btn btn-secondary" onclick="UI.closeModal('modalProductsList')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ==================== MODAL: DEBTS ==================== -->
+<div class="overlay" id="modalDebts">
+  <div class="sheet debt-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">💳 قائمة المديونين</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalDebts')">✕</button>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card accent"><span class="dl">إجمالي الديون</span><span class="dv" id="debtsTotal">0 دج</span></div>
+      <div class="dash-card"><span class="dl">عدد المديونين</span><span class="dv" id="debtsCount">0</span></div>
+    </div>
+    <div class="debt-list-toolbar">
+      <div class="search-bar">
+        <input class="input" id="debtSearch" placeholder="بحث باسم الزبون..." oninput="Debts.render()">
+        <span class="search-icon">🔍</span>
+      </div>
+      <button class="btn btn-secondary btn-sm" type="button" onclick="Debts.openAdd()">➕ دين يدوي</button>
+    </div>
+    <div id="debtsList" class="debts-list"></div>
+    <button class="btn btn-secondary" onclick="UI.closeModal('modalDebts')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ==================== MODAL: ADD MANUAL DEBT ==================== -->
+<div class="overlay" id="modalAddDebt">
+  <div class="sheet" style="max-width:420px;">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">➕ تسجيل دين يدوي</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalAddDebt')">✕</button>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>اسم ولقب الزبون</label><input class="input" id="debtCustomer" placeholder="الاسم واللقب"></div>
+      <div class="field"><label>المبلغ (دج)</label><input class="input" id="debtAmount" type="number" min="0" placeholder="0"></div>
+    </div>
+    <div class="field"><label>ملاحظة</label><input class="input" id="debtNote" placeholder="مثال: دوش + عصير"></div>
+    <div class="control-row">
+      <button class="btn btn-primary" type="button" onclick="Debts.add()">💾 تسجيل الدين</button>
+      <button class="btn btn-secondary" type="button" onclick="UI.closeModal('modalAddDebt')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: DEBT DETAIL ==================== -->
+<div class="overlay" id="modalDebtDetail">
+  <div class="sheet debt-detail-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">💳 تفاصيل الدين</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalDebtDetail')">✕</button>
+    </div>
+    <div id="debtDetailContent"></div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: CASHBOX ==================== -->
+<div class="overlay" id="modalCashbox">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">💼 صندوق اليوم</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalCashbox')">✕</button>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card accent"><span class="dl">المقبوض اليوم</span><span class="dv" id="cashTodayIn">0 دج</span></div>
+      <div class="dash-card"><span class="dl">مصاريف اليوم</span><span class="dv" id="cashTodayExpenses">0 دج</span></div>
+      <div class="dash-card accent"><span class="dl">صافي الصندوق</span><span class="dv" id="cashTodayNet">0 دج</span></div>
+      <div class="dash-card"><span class="dl">ديون متبقية</span><span class="dv" id="cashDebtsRemaining">0 دج</span></div>
+    </div>
+    <div class="section-label">حركات اليوم</div>
+    <div id="cashTransactionsList" style="max-height:360px;overflow-y:auto;"></div>
+    <button class="btn btn-secondary" onclick="UI.closeModal('modalCashbox')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ==================== MODAL: EXPENSES ==================== -->
+<div class="overlay" id="modalExpenses">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">💸 المصاريف</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalExpenses')">✕</button>
+    </div>
+    <div class="dash-grid">
+      <div class="dash-card"><span class="dl">مصاريف اليوم</span><span class="dv" id="expensesTodayTotal">0 دج</span></div>
+      <div class="dash-card"><span class="dl">إجمالي المصاريف</span><span class="dv" id="expensesAllTotal">0 دج</span></div>
+    </div>
+    <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:10px;">
+      <div class="grid-2">
+        <div class="field"><label>نوع المصروف</label><select class="input" id="expenseCategory"><option>ماء</option><option>كهرباء</option><option>غاز</option><option>تنظيف</option><option>صيانة</option><option>شراء مخزون</option><option>أجور</option><option>نقل</option><option>أخرى</option></select></div>
+        <div class="field"><label>المبلغ (دج)</label><input class="input" id="expenseAmount" type="number" min="0" step="1" placeholder="0"></div>
+      </div>
+      <div class="field"><label>ملاحظة</label><input class="input" id="expenseNote" placeholder="تفاصيل المصروف..."></div>
+      <button class="btn btn-primary" onclick="Finance.addExpense()">➕ تسجيل المصروف</button>
+    </div>
+    <div class="search-bar"><input class="input" id="expenseSearch" placeholder="بحث في المصاريف..." oninput="Finance.renderExpenses()"><span class="search-icon">🔍</span></div>
+    <div id="expensesList" style="max-height:320px;overflow-y:auto;"></div>
+    <button class="btn btn-secondary" onclick="UI.closeModal('modalExpenses')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ==================== MODAL: SETTINGS ==================== -->
+<div class="overlay" id="modalSettings">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">⚙️ الإعدادات</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalSettings')">✕</button>
+    </div>
+    <div class="settings-row"><span class="label">سعر الدوش (أقل من 25د)</span><input type="number" id="setPriceLow"></div>
+    <div class="settings-row"><span class="label">سعر الدوش (25-45د)</span><input type="number" id="setPriceMid"></div>
+    <div class="settings-row"><span class="label">سعر الدوش (أكثر من 45د)</span><input type="number" id="setPriceHigh"></div>
+    <div class="settings-row"><span class="label">حد أدنى (دقائق)</span><input type="number" id="setLimitLow"></div>
+    <div class="settings-row"><span class="label">حد أعلى (دقائق)</span><input type="number" id="setLimitHigh"></div>
+    <div class="settings-row"><span class="label">اسم المحل</span><input type="text" id="setShopName" style="width:140px;"></div>
+    <div class="settings-row"><span class="label">كلمة سر الإعدادات</span><input type="password" id="setPassSettings"></div>
+    <div class="settings-row"><span class="label">كلمة سر المنتجات</span><input type="password" id="setPassProducts"></div>
+    <div class="divider"></div>
+    <div class="section-label">🔧 صيانة الغرف</div>
+    <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:12px;display:flex;flex-direction:column;gap:10px;">
+      <div class="grid-2">
+        <div class="field"><label>الغرفة</label><select class="input" id="maintenanceRoomSelect"></select></div>
+        <div class="field"><label>سبب الصيانة</label><select class="input" id="maintenanceReasonSelect" onchange="UI.toggleCustomMaintenanceReason()">
+          <option>عطل في السخان</option><option>تسرب المياه</option><option>عطل في الحنفية</option><option>عطل في الدوش</option><option>انسداد الصرف</option><option>عطل في الباب أو القفل</option><option>عطل كهربائي</option><option>تنظيف وتعقيم</option><option>أشغال صيانة عامة</option><option value="other">سبب آخر</option>
+        </select></div>
+      </div>
+      <input class="input" id="maintenanceCustomReason" placeholder="اكتب سبب الصيانة..." style="display:none;">
+      <button class="btn btn-warning" type="button" onclick="UI.setRoomMaintenance()">🔧 إدخال الغرفة للصيانة</button>
+      <div id="maintenanceRoomsList"></div>
+    </div>
+    <div class="divider"></div>
+    <div class="grid-2">
+      <button class="btn btn-primary" onclick="UI.saveSettings()">💾 حفظ</button>
+      <button class="btn btn-secondary" onclick="UI.closeModal('modalSettings')">إغلاق</button>
+    </div>
+    <div class="grid-2">
+      <button class="btn btn-secondary" onclick="Storage.backup()">💾 نسخ احتياطي</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('restoreInput').click()">📂 استرجاع</button>
+      <input type="file" id="restoreInput" accept=".json" style="display:none" onchange="Storage.restore(event.target.files[0])">
+    </div>
+    <button class="btn btn-danger" onclick="UI.confirmResetAll()">🗑 إعادة ضبط الكل</button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   HAFID DOUCHE v20 — REVIEWED APPLICATION LOGIC
+   Modules: AppState, Helpers, Storage, Rooms, UI, Dashboard
+   ============================================================ */
+
+// ---------------------------------------------------------------
+// STATE
+// ---------------------------------------------------------------
+const DEFAULT_SETTINGS = Object.freeze({
+  priceLow: 150, priceMid: 200, priceHigh: 250,
+  limitLow: 25, limitHigh: 45,
+  passwordSettings: '1234', passwordProducts: '1234',
+  shopName: 'HAFID DOUCHE',
+  invoiceCounter: 0
+});
+
+const AppState = {
+  settings: JSON.parse(JSON.stringify(DEFAULT_SETTINGS)),
+  productsDB: [],
+  roomsState: {},
+  invoices: [],
+  debts: [],
+  expenses: [],
+  cashTransactions: [],
+  currentRoomId: null,
+  modalTimerHandle: null,
+  scannerInstance: null,
+  productFormScannerInstance: null,
+  waitingCount: 0,
+  selectorRoomId: null,
+  activeCategory: 'الكل',
+  editingProductId: null,
+  currentInvoice: null,
+  invTab: 'inv-products',
+  chartInstance: null,
+  TOTAL_ROOMS: 13,
+  MAINTENANCE_ROOMS: [],
+  CIRC_SMALL: 2 * Math.PI * 35,
+  CIRC_BIG: 2 * Math.PI * 44,
+};
+
+// ---------------------------------------------------------------
+// HELPERS
+// ---------------------------------------------------------------
+const Helpers = {
+  formatTime(sec) {
+    sec = Math.max(0, Math.floor(sec));
+    const m = Math.floor(sec / 60), s = sec % 60;
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  },
+  formatDateTime(ts) {
+    if (!ts) return '--';
+    const d = new Date(ts);
+    return d.toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }) + ' - ' +
+      d.toLocaleDateString('ar-DZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  },
+  formatDateShort(ts) {
+    if (!ts) return '--';
+    return new Date(ts).toLocaleDateString('ar-DZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  },
+  getShowerPrice(sec) {
+    const min = sec / 60;
+    if (min < AppState.settings.limitLow) return AppState.settings.priceLow;
+    if (min <= AppState.settings.limitHigh) return AppState.settings.priceMid;
+    return AppState.settings.priceHigh;
+  },
+  getTier(sec) {
+    const min = sec / 60;
+    if (min < AppState.settings.limitLow) return 'low';
+    if (min <= AppState.settings.limitHigh) return 'mid';
+    return 'high';
+  },
+  getTierColor(tier) {
+    return tier === 'low' ? '#22e0b8' : tier === 'mid' ? '#f5b942' : '#ff5468';
+  },
+  getTierLabel(tier) {
+    return tier === 'low' ? 'أقل من ' + AppState.settings.limitLow + ' د'
+      : tier === 'mid' ? AppState.settings.limitLow + '-' + AppState.settings.limitHigh + ' د'
+      : 'أكثر من ' + AppState.settings.limitHigh + ' د';
+  },
+  getProgressFraction(sec) { return Math.min(sec / 3600, 1); },
+  generateId() { return 'p' + Date.now() + '_' + Math.random().toString(36).slice(2, 8); },
+  nextInvoiceNumber() {
+    AppState.settings.invoiceCounter = (AppState.settings.invoiceCounter || 0) + 1;
+    return 'INV-' + String(AppState.settings.invoiceCounter).padStart(6, '0');
+  },
+  showToast(msg, type = '') {
+    const c = document.getElementById('toastStack');
+    const t = document.createElement('div');
+    t.className = 'toast ' + type;
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
+  },
+  playSound(type = 'beep') {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      if (type === 'alert') { osc.frequency.value = 800; osc.type = 'square'; gain.gain.value = 0.15; }
+      else { osc.frequency.value = 1000; osc.type = 'sine'; gain.gain.value = 0.1; }
+      osc.start(); osc.stop(ctx.currentTime + 0.2);
+    } catch (e) {}
+  },
+  requestNotification() {
+    if (typeof Notification === 'undefined') return;
+    if (Notification.permission === 'default') Notification.requestPermission();
+    if (Notification.permission === 'granted') new Notification('HAFID DOUCHE', { body: '⚠️ تجاوز الزبون الحد الأقصى!' });
+  },
+  createRipple(e, el) {
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const rect = el.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    r.style.width = r.style.height = size + 'px';
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left - size / 2;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top - size / 2;
+    r.style.left = x + 'px'; r.style.top = y + 'px';
+    el.appendChild(r);
+    r.addEventListener('animationend', () => r.remove());
+  },
+  isToday(ts) {
+    const d = new Date(ts), t = new Date();
+    return d.getDate() === t.getDate() && d.getMonth() === t.getMonth() && d.getFullYear() === t.getFullYear();
+  },
+  isThisWeek(ts) {
+    const d = new Date(ts), t = new Date();
+    const diffDays = (t - d) / 86400000;
+    return diffDays >= 0 && diffDays < 7;
+  },
+  isThisMonth(ts) {
+    const d = new Date(ts), t = new Date();
+    return d.getMonth() === t.getMonth() && d.getFullYear() === t.getFullYear();
+  },
+  getCategoryCount() {
+    const cats = {};
+    AppState.productsDB.forEach(p => { cats[p.category || 'غير مصنف'] = (cats[p.category || 'غير مصنف'] || 0) + 1; });
+    return cats;
+  },
+  getCategories() {
+    const set = new Set(AppState.productsDB.map(p => p.category || 'غير مصنف'));
+    return ['الكل', ...Array.from(set)];
+  },
+  escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+    }[c]));
+  }
+};
+
+function getDefaultProducts() {
+  return [
+    { id: 'p1', barcode: '6110001', name: 'شامبو', category: 'عناية', cost: 12, price: 20, qty: 20, minQty: 5, image: '' },
+    { id: 'p2', barcode: '6110002', name: 'صابون', category: 'عناية', cost: 5, price: 10, qty: 40, minQty: 10, image: '' },
+    { id: 'p3', barcode: '6110003', name: 'جل الشعر', category: 'عناية', cost: 5, price: 10, qty: 15, minQty: 5, image: '' },
+    { id: 'p4', barcode: '6110004', name: 'منشفة', category: 'أدوات', cost: 5, price: 10, qty: 25, minQty: 8, image: '' },
+    { id: 'p5', barcode: '6110005', name: 'عصير برتقال', category: 'مشروبات', cost: 20, price: 40, qty: 12, minQty: 4, image: '' },
+    { id: 'p6', barcode: '6110006', name: 'ماء معدني', category: 'مشروبات', cost: 10, price: 20, qty: 30, minQty: 8, image: '' },
+    { id: 'p7', barcode: '6110007', name: 'كوكا كولا', category: 'مشروبات', cost: 30, price: 50, qty: 18, minQty: 5, image: '' },
+    { id: 'p8', barcode: '6110008', name: 'بيبسي', category: 'مشروبات', cost: 30, price: 50, qty: 15, minQty: 5, image: '' },
+    { id: 'p9', barcode: '6110009', name: 'جوارب قطنية', category: 'أدوات', cost: 15, price: 30, qty: 10, minQty: 4, image: '' },
+    { id: 'p10', barcode: '6110010', name: 'عطر فاخر', category: 'عناية', cost: 60, price: 100, qty: 6, minQty: 2, image: '' },
+    { id: 'p11', barcode: '6110011', name: 'شباشب', category: 'أدوات', cost: 20, price: 40, qty: 8, minQty: 3, image: '' },
+    { id: 'p12', barcode: '6110012', name: 'فرشاة أسنان', category: 'عناية', cost: 10, price: 25, qty: 14, minQty: 5, image: '' },
+  ];
+}
+
+// ---------------------------------------------------------------
+// STORAGE
+// ---------------------------------------------------------------
+const Storage = {
+  snapshotRooms() {
+    const rooms = {};
+    for (let i = 1; i <= AppState.TOTAL_ROOMS; i++) {
+      const r = AppState.roomsState[i];
+      if (!r) continue;
+      rooms[i] = {
+        id: r.id, status: r.status, startTime: r.startTime, entryTime: r.entryTime,
+        elapsedSeconds: r.status === 'busy' ? Math.floor((Date.now() - (r.startTime || Date.now())) / 1000) : r.elapsedSeconds,
+        products: r.products || [], alarmSilenced: !!r.alarmSilenced, maintenanceReason: r.maintenanceReason || ''
+      };
+    }
+    return rooms;
+  },
+  save() {
+    const data = {
+      version: 6,
+      settings: AppState.settings,
+      productsDB: AppState.productsDB,
+      invoices: AppState.invoices,
+      debts: AppState.debts,
+      expenses: AppState.expenses,
+      cashTransactions: AppState.cashTransactions,
+      waitingCount: AppState.waitingCount || 0,
+      rooms: this.snapshotRooms()
+    };
+    try {
+      localStorage.setItem('hafid_pro_v2', JSON.stringify(data));
+      localStorage.setItem('hafid_douche_debts_v1', JSON.stringify(AppState.debts)); // legacy compatibility
+      this._saveErrorShown = false;
+      return true;
+    } catch (e) {
+      console.warn('Save failed:', e);
+      if (!this._saveErrorShown) {
+        this._saveErrorShown = true;
+        Helpers.showToast('❌ تعذر حفظ البيانات. قد تكون مساحة التخزين ممتلئة؛ خذ نسخة احتياطية.', 'error');
+      }
+      return false;
+    }
+  },
+  _migrateInvoices() {
+    const txIds = new Set((AppState.cashTransactions || []).map(t => String(t.sourceId ?? '')).filter(Boolean));
+    AppState.invoices.forEach(inv => {
+      if (!inv.paymentStatus) {
+        inv.paymentStatus = 'paid';
+        inv.paidAmount = Number(inv.total || 0);
+        inv.paidAt = inv.date || new Date().toISOString();
+      }
+
+      // Old versions auto-created a cash transaction for every paid invoice.
+      // Do NOT do that for invoices that were paid through the debts module:
+      // their partial/final debt payments are already cash transactions.
+      const paidThroughDebt = !!(inv.settledViaDebt || inv.wasDebt || inv.customerName);
+      const hasInvoiceCash = txIds.has(String(inv.id));
+
+      if (inv.paymentStatus === 'paid' && !hasInvoiceCash && !paidThroughDebt) {
+        AppState.cashTransactions.push({
+          id: 'tx_mig_' + inv.id,
+          type: 'income', amount: Number(inv.total || 0),
+          source: 'invoice', sourceId: inv.id,
+          label: 'فاتورة ' + (inv.number || ''),
+          date: inv.paidAt || inv.date || new Date().toISOString()
+        });
+        txIds.add(String(inv.id));
+      }
+      (inv.products || []).forEach(item => {
+        if (item.cost == null) {
+          const dbp = AppState.productsDB.find(p => p.id === item.productId || p.name === item.name);
+          item.cost = Number(dbp?.cost || 0);
+        }
+      });
+    });
+  },
+  load() {
+    let raw = null;
+    try { raw = localStorage.getItem('hafid_pro_v2') || localStorage.getItem('hafid_pro'); }
+    catch (e) { console.warn('localStorage unavailable:', e); raw = null; }
+    if (raw) {
+      try {
+        const d = JSON.parse(raw);
+        if (d.settings) AppState.settings = { ...AppState.settings, ...d.settings };
+        AppState.productsDB = d.productsDB && d.productsDB.length ? d.productsDB : getDefaultProducts();
+        AppState.invoices = Array.isArray(d.invoices) ? d.invoices : [];
+        AppState.debts = Array.isArray(d.debts) ? d.debts : [];
+        AppState.expenses = Array.isArray(d.expenses) ? d.expenses : [];
+        AppState.cashTransactions = Array.isArray(d.cashTransactions) ? d.cashTransactions : [];
+        AppState.waitingCount = Number(d.waitingCount || 0);
+        if (!AppState.debts.length) {
+          try { AppState.debts = JSON.parse(localStorage.getItem('hafid_douche_debts_v1') || '[]'); } catch(e) {}
+        }
+        if (d.rooms) {
+          for (let i = 1; i <= AppState.TOTAL_ROOMS; i++) {
+            if (d.rooms[i]) {
+              AppState.roomsState[i] = { ...AppState.roomsState[i], ...d.rooms[i], timerHandle: null };
+              const r = AppState.roomsState[i];
+              if (r.status === 'reserved') r.status = 'ready';
+              if (r.status === 'busy' && r.startTime) r.elapsedSeconds = Math.floor((Date.now() - r.startTime) / 1000);
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Load failed:', e);
+        AppState.productsDB = getDefaultProducts();
+        AppState.invoices = [];
+        AppState.debts = []; AppState.expenses = []; AppState.cashTransactions = [];
+      }
+    } else {
+      AppState.productsDB = getDefaultProducts();
+      AppState.invoices = []; AppState.debts = []; AppState.expenses = []; AppState.cashTransactions = [];
+      try { AppState.debts = JSON.parse(localStorage.getItem('hafid_douche_debts_v1') || '[]'); } catch(e) {}
+    }
+    this._migrateInvoices();
+  },
+  backup() {
+    const data = {
+      app: 'HAFID DOUCHE', version: 6, exportedAt: new Date().toISOString(),
+      settings: AppState.settings, productsDB: AppState.productsDB,
+      invoices: AppState.invoices, debts: AppState.debts,
+      expenses: AppState.expenses, cashTransactions: AppState.cashTransactions,
+      waitingCount: AppState.waitingCount || 0, rooms: this.snapshotRooms()
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'hafid_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click(); URL.revokeObjectURL(a.href);
+    Helpers.showToast('✅ تم إنشاء نسخة احتياطية كاملة', 'success');
+  },
+  restore(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const d = JSON.parse(e.target.result);
+        if (!d || typeof d !== 'object') throw new Error('invalid backup');
+        if (d.settings) AppState.settings = { ...AppState.settings, ...d.settings };
+        if (Array.isArray(d.productsDB)) AppState.productsDB = d.productsDB;
+        if (Array.isArray(d.invoices)) AppState.invoices = d.invoices;
+        if (Array.isArray(d.debts)) AppState.debts = d.debts;
+        if (Array.isArray(d.expenses)) AppState.expenses = d.expenses;
+        if (Array.isArray(d.cashTransactions)) AppState.cashTransactions = d.cashTransactions;
+        if (Number.isFinite(Number(d.waitingCount))) AppState.waitingCount = Math.max(0, Number(d.waitingCount));
+        if (d.rooms && typeof d.rooms === 'object') {
+          Rooms.resetAll();
+          for (let i = 1; i <= AppState.TOTAL_ROOMS; i++) {
+            if (d.rooms[i]) AppState.roomsState[i] = { ...AppState.roomsState[i], ...d.rooms[i], timerHandle: null };
+          }
+        }
+        this._migrateInvoices();
+        Storage.save();
+        Debts.syncFromState();
+        UI.renderAll(); UI.loadSettings(); UI.renderProductsAdmin(); UI.renderInventory('inv-products');
+        UI.renderSales(); UI.renderInvoicesList(); UI.updateDashboardStats(); Finance.renderCashbox(); Finance.renderExpenses();
+        Helpers.showToast('✅ تم استرجاع النسخة الاحتياطية كاملة', 'success');
+        UI.closeModal('modalSettings');
+      } catch (err) {
+        console.error(err); Helpers.showToast('❌ ملف النسخة الاحتياطية غير صالح', 'error');
+      } finally { document.getElementById('restoreInput').value = ''; }
+    };
+    reader.readAsText(file);
+  }
+};
+// ---------------------------------------------------------------
+// ROOM MANAGER
+// ---------------------------------------------------------------
+const Rooms = {
+  // init(force=false): with no argument it only fills in rooms that don't exist yet
+  // (safe to call after loading saved state). With force=true it unconditionally
+  // rebuilds every room to its default state and clears any running timers first —
+  // this is what a real "reset all" needs, otherwise rooms that are mid-shower keep
+  // their old timer running forever in the background after a reset.
+  init(force = false) {
+    for (let i = 1; i <= AppState.TOTAL_ROOMS; i++) {
+      if (force || !AppState.roomsState[i]) {
+        const existing = AppState.roomsState[i];
+        if (existing && existing.timerHandle) clearInterval(existing.timerHandle);
+        AppState.roomsState[i] = {
+          id: i,
+          status: AppState.MAINTENANCE_ROOMS.includes(i) ? 'maintenance' : 'ready',
+          startTime: null, entryTime: null, elapsedSeconds: 0, timerHandle: null, products: [], alarmSilenced: false, maintenanceReason: ''
+        };
+      }
+    }
+  },
+  resetAll() { this.init(true); },
+  startShower(roomId) {
+    const room = AppState.roomsState[roomId];
+    if (room.status !== 'ready') return;
+    room.status = 'busy';
+    room.startTime = Date.now();
+    room.entryTime = Date.now();
+    room.elapsedSeconds = 0;
+    room.products = [];
+    room.alarmSilenced = false;
+    this._runTimer(roomId);
+    UI.refreshRoomCard(roomId);
+    Storage.save();
+    Helpers.showToast('🚿 بدأ الدوش — غرفة ' + String(roomId).padStart(2, '0'), 'success');
+    Helpers.playSound('beep');
+  },
+  // Move a running customer (timer + entry time + products) from one room to another
+  // vacant room, without touching their bill.
+  moveCustomer(fromId, toId) {
+    const from = AppState.roomsState[fromId];
+    const to = AppState.roomsState[toId];
+    if (!from || !to || to.status !== 'ready') { Helpers.showToast('❌ الغرفة الوجهة غير شاغرة', 'error'); return false; }
+    if (from.timerHandle) { clearInterval(from.timerHandle); from.timerHandle = null; }
+    to.status = from.status;
+    to.startTime = from.startTime;
+    to.entryTime = from.entryTime;
+    to.elapsedSeconds = from.elapsedSeconds;
+    to.products = from.products;
+    to.alarmSilenced = from.alarmSilenced;
+    from.status = 'ready'; from.startTime = null; from.entryTime = null; from.elapsedSeconds = 0; from.products = []; from.alarmSilenced = false;
+    if (to.status === 'busy') this._runTimer(toId);
+    UI.refreshRoomCard(fromId);
+    UI.refreshRoomCard(toId);
+    UI.updateHomeStats();
+    Storage.save();
+    Helpers.showToast('🔀 تم نقل الزبون إلى غرفة ' + String(toId).padStart(2, '0'), 'success');
+    return true;
+  },
+  // Silence the over-limit alarm for a room; it re-arms automatically next time a shower starts.
+  muteAlarm(roomId) {
+    const room = AppState.roomsState[roomId];
+    if (!room) return;
+    room.alarmSilenced = true;
+    Storage.save();
+    UI.updateRoomModal();
+    Helpers.showToast('🔇 تم إيقاف الإنذار لهذه الغرفة', 'warning');
+  },
+  _runTimer(roomId) {
+    const room = AppState.roomsState[roomId];
+    if (room.timerHandle) clearInterval(room.timerHandle);
+    room.timerHandle = setInterval(() => {
+      room.elapsedSeconds = Math.floor((Date.now() - room.startTime) / 1000);
+      UI.updateRoomTimerUI(roomId);
+      if (AppState.currentRoomId === roomId) UI.updateRoomModal();
+      if (room.elapsedSeconds > AppState.settings.limitHigh * 60 && room.elapsedSeconds % 60 === 0 && !room.alarmSilenced) {
+        Helpers.requestNotification(); Helpers.playSound('alert');
+      }
+    }, 1000);
+  },
+  togglePause(roomId) {
+    const room = AppState.roomsState[roomId];
+    if (!room) return;
+    if (room.status === 'busy') {
+      clearInterval(room.timerHandle); room.timerHandle = null;
+      room.status = 'paused';
+      Helpers.showToast('⏸ تم إيقاف المؤقت مؤقتاً', 'warning');
+    } else if (room.status === 'paused') {
+      room.startTime = Date.now() - room.elapsedSeconds * 1000;
+      room.status = 'busy';
+      this._runTimer(roomId);
+      Helpers.showToast('▶ تمت متابعة المؤقت', 'success');
+    }
+    UI.refreshRoomCard(roomId);
+    UI.updateRoomModal();
+    Storage.save();
+  },
+  adjustTime(roomId, deltaSec) {
+    const room = AppState.roomsState[roomId];
+    if (!room || (room.status !== 'busy' && room.status !== 'paused')) return;
+    room.elapsedSeconds = Math.max(0, room.elapsedSeconds + deltaSec);
+    if (room.status === 'busy') room.startTime = Date.now() - room.elapsedSeconds * 1000;
+    UI.updateRoomTimerUI(roomId);
+    UI.updateRoomModal();
+    Storage.save();
+    Helpers.showToast((deltaSec > 0 ? '+' : '') + (deltaSec / 60) + ' دقائق', 'success');
+  },
+  cancelShower(roomId) {
+    const room = AppState.roomsState[roomId];
+    if (!room || (room.status !== 'busy' && room.status !== 'paused')) return;
+    if (room.timerHandle) clearInterval(room.timerHandle);
+    room.timerHandle = null;
+
+    // Any products added during an accidental session are returned to stock.
+    (room.products || []).forEach(item => {
+      const product = AppState.productsDB.find(p => p.id === item.productId);
+      if (product) product.qty = Number(product.qty || 0) + Number(item.qty || 1);
+    });
+
+    room.status = 'ready';
+    room.startTime = null;
+    room.entryTime = null;
+    room.elapsedSeconds = 0;
+    room.products = [];
+    room.alarmSilenced = false;
+
+    UI.refreshRoomCard(roomId);
+    UI.updateHomeStats();
+    UI.updateLowStockBadge();
+    Storage.save();
+    if (AppState.currentRoomId === roomId) UI.closeModal('modalRoom');
+    Helpers.showToast('↩ تم إلغاء الدوش — لم تُنشأ فاتورة ولم تُسجّل مداخيل', 'warning');
+  },
+  endShower(roomId) {
+    const room = AppState.roomsState[roomId];
+    if (room.status !== 'busy' && room.status !== 'paused') return;
+    if (room.timerHandle) clearInterval(room.timerHandle);
+    room.timerHandle = null;
+    const finalSec = room.elapsedSeconds;
+    const entry = room.entryTime, exit = Date.now();
+    const showerPrice = Helpers.getShowerPrice(finalSec);
+    room.products.forEach(item => { if (item.cost == null) { const dbp = AppState.productsDB.find(p => p.id === item.productId); item.cost = Number(dbp?.cost || 0); } });
+    const productsSum = room.products.reduce((a, p) => a + p.price * (p.qty || 1), 0);
+    const total = showerPrice + productsSum;
+    const invoice = {
+      id: 'inv_' + Date.now(),
+      number: Helpers.nextInvoiceNumber(),
+      roomId, entryTime: entry, exitTime: exit, durationSec: finalSec,
+      showerPrice, products: JSON.parse(JSON.stringify(room.products)), productsSum, total,
+      paymentStatus: 'pending', paidAmount: 0, paidAt: null, customerName: '',
+      date: new Date().toISOString()
+    };
+    AppState.invoices.push(invoice);
+    room.status = 'ready'; room.startTime = null; room.entryTime = null; room.elapsedSeconds = 0; room.products = []; room.alarmSilenced = false;
+    UI.refreshRoomCard(roomId);
+    UI.updateHomeStats();
+    Storage.save();
+    if (AppState.currentRoomId === roomId) UI.closeModal('modalRoom');
+    Helpers.playSound('beep');
+    UI.showInvoiceModal(invoice);
+    Helpers.showToast('✅ تم إنهاء الدوش — غرفة ' + String(roomId).padStart(2, '0'), 'success');
+  },
+  addProductToRoom(roomId, product) {
+    if (product.qty <= 0) { Helpers.showToast('❌ المخزون غير كافٍ', 'error'); return false; }
+    const room = AppState.roomsState[roomId];
+    const existing = room.products.find(p => p.productId === product.id);
+    if (existing) existing.qty = (existing.qty || 1) + 1;
+    else room.products.push({ productId: product.id, name: product.name, cost: Number(product.cost || 0), price: product.price, image: product.image || '', qty: 1 });
+    product.qty--;
+    Storage.save();
+    UI.updateRoomModal();
+    UI.updateLowStockBadge();
+    Helpers.showToast('➕ تمت إضافة ' + product.name, 'success');
+    if (product.qty === 0) {
+      Helpers.showToast('🚨 نفدت السلعة: ' + product.name + ' — الكمية أصبحت 0', 'error');
+      if (navigator.vibrate) navigator.vibrate([180,100,180]);
+    } else if (product.qty <= product.minQty) {
+      Helpers.showToast('⚠️ وصل ' + product.name + ' إلى المستوى الأدنى (' + product.qty + ' / ' + product.minQty + ')', 'warning');
+    }
+    return true;
+  },
+  removeProductFromRoom(roomId, itemIndex) {
+    const room = AppState.roomsState[roomId];
+    if (!room || !Array.isArray(room.products)) return false;
+    const item = room.products[itemIndex];
+    if (!item) return false;
+
+    if (item.isCustomCharge) {
+      const removedName = item.name || 'مبلغ يدوي';
+      room.products.splice(itemIndex, 1);
+      Storage.save();
+      UI.updateRoomModal();
+      Helpers.showToast('🗑️ تم حذف: ' + removedName, 'success');
+      if (navigator.vibrate) navigator.vibrate(35);
+      return true;
+    }
+
+    const dbProduct = AppState.productsDB.find(p => p.id === item.productId);
+    if (dbProduct) dbProduct.qty = Number(dbProduct.qty || 0) + 1;
+
+    const currentQty = Number(item.qty || 1);
+    const removedName = item.name || 'المنتج';
+    if (currentQty > 1) item.qty = currentQty - 1;
+    else room.products.splice(itemIndex, 1);
+
+    Storage.save();
+    UI.updateRoomModal();
+    UI.updateLowStockBadge();
+    Helpers.showToast('➖ تم إرجاع قطعة من ' + removedName + ' إلى المخزون', 'success');
+    if (navigator.vibrate) navigator.vibrate(35);
+    return true;
+  },
+  toggleMaintenance(roomId, reason = '') {
+    const room = AppState.roomsState[roomId];
+    if (room.status === 'maintenance') {
+      room.status = 'ready'; room.maintenanceReason = '';
+      Helpers.showToast('✅ عادت الغرفة ' + String(roomId).padStart(2, '0') + ' للخدمة', 'success');
+    } else if (room.status === 'ready') {
+      room.status = 'maintenance'; room.maintenanceReason = reason || 'صيانة عامة';
+      Helpers.showToast('🔧 وُضعت الغرفة ' + String(roomId).padStart(2, '0') + ' في الصيانة', 'warning');
+    } else { Helpers.showToast('❌ لا يمكن وضع غرفة مشغولة في الصيانة', 'error'); return; }
+    UI.refreshRoomCard(roomId); UI.updateHomeStats(); Storage.save();
+  },
+  ensureTimers() {
+    for (let i = 1; i <= AppState.TOTAL_ROOMS; i++) {
+      const r = AppState.roomsState[i];
+      if (r.status === 'busy' && !r.timerHandle) { r.startTime = Date.now() - r.elapsedSeconds * 1000; this._runTimer(i); }
+    }
+  }
+};
+
+// ---------------------------------------------------------------
+// UI MANAGER
+// ---------------------------------------------------------------
+const UI = {
+  // ---------- RENDER HOME ----------
+  renderAll() {
+    this.renderRooms();
+    this.updateHomeStats();
+    this.updateLowStockBadge();
+    this.renderQueue();
+    Rooms.ensureTimers();
+  },
+  renderQueue() {
+    const el = document.getElementById('queueValue');
+    if (el) el.textContent = AppState.waitingCount || 0;
+  },
+  updateHomeStats() {
+    const rooms = Object.values(AppState.roomsState);
+    const vacant = rooms.filter(r => r.status === 'ready').length;
+    const busy = rooms.filter(r => r.status === 'busy' || r.status === 'paused').length;
+    const todayRevenue = Finance.getTodayCashIn();
+    document.getElementById('statVacant').textContent = vacant;
+    document.getElementById('statBusy').textContent = busy;
+    document.getElementById('statRevenue').textContent = todayRevenue.toFixed(0);
+  },
+  renderRooms() {
+    const grid = document.getElementById('roomsGrid');
+    grid.innerHTML = '';
+    for (let i = 1; i <= AppState.TOTAL_ROOMS; i++) {
+      grid.appendChild(this._buildRoomCard(i));
+    }
+  },
+  _buildRoomCard(roomId) {
+    const room = AppState.roomsState[roomId];
+    const wrapper = document.createElement('div');
+    wrapper.className = 'room-card';
+    wrapper.setAttribute('data-room-id', roomId);
+
+    if (room.status === 'maintenance') {
+      wrapper.classList.add('maintenance');
+      wrapper.innerHTML = `
+        <span style="font-size:1.8rem;">🔧</span>
+        <span class="room-label-empty">غرفة ${String(roomId).padStart(2,'0')}</span>
+        <span class="room-sub-empty">قيد الصيانة</span>
+        <span class="room-sub-empty" style="color:var(--amber);max-width:95%;text-align:center;">${room.maintenanceReason || 'صيانة عامة'}</span>`;
+      return wrapper;
+    }
+
+    if (room.status === 'ready') {
+      wrapper.classList.add('ready');
+      wrapper.innerHTML = `
+        <span class="room-label-empty">غرفة ${String(roomId).padStart(2,'0')}</span>
+        <button class="start-btn" data-start="${roomId}">▶</button>
+        <span class="room-sub-empty">شاغرة</span>`;
+      wrapper.querySelector('.start-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        Helpers.createRipple(e, wrapper);
+        Rooms.startShower(roomId);
+      });
+      return wrapper;
+    }
+
+    // busy or paused
+    const tier = Helpers.getTier(room.elapsedSeconds);
+    wrapper.classList.add('busy', 'tier-' + tier);
+    if (room.status === 'paused') wrapper.classList.add('paused');
+    const frac = Helpers.getProgressFraction(room.elapsedSeconds);
+    const color = room.status === 'paused' ? '#8ba0ad' : Helpers.getTierColor(tier);
+    wrapper.innerHTML = `
+      <div class="room-ring-wrap">
+        <svg viewBox="0 0 100 100">
+          <circle class="ring-track" cx="50" cy="50" r="44"/>
+          <circle class="ring-fill" cx="50" cy="50" r="44" stroke="${color}"
+            stroke-dasharray="${AppState.CIRC_BIG}" stroke-dashoffset="${AppState.CIRC_BIG * (1 - frac)}"/>
+        </svg>
+        <div class="room-ring-center">
+          <span class="room-emoji-tiny">🚿</span>
+          <span class="room-num" style="font-size:0.78rem;">${String(roomId).padStart(2,'0')}</span>
+        </div>
+      </div>
+      <div class="room-meta">
+        <div class="room-timer">${Helpers.formatTime(room.elapsedSeconds)}</div>
+        <div class="room-price-tag">${Helpers.getShowerPrice(room.elapsedSeconds)} دج${room.status==='paused'?' · متوقف':''}</div>
+      </div>`;
+    wrapper.addEventListener('click', (e) => { Helpers.createRipple(e, wrapper); UI.openRoomModal(roomId); });
+    return wrapper;
+  },
+  refreshRoomCard(roomId) {
+    const grid = document.getElementById('roomsGrid');
+    const old = grid.querySelector(`.room-card[data-room-id="${roomId}"]`);
+    const fresh = this._buildRoomCard(roomId);
+    if (old) grid.replaceChild(fresh, old); else grid.appendChild(fresh);
+  },
+  updateRoomTimerUI(roomId) {
+    const room = AppState.roomsState[roomId];
+    const wrapper = document.querySelector(`.room-card[data-room-id="${roomId}"]`);
+    if (!wrapper) return;
+    const timer = wrapper.querySelector('.room-timer');
+    const priceTag = wrapper.querySelector('.room-price-tag');
+    const ring = wrapper.querySelector('.ring-fill');
+    if (timer) timer.textContent = Helpers.formatTime(room.elapsedSeconds);
+    if (priceTag) priceTag.textContent = Helpers.getShowerPrice(room.elapsedSeconds) + ' دج';
+    if (ring) {
+      const tier = Helpers.getTier(room.elapsedSeconds);
+      const frac = Helpers.getProgressFraction(room.elapsedSeconds);
+      ring.setAttribute('stroke-dashoffset', AppState.CIRC_BIG * (1 - frac));
+      ring.setAttribute('stroke', Helpers.getTierColor(tier));
+      wrapper.classList.remove('tier-low', 'tier-mid', 'tier-high');
+      wrapper.classList.add('tier-' + tier);
+    }
+    this.updateHomeStats();
+  },
+
+  // ---------- ROOM MODAL ----------
+  openRoomModal(roomId) {
+    AppState.currentRoomId = roomId;
+    document.getElementById('modalRoomTitle').textContent = '🚿 غرفة ' + String(roomId).padStart(2, '0');
+    this.updateRoomModal();
+    this.openModal('modalRoom');
+  },
+  updateRoomModal() {
+    const roomId = AppState.currentRoomId;
+    if (!roomId) return;
+    const room = AppState.roomsState[roomId];
+    if (!room || (room.status !== 'busy' && room.status !== 'paused')) return;
+
+    const sec = room.elapsedSeconds;
+    const sp = Helpers.getShowerPrice(sec);
+    document.getElementById('showerPriceDisplay').textContent = sp + ' دج';
+
+    let psum = 0;
+    const list = document.getElementById('productsListMini');
+    list.innerHTML = '';
+    room.products.forEach((p, index) => {
+      const div = document.createElement('div');
+      div.className = 'mini-product-row' + (p.isCustomCharge ? ' manual-charge-row' : '');
+      div.innerHTML = `
+        ${p.image ? `<img src="${Helpers.escapeHtml(p.image)}">` : `<div class="ph">${p.isCustomCharge ? '💵' : '📦'}</div>`}
+        <span class="pname">${Helpers.escapeHtml(p.name)}${p.isCustomCharge ? '' : ' × ' + (p.qty || 1)}</span>
+        <span class="pprice">${(p.price * (p.qty || 1)).toFixed(0)} دج</span>
+        <button class="room-item-remove" type="button"
+          aria-label="${p.isCustomCharge ? 'حذف المبلغ' : 'إنقاص المنتج'}"
+          title="${p.isCustomCharge ? 'حذف المبلغ' : 'إنقاص قطعة وإرجاعها للمخزون'}"
+          onclick="Rooms.removeProductFromRoom(${roomId}, ${index})">${p.isCustomCharge ? '🗑️' : '−'}</button>`;
+      list.appendChild(div);
+      psum += p.price * (p.qty || 1);
+    });
+    if (!room.products.length) list.innerHTML = '<div class="empty-note">لا توجد منتجات أو إضافات مضافة</div>';
+    document.getElementById('productsTotal').textContent = psum.toFixed(0) + ' دج';
+    document.getElementById('grandTotal').textContent = (sp + psum).toFixed(0) + ' دج';
+
+    const tier = Helpers.getTier(sec);
+    const ring = document.getElementById('bigRing');
+    const frac = Helpers.getProgressFraction(sec);
+    const color = room.status === 'paused' ? '#8ba0ad' : Helpers.getTierColor(tier);
+    ring.setAttribute('stroke-dashoffset', AppState.CIRC_BIG * (1 - frac));
+    ring.setAttribute('stroke', color);
+    document.getElementById('bigTimerText').textContent = Helpers.formatTime(sec);
+    const tierBadge = document.getElementById('bigTimerTier');
+    tierBadge.className = 'big-timer-tier ' + (room.status === 'paused' ? 'tier-badge-paused' : 'tier-badge-' + tier);
+    tierBadge.textContent = room.status === 'paused' ? '⏸ متوقف مؤقتاً' : Helpers.getTierLabel(tier);
+
+    const pauseBtn = document.getElementById('pauseResumeBtn');
+    pauseBtn.textContent = room.status === 'paused' ? '▶ متابعة' : '⏸ إيقاف مؤقت';
+
+    const alarmRow = document.getElementById('alarmMuteRow');
+    if (alarmRow) alarmRow.style.display = (tier === 'high' && room.status === 'busy' && !room.alarmSilenced) ? 'grid' : 'none';
+  },
+
+  // ---------- MOVE CUSTOMER ----------
+  openMoveRoomModal(fromId) {
+    const grid = document.getElementById('moveRoomGrid');
+    grid.innerHTML = '';
+    const readyRooms = [];
+    for (let i = 1; i <= AppState.TOTAL_ROOMS; i++) {
+      if (i !== fromId && AppState.roomsState[i].status === 'ready') readyRooms.push(i);
+    }
+    if (!readyRooms.length) {
+      grid.innerHTML = '<div class="empty-note" style="grid-column:1/-1;">لا توجد غرف شاغرة حالياً</div>';
+    } else {
+      readyRooms.forEach(id => {
+        const card = document.createElement('div');
+        card.className = 'pcard';
+        card.style.cursor = 'pointer';
+        card.style.alignItems = 'center';
+        card.style.textAlign = 'center';
+        card.innerHTML = `<span style="font-size:1.4rem;">🚪</span><span class="pname">غرفة ${String(id).padStart(2,'0')}</span>`;
+        card.addEventListener('click', () => {
+          if (Rooms.moveCustomer(fromId, id)) {
+            UI.closeModal('modalMoveRoom');
+            UI.closeModal('modalRoom');
+          }
+        });
+        grid.appendChild(card);
+      });
+    }
+    this.openModal('modalMoveRoom');
+  },
+
+  // ---------- CONFIRM DIALOG ----------
+  showConfirm(icon, title, text, onConfirm) {
+    document.getElementById('confirmIcon').textContent = icon;
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmText').textContent = text;
+    const btn = document.getElementById('confirmActionBtn');
+    const newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+    newBtn.addEventListener('click', () => { UI.closeModal('modalConfirm'); onConfirm(); });
+    this.openModal('modalConfirm');
+  },
+  confirmCancelShower(roomId) {
+    this.showConfirm('↩', 'إلغاء الدوش بالخطأ', 'هل بدأت هذه الغرفة بالخطأ؟ سيتم إيقاف العداد وإرجاع الغرفة شاغرة بدون فاتورة أو مداخيل، وأي منتجات أُضيفت ستعود للمخزون.',
+      () => Rooms.cancelShower(roomId));
+  },
+  confirmEndShower(roomId) {
+    this.showConfirm('⏹', 'إنهاء الدوش', 'هل تريد إنهاء الدوش وإصدار الفاتورة لغرفة ' + String(roomId).padStart(2, '0') + '؟',
+      () => Rooms.endShower(roomId));
+  },
+  confirmResetAll() {
+    this.showConfirm('🗑', 'إعادة ضبط الكل', 'سيتم حذف جميع البيانات (الإعدادات، المنتجات، الفواتير، الديون، المصاريف، الصندوق وحالة الغرف) نهائياً ولا يمكن التراجع عن هذا الإجراء. هل أنت متأكد؟', () => {
+      try {
+        // 1) wipe persisted storage completely (current + legacy key)
+        localStorage.removeItem('hafid_pro_v2');
+        localStorage.removeItem('hafid_pro');
+        localStorage.removeItem('hafid_douche_debts_v1');
+
+        // 2) restore default settings
+        AppState.settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+
+        // 3) restore default products
+        AppState.productsDB = getDefaultProducts();
+
+        // 4) wipe invoices / debts / expenses / cash movements
+        AppState.invoices = [];
+        AppState.debts = []; AppState.expenses = []; AppState.cashTransactions = [];
+        Debts.syncFromState();
+
+        // 5) force every room back to its original state, clearing any running timers
+        Rooms.resetAll();
+
+        // 6) clear any transient UI/session state so nothing stale lingers
+        AppState.currentRoomId = null;
+        AppState.currentInvoice = null;
+        AppState.editingProductId = null;
+        AppState.selectorRoomId = null;
+        AppState.activeCategory = 'الكل';
+        AppState.waitingCount = 0;
+        if (AppState.chartInstance) { AppState.chartInstance.destroy(); AppState.chartInstance = null; }
+
+        // 7) persist the fresh state
+        Storage.save();
+
+        // 8) refresh every screen immediately — no reload needed
+        this.renderAll();
+        this.loadSettings();
+        this.renderProductsAdmin();
+        this.renderInventory('inv-products');
+        this.renderSales();
+        this.renderInvoicesList();
+        this.updateDashboardStats();
+        Debts.render(); Finance.renderCashbox(); Finance.renderExpenses();
+
+        // 9) close any modal that might reference now-deleted data
+        ['modalRoom', 'modalInvoice', 'modalProductSelector'].forEach(id => this.closeModal(id));
+        this.closeModal('modalSettings');
+
+        Helpers.showToast('✅ تم إعادة ضبط جميع البيانات بنجاح', 'success');
+      } catch (err) {
+        console.error('Reset All failed:', err);
+        Helpers.showToast('❌ حدث خطأ أثناء إعادة الضبط', 'error');
+      }
+    });
+  },
+
+  // ---------- INVOICE ----------
+  buildInvoiceQrPayload(invoice) {
+    const inv = invoice || {};
+    const clean = (v, max = 60) =>
+      String(v ?? '').replace(/[\r\n|]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
+
+    const pad2 = n => String(n).padStart(2, '0');
+    const d = new Date(inv.date || inv.exitTime || Date.now());
+    const dateText = `${pad2(d.getDate())}/${pad2(d.getMonth() + 1)}/${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+    const statusText = inv.paymentStatus === 'paid' ? 'مدفوعة' : inv.paymentStatus === 'debt' ? 'دين' : 'في انتظار الدفع';
+
+    const lines = [
+      'HAFID DOUCHE',
+      `الفاتورة: ${clean(inv.number || inv.id || '—', 40)}`,
+    ];
+
+    // الاسم يبقى محفوظاً في البيانات ولا يظهر مطبوعاً على الفاتورة.
+    // يظهر فقط عند قراءة QR إذا كان موجوداً.
+    const customer = clean(inv.customerName || '', 70);
+    if (customer) lines.push(`الزبون: ${customer}`);
+
+    lines.push(
+      `الغرفة: ${String(inv.roomId ?? '').padStart(2, '0')}`,
+      `التاريخ: ${dateText}`,
+      `المدة: ${Helpers.formatTime(Number(inv.durationSec || 0))}`,
+      `الدوش: ${Number(inv.showerPrice || 0).toFixed(0)} دج`
+    );
+
+    const products = Array.isArray(inv.products) ? inv.products : [];
+    products.slice(0, 10).forEach((p, i) => {
+      const qty = Number(p.qty || 1);
+      const amount = Number(p.price || 0) * qty;
+      const name = clean(p.name || (p.isCustomCharge ? 'إضافة' : 'منتج'), 34);
+      lines.push(
+        p.isCustomCharge
+          ? `إضافة: ${name} = ${amount.toFixed(0)} دج`
+          : `${i + 1}. ${name} ×${qty} = ${amount.toFixed(0)} دج`
+      );
+    });
+    if (products.length > 10) lines.push(`+ ${products.length - 10} عناصر أخرى`);
+
+    // خصائص اختيارية مستقبلية إن وُجدت في بيانات الفاتورة.
+    const optionalPairs = [
+      ['الهاتف', inv.customerPhone],
+      ['ملاحظة', inv.note || inv.notes],
+      ['خصائص', typeof inv.properties === 'string' ? inv.properties : '']
+    ];
+    optionalPairs.forEach(([label, value]) => {
+      const v = clean(value || '', 80);
+      if (v) lines.push(`${label}: ${v}`);
+    });
+
+    lines.push(
+      `الإجمالي: ${Number(inv.total || 0).toFixed(0)} دج`,
+      `الدفع: ${statusText}`
+    );
+
+    // Keep QR payload compact enough for reliable scanning.
+    return lines.join('\n').slice(0, 1200);
+  },
+
+  showInvoiceModal(invoice) {
+    document.getElementById('invNum').textContent = '#' + (invoice.number || invoice.id);
+    document.getElementById('invRoomNum').textContent = String(invoice.roomId).padStart(2, '0');
+    document.getElementById('invEntryTime').textContent = Helpers.formatDateTime(invoice.entryTime);
+    document.getElementById('invExitTime').textContent = Helpers.formatDateTime(invoice.exitTime);
+    document.getElementById('invDuration').textContent = Helpers.formatTime(invoice.durationSec);
+    document.getElementById('invShowerPrice').textContent = invoice.showerPrice.toFixed(0) + ' دج';
+    const items = document.getElementById('invoiceItems');
+    items.innerHTML = '';
+    if (invoice.products && invoice.products.length) {
+      invoice.products.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'row';
+        div.innerHTML = `<span>${p.isCustomCharge ? '💵 ' : ''}${Helpers.escapeHtml(p.name)}${p.isCustomCharge ? '' : ' × ' + (p.qty || 1)}</span><span>${(p.price * (p.qty || 1)).toFixed(0)} دج</span>`;
+        items.appendChild(div);
+      });
+    }
+    document.getElementById('invProductsTotal').textContent = (invoice.productsSum || 0).toFixed(0) + ' دج';
+    document.getElementById('invGrandTotal').textContent = (invoice.total || 0).toFixed(0) + ' دج';
+    const statusEl = document.getElementById('invPaymentStatus');
+    const statusMap = { pending: '⏳ في انتظار الدفع', paid: '✅ مدفوعة', debt: '💳 دين' };
+    statusEl.textContent = statusMap[invoice.paymentStatus || 'pending'] || '⏳ في انتظار الدفع';
+    statusEl.style.color = invoice.paymentStatus === 'paid' ? 'var(--aqua)' : invoice.paymentStatus === 'debt' ? 'var(--amber)' : '#555';
+    const actions = document.getElementById('invoicePaymentActions');
+    if (actions) actions.style.display = invoice.paymentStatus === 'pending' || !invoice.paymentStatus ? 'grid' : 'none';
+    const paidBtn = document.getElementById('invoicePaidBtn');
+    const debtBtn = document.getElementById('invoiceDebtBtn');
+    if (paidBtn) paidBtn.style.display = invoice.paymentStatus === 'debt' ? 'none' : 'flex';
+    if (debtBtn) debtBtn.style.display = invoice.paymentStatus === 'debt' ? 'none' : 'flex';
+    AppState.currentInvoice = invoice;
+
+    const qrWrap = document.getElementById('invQrWrap');
+    qrWrap.innerHTML = '';
+    try {
+      const qrText = this.buildInvoiceQrPayload(invoice);
+      if (window.QRCode) new QRCode(qrWrap, {
+        text: qrText,
+        width: 110,
+        height: 110,
+        colorDark: '#111',
+        colorLight: '#fff',
+        correctLevel: window.QRCode?.CorrectLevel?.M
+      });
+    } catch (e) { console.warn('Invoice QR failed:', e); }
+
+    this.openModal('modalInvoice');
+  },
+  printInvoice() {
+    const inv = AppState.currentInvoice;
+    if (!inv) return;
+    try {
+      const { jsPDF } = window.jspdf || {};
+      if (!jsPDF) throw new Error('jsPDF غير متاح');
+
+      // نرسم الفاتورة أولاً على Canvas حتى تظهر العربية بشكل صحيح داخل PDF
+      // بدون الحاجة إلى تضمين خط عربي داخل jsPDF.
+      const products = Array.isArray(inv.products) ? inv.products : [];
+      const scale = 10; // 10px ~= 1mm => عرض 58mm = 580px
+      const cw = 58 * scale;
+      const margin = 38;
+      const rowH = 48;
+      const productRowsH = products.length ? (products.length * 48 + 36) : 0;
+      const qrBlockH = window.QRCode ? 245 : 0;
+      const ch = 760 + productRowsH + qrBlockH;
+      const canvas = document.createElement('canvas');
+      canvas.width = cw;
+      canvas.height = ch;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Canvas غير متاح');
+
+      // خلفية بيضاء صافية للطابعات الحرارية
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, cw, ch);
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#111111';
+
+      const setArabic = (size, weight = 500) => {
+        ctx.direction = 'rtl';
+        ctx.font = `${weight} ${size}px Cairo, Tajawal, Arial, sans-serif`;
+      };
+      const setLatin = (size, weight = 500) => {
+        ctx.direction = 'ltr';
+        ctx.font = `${weight} ${size}px Arial, Helvetica, sans-serif`;
+      };
+      const center = (text, y) => {
+        ctx.textAlign = 'center';
+        ctx.fillText(String(text ?? ''), cw / 2, y);
+      };
+      const line = (y, dashed = false) => {
+        ctx.save();
+        ctx.strokeStyle = '#222';
+        ctx.lineWidth = 2;
+        if (dashed) ctx.setLineDash([8, 7]);
+        ctx.beginPath();
+        ctx.moveTo(margin, y);
+        ctx.lineTo(cw - margin, y);
+        ctx.stroke();
+        ctx.restore();
+      };
+      const row = (label, value, y, boldValue = false) => {
+        setArabic(24, 600);
+        ctx.textAlign = 'right';
+        ctx.fillText(String(label), cw - margin, y);
+        setArabic(24, boldValue ? 800 : 600);
+        ctx.textAlign = 'left';
+        ctx.fillText(String(value), margin, y);
+      };
+      const safeText = (v) => String(v ?? '').replace(/[\r\n]+/g, ' ').trim();
+      const fitText = (text, maxWidth) => {
+        let t = safeText(text);
+        if (ctx.measureText(t).width <= maxWidth) return t;
+        while (t.length > 1 && ctx.measureText(t + '…').width > maxWidth) t = t.slice(0, -1);
+        return t + '…';
+      };
+      const pad2 = n => String(n).padStart(2, '0');
+      const d = new Date(inv.date || Date.now());
+      const dateText = `${pad2(d.getDate())}/${pad2(d.getMonth()+1)}/${d.getFullYear()}`;
+      const timeText = `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+      const invoiceNo = safeText(inv.number || inv.id || '');
+      const paymentText = inv.paymentStatus === 'paid' ? 'مدفوعة' : inv.paymentStatus === 'debt' ? 'دين' : 'في انتظار الدفع';
+
+      let y = 58;
+      setLatin(38, 800);
+      center(AppState.settings.shopName || 'HAFID DOUCHE', y);
+      y += 50;
+
+      setArabic(25, 700);
+      center('فاتورة', y);
+      y += 35;
+      setLatin(21, 600);
+      center(invoiceNo, y);
+      y += 34;
+      setLatin(20, 500);
+      center(`${dateText}  -  ${timeText}`, y);
+      y += 34;
+      line(y, true);
+      y += 35;
+
+      row('الغرفة', String(inv.roomId).padStart(2, '0'), y, true); y += rowH;
+      row('المدة', Helpers.formatTime(inv.durationSec), y, true); y += rowH;
+      row('الدوش', `${Number(inv.showerPrice || 0).toFixed(0)} دج`, y, true); y += rowH;
+
+      if (products.length) {
+        line(y - 8, true); y += 20;
+        setArabic(24, 800);
+        ctx.textAlign = 'right';
+        ctx.fillText('المنتجات', cw - margin, y);
+        y += 42;
+        products.forEach(p => {
+          const qty = Number(p.qty || 1);
+          const amount = Number(p.price || 0) * qty;
+          setArabic(22, 600);
+          ctx.textAlign = 'right';
+          const nameMax = cw - (margin * 2) - 145;
+          ctx.fillText(fitText(`${p.isCustomCharge ? 'إضافة: ' : ''}${safeText(p.name)}${p.isCustomCharge ? '' : ' × ' + qty}`, nameMax), cw - margin, y);
+          setArabic(22, 700);
+          ctx.textAlign = 'left';
+          ctx.fillText(`${amount.toFixed(0)} دج`, margin, y);
+          y += 48;
+        });
+      }
+
+      line(y - 6, false); y += 40;
+      setArabic(31, 900);
+      ctx.textAlign = 'center';
+      ctx.fillText(`الإجمالي: ${Number(inv.total || 0).toFixed(0)} دج`, cw / 2, y);
+      y += 52;
+
+      setArabic(23, 700);
+      center(`حالة الدفع: ${paymentText}`, y);
+      y += 42;
+
+      // QR يحتوي البيانات المخفية (ومنها اسم الزبون إن كان محفوظاً)
+      // من دون طباعة الاسم كنص ظاهر على الفاتورة.
+      if (window.QRCode) {
+        try {
+          const qrHost = document.createElement('div');
+          qrHost.style.position = 'fixed';
+          qrHost.style.left = '-9999px';
+          qrHost.style.top = '-9999px';
+          qrHost.style.background = '#fff';
+          document.body.appendChild(qrHost);
+
+          const qrText = this.buildInvoiceQrPayload(inv);
+          new QRCode(qrHost, {
+            text: qrText,
+            width: 180,
+            height: 180,
+            colorDark: '#000',
+            colorLight: '#fff',
+            correctLevel: window.QRCode?.CorrectLevel?.M
+          });
+
+          const qrCanvas = qrHost.querySelector('canvas');
+          const qrImg = qrHost.querySelector('img');
+          const qrSize = 180;
+          const qx = Math.round((cw - qrSize) / 2);
+
+          if (qrCanvas) {
+            ctx.drawImage(qrCanvas, qx, y, qrSize, qrSize);
+          } else if (qrImg && qrImg.complete) {
+            ctx.drawImage(qrImg, qx, y, qrSize, qrSize);
+          }
+          qrHost.remove();
+
+          y += qrSize + 22;
+          setArabic(18, 600);
+          center('امسح QR لعرض بيانات الفاتورة', y);
+          y += 32;
+        } catch (qrErr) {
+          console.warn('PDF QR failed:', qrErr);
+        }
+      }
+
+      line(y, true); y += 38;
+      setArabic(22, 600);
+      center('شكراً لزيارتكم', y);
+
+      // نقص ارتفاع الصورة إلى المحتوى الحقيقي لتجنب الفراغ الكبير أسفل الفاتورة.
+      const contentBottom = Math.min(ch, y + 45);
+      const cropped = document.createElement('canvas');
+      cropped.width = cw;
+      cropped.height = contentBottom;
+      const cctx = cropped.getContext('2d');
+      cctx.fillStyle = '#fff';
+      cctx.fillRect(0, 0, cw, contentBottom);
+      cctx.drawImage(canvas, 0, 0);
+
+      const pdfH = Math.max(70, contentBottom / scale);
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [58, pdfH], compress: true });
+      const imgData = cropped.toDataURL('image/png');
+      doc.addImage(imgData, 'PNG', 0, 0, 58, pdfH, undefined, 'FAST');
+      doc.save((invoiceNo || 'invoice') + '.pdf');
+      Helpers.showToast('🖨 تم إنشاء الفاتورة PDF بالعربية', 'success');
+    } catch (e) {
+      console.error(e);
+      Helpers.showToast('❌ خطأ في إنشاء الفاتورة', 'error');
+    }
+  },
+
+  // ---------- PRODUCT SELECTOR ----------
+  openProductSelector(roomId) {
+    AppState.selectorRoomId = roomId;
+    AppState.activeCategory = 'الكل';
+    document.getElementById('productSearchInput').value = '';
+    const amountEl = document.getElementById('manualChargeAmount');
+    const detailEl = document.getElementById('manualChargeDetail');
+    if (amountEl) amountEl.value = '';
+    if (detailEl) detailEl.value = '';
+    this.renderCategoryChips();
+    this.renderProductGrid('');
+    this.openModal('modalProductSelector');
+  },
+  addManualChargeToRoom() {
+    const roomId = AppState.selectorRoomId;
+    const room = AppState.roomsState[roomId];
+    const amountEl = document.getElementById('manualChargeAmount');
+    const detailEl = document.getElementById('manualChargeDetail');
+    const amount = Number(String(amountEl?.value || '').replace(',', '.'));
+    const detail = String(detailEl?.value || '').trim();
+    if (!room || (room.status !== 'busy' && room.status !== 'paused')) {
+      Helpers.showToast('❌ لا توجد غرفة نشطة لإضافة المبلغ', 'error');
+      return;
+    }
+    if (!Number.isFinite(amount) || amount <= 0) {
+      Helpers.showToast('⚠️ أدخل مبلغاً صحيحاً أكبر من 0', 'warning');
+      amountEl?.focus();
+      return;
+    }
+    if (!detail) {
+      Helpers.showToast('⚠️ اكتب تفصيل المبلغ', 'warning');
+      detailEl?.focus();
+      return;
+    }
+    room.products.push({
+      productId: 'manual_' + Date.now(), name: detail, cost: 0, price: amount, image: '', qty: 1, isCustomCharge: true
+    });
+    Storage.save();
+    this.updateRoomModal();
+    if (amountEl) amountEl.value = '';
+    if (detailEl) detailEl.value = '';
+    Helpers.showToast('💵 تمت إضافة ' + amount.toFixed(0) + ' دج — ' + detail, 'success');
+    if (navigator.vibrate) navigator.vibrate(50);
+  },
+  renderCategoryChips() {
+    const wrap = document.getElementById('categoryChips');
+    wrap.innerHTML = '';
+    Helpers.getCategories().forEach(cat => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (cat === AppState.activeCategory ? ' active' : '');
+      chip.textContent = cat;
+      chip.addEventListener('click', () => {
+        AppState.activeCategory = cat;
+        this.renderCategoryChips();
+        this.renderProductGrid(document.getElementById('productSearchInput').value);
+      });
+      wrap.appendChild(chip);
+    });
+  },
+  renderProductGrid(filter) {
+    const grid = document.getElementById('productSelectorGrid');
+    const f = (filter || '').trim().toLowerCase();
+    let products = AppState.productsDB.filter(p =>
+      (!f || p.name.toLowerCase().includes(f) || (p.barcode || '').toLowerCase().includes(f)) &&
+      (AppState.activeCategory === 'الكل' || (p.category || 'غير مصنف') === AppState.activeCategory)
+    );
+    grid.innerHTML = '';
+    if (!products.length) { grid.innerHTML = '<div class="empty-note" style="grid-column:1/-1;">لا توجد نتائج</div>'; return; }
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'pcard' + (p.qty <= 0 ? ' oos' : '');
+      card.innerHTML = `
+        ${p.image ? `<img class="pimg" src="${Helpers.escapeHtml(p.image)}">` : `<div class="pimg ph">📦</div>`}
+        <span class="pname">${Helpers.escapeHtml(p.name)}</span>
+        <span class="pdetail">${p.price} دج</span>
+        <button class="add-mini" ${p.qty <= 0 ? 'disabled' : ''}>+</button>`;
+      const btn = card.querySelector('.add-mini');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (Rooms.addProductToRoom(AppState.selectorRoomId, p)) {
+          this.renderProductGrid(document.getElementById('productSearchInput').value);
+          this.updateLowStockBadge();
+        }
+      });
+      grid.appendChild(card);
+    });
+  },
+  filterProducts() { this.renderProductGrid(document.getElementById('productSearchInput').value); },
+
+  // ---------- AUTOMATIC LIVE BARCODE SCANNER ----------
+  // Designed for APK/WebView or HTTPS. The camera stays live and every frame is
+  // decoded automatically; no photo/capture button is required.
+  _barcodeReadLock: false,
+  _barcodeFormats() {
+    const F = window.Html5QrcodeSupportedFormats;
+    if (!F) return null;
+    return [
+      F.EAN_13, F.EAN_8, F.UPC_A, F.UPC_E,
+      F.CODE_128, F.CODE_39, F.CODE_93,
+      F.ITF, F.CODABAR
+    ].filter(v => v !== undefined && v !== null);
+  },
+  _makeBarcodeScanner(readerId) {
+    if (!window.Html5Qrcode) throw new Error('Html5Qrcode unavailable');
+    const formats = this._barcodeFormats();
+    if (formats && formats.length) {
+      return new Html5Qrcode(readerId, { formatsToSupport: formats, verbose: false, experimentalFeatures: { useBarCodeDetectorIfSupported: true } });
+    }
+    return new Html5Qrcode(readerId);
+  },
+  _barcodeConfig() {
+    // A wide scan window is much better for EAN/UPC/Code128 than a square QR box.
+    const w = Math.max(230, Math.min(340, (window.innerWidth || 360) - 80));
+    return {
+      fps: 24,
+      qrbox: { width: w, height: 105 },
+      aspectRatio: 1.777778,
+      disableFlip: true
+    };
+  },
+  _cleanBarcode(value) {
+    return String(value ?? '').trim().replace(/\s+/g, '');
+  },
+  canUseLiveCamera() {
+    // Do not reject file/content schemes in advance: Android APK WebViews can expose
+    // getUserMedia even when a normal browser cannot. We simply try when the API exists.
+    return !!(window.Html5Qrcode && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  },
+  smartBarcodeScan(mode) {
+    const isProduct = mode === 'product';
+    if (!this.canUseLiveCamera()) {
+      Helpers.showToast('⚠️ القراءة التلقائية تحتاج صلاحية الكاميرا داخل APK أو فتح التطبيق عبر HTTPS', 'warning');
+      return;
+    }
+    if (isProduct) this.toggleProductFormScanner();
+    else this.toggleScanner();
+  },
+  _onAutomaticBarcode(mode, decodedText, scanner) {
+    if (this._barcodeReadLock) return;
+    const code = this._cleanBarcode(decodedText);
+    if (!code) return;
+    this._barcodeReadLock = true;
+
+    const isProduct = mode === 'product';
+    if (navigator.vibrate) navigator.vibrate(80);
+    try { Helpers.playSound('beep'); } catch (e) {}
+
+    if (isProduct) {
+      const field = document.getElementById('prodFormBarcode');
+      if (field) {
+        field.value = code;
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      const duplicate = AppState.productsDB.find(p => p.barcode === code && p.id !== AppState.editingProductId);
+      if (duplicate) Helpers.showToast('⚠️ هذا الباركود مسجل للمنتج: ' + duplicate.name, 'warning');
+      else Helpers.showToast('✅ تم التقاط الرقم تلقائياً: ' + code, 'success');
+    } else {
+      const field = document.getElementById('productSearchInput');
+      if (field) field.value = code;
+      AppState.activeCategory = 'الكل';
+      this.renderCategoryChips();
+      this.filterProducts();
+      const product = AppState.productsDB.find(p => String(p.barcode || '') === code);
+      if (product) Helpers.showToast('✅ تم التعرف على: ' + product.name, 'success');
+      else Helpers.showToast('📷 تم قراءة ' + code + ' — المنتج غير مسجل بعد', 'warning');
+    }
+
+    Promise.resolve(scanner && scanner.stop ? scanner.stop() : null)
+      .catch(() => {})
+      .finally(() => {
+        try { if (scanner && scanner.clear) scanner.clear(); } catch (e) {}
+        if (isProduct) {
+          AppState.productFormScannerInstance = null;
+          const c = document.getElementById('prodScannerContainer');
+          const b = document.getElementById('prodScanBtn');
+          if (c) c.style.display = 'none';
+          if (b) b.textContent = '📷 قراءة تلقائية';
+        } else {
+          AppState.scannerInstance = null;
+          const c = document.getElementById('scannerContainer');
+          const b = document.getElementById('toggleScannerBtn');
+          if (c) c.style.display = 'none';
+          if (b) b.textContent = '📷 قراءة تلقائية';
+        }
+        setTimeout(() => { this._barcodeReadLock = false; }, 350);
+      });
+  },
+  _liveBarcodeError(mode, err) {
+    console.warn('Automatic live barcode scanner failed:', err);
+    const isProduct = mode === 'product';
+    if (isProduct) {
+      AppState.productFormScannerInstance = null;
+      const c = document.getElementById('prodScannerContainer');
+      const b = document.getElementById('prodScanBtn');
+      if (c) c.style.display = 'none';
+      if (b) b.textContent = '📷 قراءة تلقائية';
+    } else {
+      AppState.scannerInstance = null;
+      const c = document.getElementById('scannerContainer');
+      const b = document.getElementById('toggleScannerBtn');
+      if (c) c.style.display = 'none';
+      if (b) b.textContent = '📷 قراءة تلقائية';
+    }
+    this._barcodeReadLock = false;
+    Helpers.showToast('❌ تعذر تشغيل الكاميرا الحية. داخل APK وافق على إذن الكاميرا.', 'error');
+  },
+  toggleScanner() {
+    const container = document.getElementById('scannerContainer');
+    const btn = document.getElementById('toggleScannerBtn');
+    if (container.style.display === 'none') {
+      container.style.display = 'block';
+      btn.textContent = '⏹ إيقاف الكاميرا';
+      this.startScanner();
+    } else {
+      container.style.display = 'none';
+      btn.textContent = '📷 قراءة تلقائية';
+      this._barcodeReadLock = false;
+      if (AppState.scannerInstance) {
+        const sc = AppState.scannerInstance;
+        AppState.scannerInstance = null;
+        sc.stop().catch(() => {}).finally(() => { try { sc.clear(); } catch (e) {} });
+      }
+    }
+  },
+  startScanner() {
+    if (AppState.scannerInstance) {
+      const old = AppState.scannerInstance;
+      AppState.scannerInstance = null;
+      old.stop().catch(() => {}).finally(() => { try { old.clear(); } catch (e) {} });
+    }
+    this._barcodeReadLock = false;
+    const reader = document.getElementById('scannerReader');
+    if (reader) reader.innerHTML = '';
+    try {
+      const scanner = this._makeBarcodeScanner('scannerReader');
+      AppState.scannerInstance = scanner;
+      scanner.start(
+        { facingMode: 'environment' },
+        this._barcodeConfig(),
+        (decodedText) => this._onAutomaticBarcode('selector', decodedText, scanner),
+        () => {}
+      ).catch(err => this._liveBarcodeError('selector', err));
+    } catch (e) {
+      this._liveBarcodeError('selector', e);
+    }
+  },
+
+  // ---------- LOW STOCK BADGE ----------
+  updateLowStockBadge() {
+    const b = document.getElementById('lowStockBadge');
+    const c = AppState.productsDB.filter(p => p.qty <= p.minQty).length;
+    b.style.display = c > 0 ? 'flex' : 'none';
+    b.textContent = c;
+  },
+
+  // ---------- MODAL HELPERS ----------
+  _lockScrollY: 0,
+  _lockBodyScroll() {
+    // Only lock once, on the first modal opening — nested confirm dialogs etc.
+    // must not re-trigger this or the saved scroll position would be wrong.
+    if (document.body.classList.contains('modal-open')) return;
+    this._lockScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.top = -this._lockScrollY + 'px';
+    document.body.classList.add('modal-open');
+  },
+  _unlockBodyScroll() {
+    // Only unlock once every overlay is actually closed, so closing one modal
+    // that's stacked behind another doesn't scroll the page underneath it.
+    if (document.querySelectorAll('.overlay.active').length > 0) return;
+    document.body.classList.remove('modal-open');
+    document.body.style.top = '';
+    window.scrollTo(0, this._lockScrollY);
+  },
+  openModal(id) {
+    const m = document.getElementById(id);
+    if (!m) return;
+    if (m._closeTimer) {
+      clearTimeout(m._closeTimer);
+      m._closeTimer = null;
+    }
+
+    // Stack nested modals in the order they are opened.
+    // This fixes invoice details opening behind "All invoices".
+    const activeOverlays = [...document.querySelectorAll('.overlay.active')]
+      .filter(el => el !== m);
+    const topZ = activeOverlays.reduce((max, el) => {
+      const inlineZ = parseInt(el.style.zIndex || '0', 10) || 0;
+      const computedZ = parseInt(getComputedStyle(el).zIndex || '0', 10) || 0;
+      return Math.max(max, inlineZ, computedZ);
+    }, 200);
+
+    if (id === 'modalConfirm') {
+      m.style.zIndex = String(Math.max(500, topZ + 20));
+    } else {
+      m.style.zIndex = String(topZ + 20);
+    }
+
+    m.style.display = 'flex';
+    m.classList.remove('closing');
+    m.classList.add('active');
+    this._lockBodyScroll();
+  },
+  closeModal(id) {
+    const m = document.getElementById(id);
+    if (!m) return;
+    m.classList.add('closing'); m.classList.remove('active');
+    if (m._closeTimer) clearTimeout(m._closeTimer);
+    m._closeTimer = setTimeout(() => {
+      if (!m.classList.contains('active')) {
+        m.style.display = 'none';
+        m.classList.remove('closing');
+        // Reset temporary stacking so the next opening gets a fresh correct order.
+        if (id !== 'modalConfirm') m.style.zIndex = '';
+      }
+      m._closeTimer = null;
+    }, 200);
+    if (id === 'modalProductSelector' && AppState.scannerInstance) {
+      AppState.scannerInstance.stop().catch(() => {});
+      AppState.scannerInstance = null;
+      document.getElementById('scannerContainer').style.display = 'none';
+      document.getElementById('toggleScannerBtn').textContent = '📷 قراءة تلقائية';
+    }
+    if (id === 'modalProductsList' && AppState.productFormScannerInstance) {
+      AppState.productFormScannerInstance.stop().catch(() => {});
+      AppState.productFormScannerInstance = null;
+      document.getElementById('prodScannerContainer').style.display = 'none';
+      document.getElementById('prodScanBtn').textContent = '📷 قراءة تلقائية';
+    }
+    if (id === 'modalRoom') AppState.currentRoomId = null;
+    this._unlockBodyScroll();
+  },
+  initTabHandlers() {
+    document.querySelectorAll('#inventoryTabs .tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('#inventoryTabs .tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('#modalInventory .tab-panel').forEach(p => p.classList.remove('active'));
+        const target = tab.dataset.tab;
+        document.getElementById(target)?.classList.add('active');
+        AppState.invTab = target;
+        this.renderInventory(target);
+      });
+    });
+  },
+
+  // ---------- DASHBOARD ----------
+  updateDashboardStats() {
+    const todayRev = AppState.invoices.filter(i => Helpers.isToday(i.date)).reduce((s, i) => s + (i.total || 0), 0);
+    const weekRev = AppState.invoices.filter(i => Helpers.isThisWeek(i.date)).reduce((s, i) => s + (i.total || 0), 0);
+    const monthRev = AppState.invoices.filter(i => Helpers.isThisMonth(i.date)).reduce((s, i) => s + (i.total || 0), 0);
+    document.getElementById('dashToday').textContent = todayRev.toFixed(0) + ' دج';
+    document.getElementById('dashWeek').textContent = weekRev.toFixed(0) + ' دج';
+    document.getElementById('dashMonth').textContent = monthRev.toFixed(0) + ' دج';
+    const netTodayEl = document.getElementById('dashNetToday');
+    if (netTodayEl) netTodayEl.textContent = Finance.getTodayNetCash().toFixed(0) + ' دج';
+    document.getElementById('dashCustomers').textContent = AppState.invoices.length;
+    document.getElementById('dashLowStock').textContent = AppState.productsDB.filter(p => p.qty <= p.minQty).length;
+
+    // top room
+    const roomCounts = {};
+    AppState.invoices.forEach(i => { roomCounts[i.roomId] = (roomCounts[i.roomId] || 0) + 1; });
+    const topRoomEntry = Object.entries(roomCounts).sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('dashTopRoom').textContent = topRoomEntry ? 'غرفة ' + String(topRoomEntry[0]).padStart(2, '0') + ' (' + topRoomEntry[1] + ')' : '--';
+
+    // top product
+    const prodCounts = {};
+    AppState.invoices.forEach(i => (i.products || []).forEach(p => { if (!p.isCustomCharge) prodCounts[p.name] = (prodCounts[p.name] || 0) + (p.qty || 1); }));
+    const topProdEntry = Object.entries(prodCounts).sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('dashTopProduct').textContent = topProdEntry ? topProdEntry[0] + ' (' + topProdEntry[1] + ')' : '--';
+
+    // average invoice value
+    const avgInvoice = AppState.invoices.length ? (AppState.invoices.reduce((s, i) => s + (i.total || 0), 0) / AppState.invoices.length) : 0;
+    document.getElementById('dashAvgInvoice').textContent = avgInvoice.toFixed(0) + ' دج';
+
+    // busiest hour (by entry time)
+    const hourCounts = {};
+    AppState.invoices.forEach(i => {
+      const h = new Date(i.entryTime || i.date).getHours();
+      hourCounts[h] = (hourCounts[h] || 0) + 1;
+    });
+    const topHourEntry = Object.entries(hourCounts).sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('dashTopHour').textContent = topHourEntry ? (String(topHourEntry[0]).padStart(2, '0') + ':00 (' + topHourEntry[1] + ')') : '--';
+
+    // most profitable day: shower contribution + product margin - recorded expenses
+    const dayProfit = {};
+    AppState.invoices.forEach(i => {
+      const d = Helpers.formatDateShort(i.date);
+      const productMargin = (i.products || []).reduce((s,p) => s + (Number(p.price||0)-Number(p.cost||0))*Number(p.qty||1), 0);
+      dayProfit[d] = (dayProfit[d] || 0) + Number(i.showerPrice || 0) + productMargin;
+    });
+    AppState.expenses.forEach(e => { const d = Helpers.formatDateShort(e.date); dayProfit[d] = (dayProfit[d] || 0) - Number(e.amount || 0); });
+    const topDayEntry = Object.entries(dayProfit).sort((a, b) => b[1] - a[1])[0];
+    document.getElementById('dashTopDay').textContent = topDayEntry ? (topDayEntry[0] + ' (' + topDayEntry[1].toFixed(0) + ' دج)') : '--';
+
+    // true gross-profit contribution: shower revenue (no direct shower cost configured) + product margin
+    const showerProfit = AppState.invoices.reduce((s, i) => s + Number(i.showerPrice || 0), 0);
+    const productProfit = AppState.invoices.reduce((s, i) => s + (i.products || []).reduce((x, p) => x + (Number(p.price || 0) - Number(p.cost || 0)) * Number(p.qty || 1), 0), 0);
+    const totalProfit = showerProfit + productProfit;
+    document.getElementById('dashShowerPct').textContent = totalProfit ? ((showerProfit / totalProfit) * 100).toFixed(0) + '%' : '--';
+    document.getElementById('dashProductPct').textContent = totalProfit ? ((productProfit / totalProfit) * 100).toFixed(0) + '%' : '--';
+
+    // recent invoices
+    const recent = document.getElementById('dashRecentInvoices');
+    recent.innerHTML = '';
+    const last5 = AppState.invoices.slice(-5).reverse();
+    if (!last5.length) recent.innerHTML = '<div class="empty-note">لا توجد فواتير حديثة</div>';
+    else last5.forEach(inv => recent.appendChild(this._buildListRow(inv)));
+
+    this.renderRevenueChart();
+  },
+  renderRevenueChart() {
+    const canvas = document.getElementById('revenueChart');
+    if (!canvas || !window.Chart) return;
+    const days = [];
+    const values = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const label = d.toLocaleDateString('ar-DZ', { weekday: 'short' });
+      const rev = AppState.invoices.filter(inv => {
+        const id = new Date(inv.date);
+        return id.getDate() === d.getDate() && id.getMonth() === d.getMonth() && id.getFullYear() === d.getFullYear();
+      }).reduce((s, inv) => s + (inv.total || 0), 0);
+      days.push(label); values.push(rev);
+    }
+    if (AppState.chartInstance) AppState.chartInstance.destroy();
+    AppState.chartInstance = new Chart(canvas, {
+      type: 'bar',
+      data: { labels: days, datasets: [{ data: values, backgroundColor: '#22e0b8', borderRadius: 8, maxBarThickness: 28 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#8ba0ad', font: { family: 'Tajawal' } } },
+          y: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: '#8ba0ad' } }
+        }
+      }
+    });
+  },
+
+  // ---------- SALES / INVOICES LIST ----------
+  _buildListRow(inv) {
+    const div = document.createElement('div');
+    div.className = 'list-row';
+    div.style.cursor = 'pointer';
+    div.innerHTML = `
+      <div class="li"><span class="name">غرفة ${String(inv.roomId).padStart(2,'0')} · ${inv.number || ''}</span>
+      <span class="sub">${Helpers.formatDateShort(inv.date)} · ${Helpers.formatTime(inv.durationSec)} · ${inv.paymentStatus === 'paid' ? '✅ مدفوعة' : inv.paymentStatus === 'debt' ? '💳 دين' : '⏳ انتظار الدفع'}</span></div>
+      <span class="amount">${(inv.total || 0).toFixed(0)} دج</span>`;
+    div.addEventListener('click', () => this.showInvoiceModal(inv));
+    return div;
+  },
+  renderSales() {
+    const list = document.getElementById('salesList');
+    list.innerHTML = '';
+    const total = AppState.invoices.reduce((s, i) => s + (i.total || 0), 0);
+    document.getElementById('salesTotalRevenue').textContent = total.toFixed(0) + ' دج';
+    document.getElementById('salesTotalCount').textContent = AppState.invoices.length;
+    const sorted = [...AppState.invoices].reverse();
+    if (!sorted.length) { list.innerHTML = '<div class="empty-note">لا توجد مبيعات بعد</div>'; return; }
+    sorted.forEach(inv => list.appendChild(this._buildListRow(inv)));
+  },
+  renderInvoicesList() {
+    const searchInput = document.getElementById('invoiceSearchInput');
+    if (searchInput) searchInput.value = '';
+    this.filterInvoices();
+  },
+  filterInvoices() {
+    const q = (document.getElementById('invoiceSearchInput')?.value || '').trim().toLowerCase();
+    const container = document.getElementById('invoicesListContainer');
+    container.innerHTML = '';
+    let list = [...AppState.invoices].reverse();
+    if (q) {
+      list = list.filter(inv =>
+        (inv.number || '').toLowerCase().includes(q) ||
+        Helpers.formatDateShort(inv.date).toLowerCase().includes(q) ||
+        String(inv.roomId).includes(q)
+      );
+    }
+    if (!list.length) { container.innerHTML = '<div class="empty-note">لا توجد نتائج</div>'; return; }
+    list.forEach(inv => container.appendChild(this._buildListRow(inv)));
+  },
+
+  // ---------- INVENTORY ----------
+  renderInventory(tab) {
+    tab = tab || AppState.invTab || 'inv-products';
+    AppState.invTab = tab;
+    if (tab === 'inv-products') {
+      const c = document.getElementById('inv-products'); c.innerHTML = '';
+      if (!AppState.productsDB.length) { c.innerHTML = '<div class="empty-note">لا توجد منتجات</div>'; return; }
+      AppState.productsDB.forEach(p => {
+        const status = p.qty <= p.minQty ? (p.qty === 0 ? '🔴' : '🟠') : '🟢';
+        const div = document.createElement('div');
+        div.className = 'list-row';
+        div.innerHTML = `<div class="li"><span class="name">${Helpers.escapeHtml(p.name)}</span><span class="sub">${Helpers.escapeHtml(p.category || '—')} · ${Helpers.escapeHtml(p.barcode || '—')}</span></div>
+          <span style="font-weight:700;">${p.qty} / ${p.minQty} ${status}</span>`;
+        c.appendChild(div);
+      });
+    } else if (tab === 'inv-low') {
+      const c = document.getElementById('inv-low'); c.innerHTML = '';
+      const low = AppState.productsDB.filter(p => p.qty <= p.minQty);
+      if (!low.length) { c.innerHTML = '<div class="empty-note">✅ جميع المنتجات متوفرة</div>'; return; }
+      low.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'list-row';
+        div.innerHTML = `<div class="li"><span class="name">${Helpers.escapeHtml(p.name)}</span><span class="sub">${Helpers.escapeHtml(p.category || '—')}</span></div>
+          <span style="font-weight:700;color:${p.qty === 0 ? '#ff5468' : '#f5b942'}">${p.qty} / ${p.minQty}</span>`;
+        c.appendChild(div);
+      });
+    } else if (tab === 'inv-categories') {
+      const c = document.getElementById('inv-categories'); c.innerHTML = '';
+      const cats = Helpers.getCategoryCount();
+      if (!Object.keys(cats).length) { c.innerHTML = '<div class="empty-note">لا توجد فئات</div>'; return; }
+      Object.entries(cats).forEach(([cat, count]) => {
+        const div = document.createElement('div');
+        div.className = 'list-row';
+        div.innerHTML = `<span class="name">${cat}</span><span>${count} منتج</span>`;
+        c.appendChild(div);
+      });
+    }
+  },
+
+  // ---------- PRODUCTS ADMIN ----------
+  _tempImage: '',
+  renderProductsAdmin() {
+    const container = document.getElementById('productsAdminList');
+    const q = (document.getElementById('adminSearchInput')?.value || '').trim().toLowerCase();
+    container.innerHTML = '';
+    const list = AppState.productsDB.filter(p => !q || p.name.toLowerCase().includes(q) || (p.barcode || '').toLowerCase().includes(q));
+    if (!list.length) { container.innerHTML = '<div class="empty-note">لا توجد منتجات</div>'; return; }
+    list.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'list-row';
+      div.innerHTML = `
+        <div class="li"><span class="name">${Helpers.escapeHtml(p.name)}</span><span class="sub">${Helpers.escapeHtml(p.barcode || '—')} · ${Helpers.escapeHtml(p.category || '—')} · ${p.price} دج · مخزون: ${p.qty}</span></div>
+        <div class="actions">
+          <button class="primary" data-stock="${p.id}" title="زيادة المخزون">➕</button>
+          <button class="primary" data-edit="${p.id}">✏️</button>
+          <button class="danger" data-del="${p.id}">🗑</button>
+        </div>`;
+      div.querySelector('[data-stock]').addEventListener('click', () => this.quickAddStock(p.id));
+      div.querySelector('[data-edit]').addEventListener('click', () => this.editProduct(p.id));
+      div.querySelector('[data-del]').addEventListener('click', () => this.deleteProduct(p.id));
+      container.appendChild(div);
+    });
+  },
+  showProductForm(data) {
+    document.getElementById('productForm').style.display = 'flex';
+    this._tempImage = data?.image || '';
+    document.getElementById('prodImgPreview').src = this._tempImage || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"></svg>';
+    document.getElementById('prodFormName').value = data?.name || '';
+    document.getElementById('prodFormBarcode').value = data?.barcode || '';
+    document.getElementById('prodFormCategory').value = data?.category || '';
+    document.getElementById('prodFormCost').value = data?.cost ?? '';
+    document.getElementById('prodFormPrice').value = data?.price ?? '';
+    document.getElementById('prodFormQty').value = data?.qty ?? '';
+    document.getElementById('prodFormMinQty').value = data?.minQty ?? 5;
+    AppState.editingProductId = data?.id || null;
+  },
+  hideProductForm() {
+    document.getElementById('productForm').style.display = 'none';
+    AppState.editingProductId = null;
+    document.getElementById('prodScannerContainer').style.display = 'none';
+    document.getElementById('prodScanBtn').textContent = '📷 قراءة تلقائية';
+    if (AppState.productFormScannerInstance) { AppState.productFormScannerInstance.stop().catch(() => {}); AppState.productFormScannerInstance = null; }
+  },
+  // ---------- AUTOMATIC BARCODE SCANNER (add/edit product) ----------
+  toggleProductFormScanner() {
+    const container = document.getElementById('prodScannerContainer');
+    const btn = document.getElementById('prodScanBtn');
+    if (container.style.display === 'none') {
+      container.style.display = 'block';
+      btn.textContent = '⏹ إيقاف الكاميرا';
+      this.startProductFormScanner();
+    } else {
+      container.style.display = 'none';
+      btn.textContent = '📷 قراءة تلقائية';
+      this._barcodeReadLock = false;
+      if (AppState.productFormScannerInstance) {
+        const sc = AppState.productFormScannerInstance;
+        AppState.productFormScannerInstance = null;
+        sc.stop().catch(() => {}).finally(() => { try { sc.clear(); } catch (e) {} });
+      }
+    }
+  },
+  startProductFormScanner() {
+    if (AppState.productFormScannerInstance) {
+      const old = AppState.productFormScannerInstance;
+      AppState.productFormScannerInstance = null;
+      old.stop().catch(() => {}).finally(() => { try { old.clear(); } catch (e) {} });
+    }
+    this._barcodeReadLock = false;
+    const reader = document.getElementById('prodScannerReader');
+    if (reader) reader.innerHTML = '';
+    try {
+      const scanner = this._makeBarcodeScanner('prodScannerReader');
+      AppState.productFormScannerInstance = scanner;
+      scanner.start(
+        { facingMode: 'environment' },
+        this._barcodeConfig(),
+        (decodedText) => this._onAutomaticBarcode('product', decodedText, scanner),
+        () => {}
+      ).catch(err => this._liveBarcodeError('product', err));
+    } catch (e) {
+      this._liveBarcodeError('product', e);
+    }
+  },
+  handleProductImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!String(file.type || '').startsWith('image/')) {
+      Helpers.showToast('❌ اختر ملف صورة صالح', 'error');
+      event.target.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const maxSide = 420;
+          const ratio = Math.min(1, maxSide / Math.max(img.width || 1, img.height || 1));
+          const w = Math.max(1, Math.round(img.width * ratio));
+          const h = Math.max(1, Math.round(img.height * ratio));
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          this._tempImage = canvas.toDataURL('image/jpeg', 0.78);
+          document.getElementById('prodImgPreview').src = this._tempImage;
+        } catch (err) {
+          console.warn('Image compression failed:', err);
+          this._tempImage = e.target.result;
+          document.getElementById('prodImgPreview').src = this._tempImage;
+        }
+      };
+      img.onerror = () => Helpers.showToast('❌ تعذر قراءة الصورة', 'error');
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  },
+  saveProduct() {
+    const name = document.getElementById('prodFormName').value.trim();
+    const barcode = document.getElementById('prodFormBarcode').value.trim();
+    const category = document.getElementById('prodFormCategory').value.trim();
+    const cost = parseFloat(document.getElementById('prodFormCost').value) || 0;
+    const price = parseFloat(document.getElementById('prodFormPrice').value) || 0;
+    const qty = parseInt(document.getElementById('prodFormQty').value) || 0;
+    const minQtyRaw = parseInt(document.getElementById('prodFormMinQty').value);
+    const minQty = Number.isFinite(minQtyRaw) ? minQtyRaw : 5;
+    if (!name) { Helpers.showToast('❌ الاسم مطلوب', 'error'); return; }
+    if (cost < 0 || price <= 0 || qty < 0 || minQty < 0) { Helpers.showToast('❌ تحقق من الأسعار والكميات: لا تقبل القيم السالبة', 'error'); return; }
+    if (cost > price) { Helpers.showToast('⚠️ سعر الشراء أكبر من سعر البيع', 'warning'); }
+    if (AppState.editingProductId) {
+      if (barcode && AppState.productsDB.some(p => p.barcode === barcode && p.id !== AppState.editingProductId)) {
+        Helpers.showToast('❌ الباركود موجود مسبقاً', 'error'); return;
+      }
+      const existing = AppState.productsDB.find(p => p.id === AppState.editingProductId);
+      if (existing) Object.assign(existing, { name, barcode: barcode || existing.barcode, category: category || existing.category, cost, price, qty, minQty, image: this._tempImage });
+      Helpers.showToast('✅ تم تحديث المنتج', 'success');
+    } else {
+      if (barcode && AppState.productsDB.some(p => p.barcode === barcode)) { Helpers.showToast('❌ الباركود موجود مسبقاً', 'error'); return; }
+      AppState.productsDB.push({ id: Helpers.generateId(), barcode, name, category, cost, price, qty, minQty, image: this._tempImage });
+      Helpers.showToast('✅ تمت إضافة المنتج', 'success');
+    }
+    Storage.save();
+    this.hideProductForm();
+    this.renderProductsAdmin();
+    this.updateLowStockBadge();
+    this.renderInventory();
+  },
+  editProduct(id) {
+    const p = AppState.productsDB.find(pr => pr.id === id);
+    if (p) this.showProductForm(p);
+  },
+  quickAddStock(id) {
+    const p = AppState.productsDB.find(pr => pr.id === id);
+    if (!p) return;
+    const val = prompt('➕ الكمية المراد إضافتها للمخزون:', '10');
+    if (val === null) return;
+    const n = parseInt(val);
+    if (!n || n <= 0) { Helpers.showToast('❌ رقم غير صالح', 'error'); return; }
+    p.qty = (p.qty || 0) + n;
+    Storage.save();
+    this.renderProductsAdmin();
+    this.updateLowStockBadge();
+    this.renderInventory();
+    Helpers.showToast('✅ تمت إضافة ' + n + ' إلى مخزون ' + p.name, 'success');
+  },
+  deleteProduct(id) {
+    const usedInActiveRoom = Object.values(AppState.roomsState).some(r =>
+      (r.status === 'busy' || r.status === 'paused') &&
+      Array.isArray(r.products) &&
+      r.products.some(item => item.productId === id)
+    );
+    if (usedInActiveRoom) {
+      Helpers.showToast('⚠️ لا يمكن حذف المنتج وهو مضاف لغرفة نشطة. أزله من الغرفة أولاً.', 'warning');
+      return;
+    }
+    this.showConfirm('🗑', 'حذف المنتج', 'هل تريد حذف هذا المنتج نهائياً؟', () => {
+      AppState.productsDB = AppState.productsDB.filter(p => p.id !== id);
+      Storage.save();
+      this.renderProductsAdmin();
+      this.updateLowStockBadge();
+      this.renderInventory();
+      Helpers.showToast('🗑 تم حذف المنتج', 'warning');
+    });
+  },
+  exportProductsJSON() {
+    const blob = new Blob([JSON.stringify(AppState.productsDB, null, 2)], { type: 'application/json;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'hafid_products_' + new Date().toISOString().slice(0,10) + '.json'; a.click();
+    URL.revokeObjectURL(a.href);
+    Helpers.showToast('📤 تم تصدير المنتجات بصيغة JSON', 'success');
+  },
+  importProducts(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const hasActiveItems = Object.values(AppState.roomsState).some(r =>
+      (r.status === 'busy' || r.status === 'paused') &&
+      Array.isArray(r.products) &&
+      r.products.some(item => !item.isCustomCharge)
+    );
+    if (hasActiveItems) {
+      Helpers.showToast('⚠️ أنهِ الغرف النشطة أو أزل منتجاتها قبل استيراد مخزون جديد.', 'warning');
+      event.target.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!Array.isArray(data)) throw new Error('not array');
+        const cleaned = data.map(p => ({
+          id: p.id || Helpers.generateId(), barcode: String(p.barcode || ''),
+          name: String(p.name || '').trim(), category: String(p.category || 'غير مصنف').trim(),
+          cost: Math.max(0, Number(p.cost || 0)), price: Math.max(0, Number(p.price || 0)),
+          qty: Math.max(0, parseInt(p.qty || 0)), minQty: Math.max(0, parseInt(p.minQty ?? 5)), image: p.image || ''
+        })).filter(p => p.name && p.price > 0);
+        if (!cleaned.length && data.length) throw new Error('invalid products');
+        const barcodes = cleaned.map(p => p.barcode).filter(Boolean);
+        if (new Set(barcodes).size !== barcodes.length) throw new Error('duplicate barcode');
+        AppState.productsDB = cleaned;
+        Storage.save(); this.renderProductsAdmin(); this.updateLowStockBadge(); this.renderInventory();
+        Helpers.showToast('✅ تم استيراد المنتجات بنجاح', 'success');
+      } catch (err) { Helpers.showToast('❌ ملف JSON غير صالح أو يحتوي بيانات مكررة', 'error'); }
+    };
+    reader.readAsText(file); event.target.value = '';
+  },
+
+  // ---------- SETTINGS ----------
+  loadSettings() {
+    const s = AppState.settings;
+    document.getElementById('setPriceLow').value = s.priceLow;
+    document.getElementById('setPriceMid').value = s.priceMid;
+    document.getElementById('setPriceHigh').value = s.priceHigh;
+    document.getElementById('setLimitLow').value = s.limitLow;
+    document.getElementById('setLimitHigh').value = s.limitHigh;
+    document.getElementById('setShopName').value = s.shopName || 'HAFID DOUCHE';
+    document.getElementById('setPassSettings').value = s.passwordSettings || '1234';
+    document.getElementById('setPassProducts').value = s.passwordProducts || '1234';
+    this.renderMaintenanceSettings();
+  },
+  toggleCustomMaintenanceReason() {
+    const sel = document.getElementById('maintenanceReasonSelect');
+    const custom = document.getElementById('maintenanceCustomReason');
+    if (sel && custom) custom.style.display = sel.value === 'other' ? 'block' : 'none';
+  },
+  renderMaintenanceSettings() {
+    const sel = document.getElementById('maintenanceRoomSelect');
+    const list = document.getElementById('maintenanceRoomsList');
+    if (!sel || !list) return;
+    const ready = Object.values(AppState.roomsState).filter(r => r.status === 'ready');
+    sel.innerHTML = ready.length ? ready.map(r => `<option value="${r.id}">غرفة ${String(r.id).padStart(2,'0')}</option>`).join('') : '<option value="">لا توجد غرفة شاغرة</option>';
+    const maint = Object.values(AppState.roomsState).filter(r => r.status === 'maintenance');
+    list.innerHTML = maint.length ? maint.map(r => `<div class="list-row"><div class="li"><span class="name">🔧 غرفة ${String(r.id).padStart(2,'0')}</span><span class="sub">${r.maintenanceReason || 'صيانة عامة'}</span></div><button class="btn btn-primary btn-sm" type="button" onclick="UI.finishRoomMaintenance(${r.id})">✅ إرجاع للخدمة</button></div>`).join('') : '<div class="empty-note">لا توجد غرف قيد الصيانة</div>';
+  },
+  setRoomMaintenance() {
+    const roomId = parseInt(document.getElementById('maintenanceRoomSelect').value);
+    if (!roomId) return Helpers.showToast('❌ اختر غرفة شاغرة', 'error');
+    const rs = document.getElementById('maintenanceReasonSelect');
+    let reason = rs.value === 'other' ? document.getElementById('maintenanceCustomReason').value.trim() : rs.value;
+    if (!reason) return Helpers.showToast('❌ اكتب سبب الصيانة', 'error');
+    Rooms.toggleMaintenance(roomId, reason); this.renderMaintenanceSettings();
+  },
+  finishRoomMaintenance(roomId) {
+    Rooms.toggleMaintenance(roomId); this.renderMaintenanceSettings();
+  },
+  saveSettings() {
+    const priceLow = Number(document.getElementById('setPriceLow').value);
+    const priceMid = Number(document.getElementById('setPriceMid').value);
+    const priceHigh = Number(document.getElementById('setPriceHigh').value);
+    const limitLow = Number(document.getElementById('setLimitLow').value);
+    const limitHigh = Number(document.getElementById('setLimitHigh').value);
+    if (![priceLow,priceMid,priceHigh,limitLow,limitHigh].every(Number.isFinite) || priceLow < 0 || priceMid < 0 || priceHigh < 0 || limitLow <= 0 || limitHigh <= 0) {
+      Helpers.showToast('❌ الأسعار والحدود يجب أن تكون أرقاماً موجبة', 'error'); return;
+    }
+    if (limitLow >= limitHigh) { Helpers.showToast('❌ الحد الأدنى للوقت يجب أن يكون أصغر من الحد الأعلى', 'error'); return; }
+    if (!(priceLow <= priceMid && priceMid <= priceHigh)) { Helpers.showToast('❌ ترتيب الأسعار يجب أن يكون: منخفض ≤ متوسط ≤ مرتفع', 'error'); return; }
+    const s = AppState.settings;
+    s.priceLow = priceLow; s.priceMid = priceMid; s.priceHigh = priceHigh; s.limitLow = limitLow; s.limitHigh = limitHigh;
+    s.shopName = document.getElementById('setShopName').value.trim() || 'HAFID DOUCHE';
+    s.passwordSettings = document.getElementById('setPassSettings').value || '1234';
+    s.passwordProducts = document.getElementById('setPassProducts').value || '1234';
+    Storage.save(); Helpers.showToast('✅ تم حفظ الإعدادات', 'success'); this.closeModal('modalSettings'); this.renderAll();
+  }
+};
+
+// ---------------------------------------------------------------
+// FINANCE: payments, debts, expenses and daily cashbox
+// ---------------------------------------------------------------
+const Finance = {
+  addCashTransaction(amount, label, source = 'manual', sourceId = null, date = null) {
+    amount = Number(amount || 0); if (!(amount > 0)) return;
+    AppState.cashTransactions.push({ id: 'tx_' + Date.now() + '_' + Math.random().toString(36).slice(2,6), type: 'income', amount, label, source, sourceId, date: date || new Date().toISOString() });
+  },
+  markInvoicePaid() {
+    const inv = AppState.currentInvoice; if (!inv || inv.paymentStatus === 'paid') return;
+    if (inv.paymentStatus === 'debt') return Helpers.showToast('⚠️ سدد الدين من قائمة الديون', 'warning');
+    inv.paymentStatus = 'paid'; inv.paidAmount = Number(inv.total || 0); inv.paidAt = new Date().toISOString();
+    this.addCashTransaction(inv.total, 'فاتورة ' + (inv.number || ''), 'invoice', inv.id, inv.paidAt);
+    Storage.save(); UI.showInvoiceModal(inv); UI.updateHomeStats(); UI.renderSales(); this.renderCashbox(); UI.updateDashboardStats();
+    Helpers.showToast('✅ تم تسجيل الدفع وإضافته لصندوق اليوم', 'success');
+  },
+  markInvoiceDebt() {
+    const inv = AppState.currentInvoice; if (!inv || inv.paymentStatus !== 'pending') return;
+    const raw = prompt('👤 اسم الزبون صاحب الدين:'); if (raw === null) return;
+    const customer = raw.trim(); if (!customer) return Helpers.showToast('❌ اسم الزبون مطلوب', 'error');
+    inv.paymentStatus = 'debt'; inv.customerName = customer; inv.paidAmount = 0; inv.wasDebt = true;
+    const debt = {
+      id: Date.now(), customer, amount: Number(inv.total || 0), remaining: Number(inv.total || 0),
+      note: 'فاتورة ' + (inv.number || '') + ' · غرفة ' + String(inv.roomId).padStart(2,'0'),
+      invoiceId: inv.id, invoiceNumber: inv.number, roomId: inv.roomId, durationSec: inv.durationSec,
+      showerPrice: Number(inv.showerPrice || 0), products: JSON.parse(JSON.stringify(inv.products || [])),
+      createdAt: new Date().toISOString(), payments: []
+    };
+    AppState.debts.unshift(debt); Debts.syncFromState(); Storage.save(); UI.showInvoiceModal(inv); UI.renderSales(); this.renderCashbox();
+    Helpers.showToast('💳 تم ربط الدين بالفاتورة باسم ' + customer, 'success');
+  },
+  addExpense() {
+    const amountEl = document.getElementById('expenseAmount'); const noteEl = document.getElementById('expenseNote'); const catEl = document.getElementById('expenseCategory');
+    const amount = Number(amountEl?.value || 0); const note = (noteEl?.value || '').trim(); const category = catEl?.value || 'أخرى';
+    if (!(amount > 0)) return Helpers.showToast('❌ أدخل مبلغ المصروف', 'error');
+    AppState.expenses.unshift({ id: 'exp_' + Date.now(), amount, category, note, date: new Date().toISOString() });
+    amountEl.value = ''; noteEl.value = ''; Storage.save(); this.renderExpenses(); this.renderCashbox(); UI.updateHomeStats(); UI.updateDashboardStats();
+    Helpers.showToast('✅ تم تسجيل المصروف', 'success');
+  },
+  removeExpense(id) {
+    UI.showConfirm('🗑','حذف المصروف','هل تريد حذف هذا المصروف؟',() => { AppState.expenses = AppState.expenses.filter(e => e.id !== id); Storage.save(); Finance.renderExpenses(); Finance.renderCashbox(); UI.updateHomeStats(); UI.updateDashboardStats(); });
+  },
+  getTodayCashIn() { return AppState.cashTransactions.filter(t => t.type === 'income' && Helpers.isToday(t.date)).reduce((s,t)=>s+Number(t.amount||0),0); },
+  getTodayExpenses() { return AppState.expenses.filter(e => Helpers.isToday(e.date)).reduce((s,e)=>s+Number(e.amount||0),0); },
+  getTodayNetCash() { return this.getTodayCashIn() - this.getTodayExpenses(); },
+  getDebtsRemaining() { return AppState.debts.reduce((s,d)=>s+Number(d.remaining||0),0); },
+  renderCashbox() {
+    const inc=this.getTodayCashIn(), exp=this.getTodayExpenses(), net=inc-exp;
+    const a=document.getElementById('cashTodayIn'), b=document.getElementById('cashTodayExpenses'), c=document.getElementById('cashTodayNet'), d=document.getElementById('cashDebtsRemaining');
+    if(a)a.textContent=inc.toLocaleString('ar-DZ')+' دج'; if(b)b.textContent=exp.toLocaleString('ar-DZ')+' دج'; if(c)c.textContent=net.toLocaleString('ar-DZ')+' دج'; if(d)d.textContent=this.getDebtsRemaining().toLocaleString('ar-DZ')+' دج';
+    const list=document.getElementById('cashTransactionsList'); if(!list)return;
+    const rows=[];
+    AppState.cashTransactions.filter(t=>Helpers.isToday(t.date)).forEach(t=>rows.push({date:t.date, html:`<div class="list-row"><div class="li"><span class="name">💵 ${Debts.escape(t.label||'قبض')}</span><span class="sub">${Helpers.formatDateTime(t.date)}</span></div><span class="amount" style="color:var(--aqua)">+${Number(t.amount).toLocaleString('ar-DZ')} دج</span></div>`}));
+    AppState.expenses.filter(e=>Helpers.isToday(e.date)).forEach(e=>rows.push({date:e.date, html:`<div class="list-row"><div class="li"><span class="name">💸 ${Debts.escape(e.category)}</span><span class="sub">${Helpers.formatDateTime(e.date)}${e.note?' — '+Debts.escape(e.note):''}</span></div><span class="amount" style="color:var(--red)">-${Number(e.amount).toLocaleString('ar-DZ')} دج</span></div>`}));
+    rows.sort((x,y)=>new Date(y.date)-new Date(x.date)); list.innerHTML=rows.length?rows.map(x=>x.html).join(''):'<div class="empty-note">لا توجد حركات في صندوق اليوم</div>';
+  },
+  renderExpenses() {
+    const list=document.getElementById('expensesList'); if(!list)return; const q=(document.getElementById('expenseSearch')?.value||'').trim().toLowerCase();
+    const rows=AppState.expenses.filter(e=>!q||(e.category||'').toLowerCase().includes(q)||(e.note||'').toLowerCase().includes(q));
+    const today=this.getTodayExpenses(), all=AppState.expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+    const t=document.getElementById('expensesTodayTotal'), a=document.getElementById('expensesAllTotal'); if(t)t.textContent=today.toLocaleString('ar-DZ')+' دج'; if(a)a.textContent=all.toLocaleString('ar-DZ')+' دج';
+    list.innerHTML=rows.length?rows.map(e=>`<div class="list-row"><div class="li"><span class="name">${Debts.escape(e.category)}</span><span class="sub">${Helpers.formatDateTime(e.date)}${e.note?' — '+Debts.escape(e.note):''}</span></div><div style="display:flex;align-items:center;gap:8px"><span class="amount">${Number(e.amount).toLocaleString('ar-DZ')} دج</span><div class="actions"><button class="danger" onclick="Finance.removeExpense('${e.id}')">🗑</button></div></div></div>`).join(''):'<div class="empty-note">لا توجد مصاريف مسجلة</div>';
+  }
+};
+
+// ---------------------------------------------------------------
+// INIT
+// ---------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', function () {
+  Rooms.init(); // build default rooms first so Storage.load() has something to merge into
+  Storage.load();
+  Debts.syncFromState();
+  Rooms.init(); // fill in any room ids that weren't present in the saved data
+  UI.renderAll();
+  UI.loadSettings();
+  UI.initTabHandlers();
+  UI.renderInventory('inv-products');
+  UI.renderProductsAdmin();
+  UI.renderSales();
+  UI.renderInvoicesList();
+  Finance.renderCashbox(); Finance.renderExpenses();
+
+  document.getElementById('btnDashboard').addEventListener('click', () => { UI.updateDashboardStats(); UI.openModal('modalDashboard'); });
+  document.getElementById('btnSales').addEventListener('click', () => { UI.renderSales(); UI.openModal('modalSales'); });
+  document.getElementById('btnCashbox').addEventListener('click', () => { Finance.renderCashbox(); UI.openModal('modalCashbox'); });
+  document.getElementById('btnExpenses').addEventListener('click', () => { Finance.renderExpenses(); UI.openModal('modalExpenses'); });
+  document.getElementById('btnInvoices').addEventListener('click', () => { UI.renderInvoicesList(); UI.openModal('modalInvoicesList'); });
+  document.getElementById('btnInventory').addEventListener('click', () => { UI.renderInventory('inv-products'); UI.openModal('modalInventory'); });
+  document.getElementById('btnProducts').addEventListener('click', () => {
+    const pass = prompt('🔑 كلمة سر المنتجات:');
+    if (pass === null) return;
+    if (pass === AppState.settings.passwordProducts) { UI.renderProductsAdmin(); UI.openModal('modalProductsList'); }
+    else Helpers.showToast('❌ كلمة سر غير صحيحة', 'error');
+  });
+  document.getElementById('queuePlusBtn').addEventListener('click', () => {
+    AppState.waitingCount = (AppState.waitingCount || 0) + 1;
+    UI.renderQueue();
+    Storage.save();
+  });
+  document.getElementById('queueMinusBtn').addEventListener('click', () => {
+    AppState.waitingCount = Math.max(0, (AppState.waitingCount || 0) - 1);
+    UI.renderQueue();
+    Storage.save();
+  });
+  document.getElementById('btnSettings').addEventListener('click', () => {
+    const pass = prompt('🔑 كلمة سر الإعدادات:');
+    if (pass === null) return;
+    if (pass === AppState.settings.passwordSettings) { UI.loadSettings(); UI.openModal('modalSettings'); }
+    else Helpers.showToast('❌ كلمة سر غير صحيحة', 'error');
+  });
+
+  document.querySelectorAll('.overlay').forEach(ov => {
+    ov.addEventListener('click', (e) => { if (e.target === ov) UI.closeModal(ov.id); });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('.overlay.active').forEach(m => UI.closeModal(m.id));
+  });
+
+  setInterval(() => Storage.save(), 30000);
+});
+
+window.UI = UI; window.Rooms = Rooms; window.Storage = Storage; window.Helpers = Helpers; window.AppState = AppState;
+
+// ===============================================================
+// LIVE CLOCK + SIMPLE DEBTS MODULE
+// ===============================================================
+(function(){
+  function updateLiveDateTime(){
+    const now = new Date();
+    const clock = document.getElementById('liveClock');
+    const date = document.getElementById('liveDate');
+    if(clock) clock.textContent = now.toLocaleTimeString('ar-DZ', {hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false});
+    if(date) date.textContent = now.toLocaleDateString('ar-DZ', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  }
+  updateLiveDateTime();
+  setInterval(updateLiveDateTime, 1000);
+})();
+
+const Debts = {
+  data: AppState.debts,
+  currentDetailId: null,
+  syncFromState(){ this.data = AppState.debts; },
+  save(){ AppState.debts = this.data; Storage.save(); this.render(); Finance.renderCashbox(); UI.updateHomeStats(); },
+  openAdd(){
+    const n=document.getElementById('debtCustomer'), a=document.getElementById('debtAmount'), note=document.getElementById('debtNote');
+    if(n)n.value=''; if(a)a.value=''; if(note)note.value='';
+    UI.openModal('modalAddDebt');
+  },
+  add(){
+    const nameEl=document.getElementById('debtCustomer'), amountEl=document.getElementById('debtAmount'), noteEl=document.getElementById('debtNote');
+    const name=(nameEl?.value||'').trim(), amount=Number(amountEl?.value||0), note=(noteEl?.value||'').trim();
+    if(!name) return Helpers.showToast('❌ اكتب اسم ولقب الزبون','error');
+    if(!(amount>0)) return Helpers.showToast('❌ أدخل مبلغ الدين','error');
+    this.data.unshift({id:Date.now(),customer:name,amount,remaining:amount,note,createdAt:new Date().toISOString(),payments:[]});
+    this.save();
+    if(nameEl)nameEl.value=''; if(amountEl)amountEl.value=''; if(noteEl)noteEl.value='';
+    UI.closeModal('modalAddDebt');
+    Helpers.showToast('✅ تم تسجيل الدين','success');
+  },
+  pay(id){
+    const d=this.data.find(x=>x.id===id); if(!d)return;
+    const raw=prompt('المبلغ المدفوع (دج):',d.remaining); if(raw===null)return; const paid=Number(raw);
+    if(!(paid>0)) return Helpers.showToast('❌ أدخل مبلغاً صحيحاً','error');
+    if(paid>Number(d.remaining)) return Helpers.showToast('❌ المبلغ أكبر من الدين المتبقي','error');
+    const at=new Date().toISOString();
+    d.remaining=Math.max(0,Number(d.remaining)-paid);
+    d.payments=Array.isArray(d.payments)?d.payments:[];
+    d.payments.push({amount:paid,date:at});
+    Finance.addCashTransaction(paid,'تسديد دين: '+d.customer,'debt',d.invoiceId ? String(d.invoiceId) : String(d.id),at);
+    if(d.invoiceId){
+      const inv=AppState.invoices.find(i=>i.id===d.invoiceId);
+      if(inv){
+        inv.paidAmount=Number(inv.paidAmount||0)+paid;
+        if(d.remaining<=0){inv.paymentStatus='paid';inv.paidAt=at;inv.settledViaDebt=true;inv.wasDebt=true;} else inv.paymentStatus='debt';
+      }
+    }
+    const settled=d.remaining<=0;
+    if(settled) this.data=this.data.filter(x=>x.id!==id);
+    this.save(); UI.renderSales();
+    if(settled){ this.currentDetailId=null; UI.closeModal('modalDebtDetail'); }
+    else this.openDetail(id, true);
+    Helpers.showToast('✅ تم تسجيل التسديد في صندوق اليوم','success');
+  },
+  remove(id){
+    const d=this.data.find(x=>x.id===id); if(!d)return;
+    if(d.invoiceId) return Helpers.showToast('⚠️ هذا الدين مربوط بفاتورة؛ سدده من زر التسديد حتى تبقى الحسابات صحيحة','warning');
+    UI.showConfirm('🗑','حذف الدين','هل تريد حذف هذا الدين اليدوي؟',()=>{
+      this.data=this.data.filter(x=>x.id!==id); this.currentDetailId=null; this.save(); UI.closeModal('modalDebtDetail');
+    });
+  },
+  getInvoice(d){ return d?.invoiceId ? AppState.invoices.find(i => i.id === d.invoiceId) : null; },
+  getDebtItems(d){
+    const inv = this.getInvoice(d);
+    const showerPrice = Number(d?.showerPrice ?? inv?.showerPrice ?? 0);
+    const products = Array.isArray(d?.products) && d.products.length ? d.products : (Array.isArray(inv?.products) ? inv.products : []);
+    const lines = [];
+    if (showerPrice > 0) lines.push({ label: '🚿 دوش', value: showerPrice + ' دج' });
+    products.forEach(p => {
+      const qty = Number(p.qty || 1), price = Number(p.price || 0), total = price * qty;
+      lines.push({ label: (p.isCustomCharge ? '💵 ' : '📦 ') + (p.name || (p.isCustomCharge ? 'إضافة يدوية' : 'منتج')) + (!p.isCustomCharge && qty > 1 ? ' × ' + qty : ''), value: total.toLocaleString('ar-DZ') + ' دج' });
+    });
+    return lines;
+  },
+  render(){
+    const list=document.getElementById('debtsList'), totalEl=document.getElementById('debtsTotal'), countEl=document.getElementById('debtsCount'); if(!list)return;
+    const q=(document.getElementById('debtSearch')?.value||'').trim().toLowerCase();
+    const rows=this.data.filter(d=>!q || String(d.customer||'').toLowerCase().includes(q));
+    const total=this.data.reduce((s,d)=>s+Number(d.remaining||0),0);
+    if(totalEl)totalEl.textContent=total.toLocaleString('ar-DZ')+' دج';
+    if(countEl)countEl.textContent=this.data.length;
+    if(!rows.length){list.innerHTML='<div class="empty-note">لا توجد ديون مسجلة</div>';return;}
+    list.innerHTML=rows.map(d=>{
+      const dt=new Date(d.createdAt);
+      const when=dt.toLocaleDateString('ar-DZ')+' • '+dt.toLocaleTimeString('ar-DZ',{hour:'2-digit',minute:'2-digit',hour12:false});
+      return `<div class="debt-list-row" onclick="Debts.openDetail(${d.id})">
+        <div class="debt-list-main">
+          <div class="debt-customer">${this.escape(d.customer)}</div>
+          <div class="debt-meta">${this.escape(when)}</div>
+        </div>
+        <div class="debt-list-side">
+          <div class="debt-amount">${Number(d.remaining).toLocaleString('ar-DZ')} دج</div>
+          <span class="debt-chevron">‹</span>
+        </div>
+      </div>`;
+    }).join('');
+  },
+  openDetail(id, refreshOnly=false){
+    const d=this.data.find(x=>x.id===id); if(!d)return;
+    this.currentDetailId=id;
+    const wrap=document.getElementById('debtDetailContent'); if(!wrap)return;
+    const inv=this.getInvoice(d);
+    const dt=new Date(d.createdAt);
+    const when=dt.toLocaleDateString('ar-DZ')+' • '+dt.toLocaleTimeString('ar-DZ',{hour:'2-digit',minute:'2-digit',hour12:false});
+    const roomId=d.roomId ?? inv?.roomId;
+    const invoiceNumber=d.invoiceNumber || inv?.number || '';
+    const original=Number(d.amount || inv?.total || d.remaining || 0);
+    const details=this.getDebtItems(d);
+    const detailsHtml=details.length
+      ? `<div><div class="section-label">تفاصيل الفاتورة</div><div class="debt-details">${details.map(x=>`<div class="debt-detail-line"><span class="label">${this.escape(x.label)}</span><span class="value">${this.escape(x.value)}</span></div>`).join('')}</div></div>`
+      : `<div class="debt-note">📝 ${this.escape(d.note || 'دين يدوي بدون تفاصيل فاتورة')}</div>`;
+    const payments=Array.isArray(d.payments)?d.payments:[];
+    const paidTotal=payments.reduce((s,p)=>s+Number(p.amount||0),0);
+    const paymentsHtml=payments.length ? `<div><div class="section-label">التسديدات السابقة</div><div class="debt-details">${payments.slice().reverse().map(p=>{
+      const pd=new Date(p.date); const pw=pd.toLocaleDateString('ar-DZ')+' • '+pd.toLocaleTimeString('ar-DZ',{hour:'2-digit',minute:'2-digit',hour12:false});
+      return `<div class="debt-detail-line"><span class="label">${this.escape(pw)}</span><span class="value">${Number(p.amount||0).toLocaleString('ar-DZ')} دج</span></div>`;
+    }).join('')}</div></div>` : '';
+    const noteHtml=(d.note && details.length) ? `<div class="debt-note">📝 ${this.escape(d.note)}</div>` : '';
+    wrap.innerHTML=`
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="debt-profile">
+          <div style="min-width:0"><div class="debt-profile-name">${this.escape(d.customer)}</div><div class="debt-profile-time">${this.escape(when)}</div></div>
+          <div class="debt-profile-amount">${Number(d.remaining).toLocaleString('ar-DZ')} دج</div>
+        </div>
+        <div class="debt-detail-grid">
+          <div class="debt-info-box"><span class="k">المبلغ الأصلي</span><span class="v">${original.toLocaleString('ar-DZ')} دج</span></div>
+          <div class="debt-info-box"><span class="k">المبلغ المتبقي</span><span class="v">${Number(d.remaining).toLocaleString('ar-DZ')} دج</span></div>
+          <div class="debt-info-box"><span class="k">رقم الفاتورة</span><span class="v">${this.escape(invoiceNumber || 'دين يدوي')}</span></div>
+          <div class="debt-info-box"><span class="k">الغرفة</span><span class="v">${roomId ? 'غرفة '+String(roomId).padStart(2,'0') : '--'}</span></div>
+        </div>
+        ${detailsHtml}
+        ${noteHtml}
+        ${paymentsHtml}
+        ${paidTotal>0 ? `<div class="info-line"><span class="k">إجمالي ما تم تسديده</span><span class="v">${paidTotal.toLocaleString('ar-DZ')} دج</span></div>` : ''}
+        <div class="debt-actions">
+          <button class="btn btn-primary pay-debt" onclick="Debts.pay(${d.id})">💵 تسديد الدين</button>
+          <button class="btn btn-secondary delete-debt" onclick="Debts.remove(${d.id})" title="حذف">🗑</button>
+        </div>
+      </div>`;
+    if(!refreshOnly) UI.openModal('modalDebtDetail');
+  },
+  escape(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));},
+  open(){this.render();UI.openModal('modalDebts');}
+};
+window.Finance = Finance; window.Debts = Debts;
+
+document.addEventListener('DOMContentLoaded', function(){
+  const b = document.getElementById('btnDebts');
+  if(b) b.addEventListener('click', () => Debts.open());
+  Debts.render();
+});
+
+</script>
+</body>
+</html>

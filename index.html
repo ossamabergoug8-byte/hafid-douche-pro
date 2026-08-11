@@ -4,7 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0a0f14">
-<title>HAFID DOUCHE | نظام الإدارة الاحترافي v11</title>
+<title>HAFID DOUCHE | نظام الإدارة الاحترافي</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Hafid Douche Pro">
+<meta name="apple-mobile-web-app-title" content="Hafid Douche Pro">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="./icon-192.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
@@ -475,6 +483,81 @@ body.modal-open{ position:fixed; inset:0; overflow:hidden; width:100%; }
 .manual-charge-row .ph{ background:rgba(34,224,184,.08); color:var(--aqua); }
 .manual-charge-row .pname::before{ content:'💵 '; }
 
+
+/* Direct sale — products without a shower session */
+.direct-sale-cart{
+  background:linear-gradient(155deg,rgba(34,224,184,.07),rgba(255,255,255,.02));
+  border:1px solid rgba(34,224,184,.18);border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:8px;
+}
+.direct-sale-cart-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:900;color:#fff;}
+.direct-sale-cart-list{display:flex;flex-direction:column;gap:6px;max-height:210px;overflow:auto;}
+.direct-sale-cart-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:8px 9px;}
+.direct-sale-cart-row .sale-name{font-size:.78rem;font-weight:800;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.direct-sale-cart-row .sale-sub{font-size:.65rem;color:var(--text-dim);margin-top:2px;}
+.direct-sale-qty{display:flex;align-items:center;gap:5px;direction:ltr;}
+.direct-sale-qty button{width:28px;height:28px;border:0;border-radius:8px;background:var(--surface-3);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;}
+.direct-sale-qty .remove{color:#ff9aa3;background:rgba(255,84,104,.10);}
+.direct-sale-total{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:8px;font-family:var(--font-display);font-weight:900;}
+.direct-sale-total .amount{color:var(--aqua);font-size:1.08rem;}
+#modalDirectSale .product-grid{
+  gap:6px;
+  min-height:118px;
+  max-height:260px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  flex:0 0 auto;
+  align-content:start;
+}
+#modalDirectSale .pcard{
+  padding:6px;
+  gap:2px;
+  border-radius:12px;
+  min-height:92px;
+  flex-shrink:0;
+  width:100%;
+  text-align:right;
+  font-family:var(--font-body);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+#modalDirectSale button.pcard{
+  appearance:none;
+  -webkit-appearance:none;
+  cursor:pointer;
+}
+#modalDirectSale button.pcard:active{
+  transform:scale(.97);
+  border-color:rgba(34,224,184,.45);
+}
+#modalDirectSale button.pcard:disabled{
+  cursor:not-allowed;
+  opacity:.45;
+}
+#modalDirectSale .direct-sale-plus{
+  position:absolute;
+  top:5px;
+  left:5px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:linear-gradient(150deg,var(--aqua),var(--aqua-dark));
+  color:#052620;
+  font-weight:900;
+  font-size:.78rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px var(--aqua-glow);
+  pointer-events:none;
+}
+#modalDirectSale .pcard .pimg{height:40px;border-radius:8px;}
+#modalDirectSale .pcard .add-mini{width:22px;height:22px;top:5px;left:5px;font-size:.78rem;}
+#modalDirectSale .pcard .pname{font-size:.74rem;line-height:1.15;margin-top:1px;}
+#modalDirectSale .pcard .pdetail{font-size:.66rem;line-height:1.15;font-weight:700;color:var(--text-dim);}
+#modalDirectSale .chip{min-height:34px;padding:7px 12px;font-size:.72rem;}
+#modalDirectSale #directSaleCategoryChips{min-height:38px;align-items:center;overflow-x:auto;overflow-y:visible;}
+.direct-sale-customer-note{font-size:.65rem;color:var(--text-dim);margin-top:-3px;}
+
 .scanner-box{ background:#000; border-radius:var(--r-md); overflow:hidden; min-height:220px; position:relative; }
 .scanner-box video{ width:100% !important; height:100% !important; min-height:220px; display:block; object-fit:cover; }
 .scan-frame-wrap{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:5; }
@@ -741,6 +824,7 @@ body.modal-open{ position:fixed; inset:0; overflow:hidden; width:100%; }
     <div class="header-actions">
       <button class="icon-btn" id="btnDashboard" title="لوحة التحكم">📊</button>
       <button class="icon-btn" id="btnSales" title="المبيعات">💰</button>
+      <button class="icon-btn" id="btnDirectSale" title="بيع مباشر بدون دوش">🛒</button>
       <button class="icon-btn" id="btnInvoices" title="الفواتير">🧾</button>
       <button class="icon-btn" id="btnInventory" title="المخزون">📋</button>
       <button class="icon-btn" id="btnDebts" title="الديون">💳</button>
@@ -887,12 +971,14 @@ body.modal-open{ position:fixed; inset:0; overflow:hidden; width:100%; }
         <div class="num" id="invNum">#INV-000000</div>
       </div>
       <hr>
-      <div class="row"><span>الغرفة</span><span id="invRoomNum">--</span></div>
-      <div class="row"><span>الدخول</span><span id="invEntryTime">--</span></div>
-      <div class="row"><span>الخروج</span><span id="invExitTime">--</span></div>
-      <div class="row"><span>المدة</span><span id="invDuration">--</span></div>
+      <div class="row" id="invOperationRow"><span>العملية</span><span id="invOperationType">دوش</span></div>
+      <div class="row" id="invDirectDateRow" style="display:none;"><span>التاريخ</span><span id="invDirectDate">--</span></div>
+      <div class="row" id="invRoomRow"><span>الغرفة</span><span id="invRoomNum">--</span></div>
+      <div class="row" id="invEntryRow"><span>الدخول</span><span id="invEntryTime">--</span></div>
+      <div class="row" id="invExitRow"><span>الخروج</span><span id="invExitTime">--</span></div>
+      <div class="row" id="invDurationRow"><span>المدة</span><span id="invDuration">--</span></div>
       <hr>
-      <div class="row"><span>سعر الدوش</span><span id="invShowerPrice">0 دج</span></div>
+      <div class="row" id="invShowerRow"><span>سعر الدوش</span><span id="invShowerPrice">0 دج</span></div>
       <div id="invoiceItems"></div>
       <div class="row"><span>إجمالي المنتجات والإضافات</span><span id="invProductsTotal">0 دج</span></div>
       <div class="row total"><span>الإجمالي</span><span id="invGrandTotal">0 دج</span></div>
@@ -940,6 +1026,43 @@ body.modal-open{ position:fixed; inset:0; overflow:hidden; width:100%; }
     </div>
     <button class="btn btn-secondary" id="toggleScannerBtn" onclick="UI.smartBarcodeScan('selector')">📷 قراءة تلقائية</button>
     <div class="product-grid" id="productSelectorGrid"></div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: DIRECT SALE ==================== -->
+<div class="overlay" id="modalDirectSale">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title">🛒 بيع مباشر — بدون دوش</span>
+      <button class="sheet-close" onclick="UI.closeModal('modalDirectSale')">✕</button>
+    </div>
+    <div class="field">
+      <label>اسم الزبون (اختياري)</label>
+      <input class="input" id="directSaleCustomer" maxlength="70" placeholder="يبقى محفوظاً ويظهر في QR فقط">
+      <div class="direct-sale-customer-note">الاسم لا يُطبع كنص ظاهر على الفاتورة.</div>
+    </div>
+    <div class="search-bar">
+      <input class="input" id="directSaleSearchInput" placeholder="ابحث بالاسم أو الباركود..." oninput="UI.renderDirectSaleProducts()">
+      <span class="search-icon">🔍</span>
+    </div>
+    <div class="chip-row" id="directSaleCategoryChips"></div>
+    <div class="scanner-box" id="directSaleScannerContainer" style="display:none;">
+      <div id="directSaleScannerReader"></div>
+      <div class="scan-frame-wrap"><div class="scan-frame"></div></div>
+      <div class="scan-live-hint">📷 وجّه الباركود داخل المستطيل — يُضاف المنتج تلقائياً</div>
+    </div>
+    <button class="btn btn-secondary" id="directSaleScanBtn" onclick="UI.smartBarcodeScan('direct-sale')">📷 قراءة الباركود تلقائياً</button>
+    <div class="direct-sale-cart">
+      <div class="direct-sale-cart-head"><span>🧺 سلة البيع</span><button class="btn btn-secondary btn-sm" type="button" onclick="UI.clearDirectSaleCart()">تفريغ</button></div>
+      <div class="direct-sale-cart-list" id="directSaleCartList"></div>
+      <div class="direct-sale-total"><span>الإجمالي</span><span class="amount" id="directSaleTotal">0 دج</span></div>
+    </div>
+    <div class="product-grid" id="directSaleProductGrid"></div>
+    <div class="control-row">
+      <button class="btn btn-secondary" type="button" onclick="UI.closeModal('modalDirectSale')">إلغاء</button>
+      <button class="btn btn-primary" id="directSaleCheckoutBtn" type="button" onclick="UI.checkoutDirectSale()">🧾 إصدار الفاتورة</button>
+    </div>
   </div>
 </div>
 
@@ -1252,7 +1375,7 @@ body.modal-open{ position:fixed; inset:0; overflow:hidden; width:100%; }
 
 <script>
 /* ============================================================
-   HAFID DOUCHE v20 — REVIEWED APPLICATION LOGIC
+   HAFID DOUCHE v27 — FINAL REVIEWED + PWA + DIRECT SALE
    Modules: AppState, Helpers, Storage, Rooms, UI, Dashboard
    ============================================================ */
 
@@ -1279,6 +1402,9 @@ const AppState = {
   modalTimerHandle: null,
   scannerInstance: null,
   productFormScannerInstance: null,
+  directSaleScannerInstance: null,
+  directSaleCart: [],
+  directSaleCategory: 'الكل',
   waitingCount: 0,
   selectorRoomId: null,
   activeCategory: 'الكل',
@@ -1437,7 +1563,7 @@ const Storage = {
   },
   save() {
     const data = {
-      version: 6,
+      version: 7,
       settings: AppState.settings,
       productsDB: AppState.productsDB,
       invoices: AppState.invoices,
@@ -1473,7 +1599,7 @@ const Storage = {
       // Old versions auto-created a cash transaction for every paid invoice.
       // Do NOT do that for invoices that were paid through the debts module:
       // their partial/final debt payments are already cash transactions.
-      const paidThroughDebt = !!(inv.settledViaDebt || inv.wasDebt || inv.customerName);
+      const paidThroughDebt = !!(inv.settledViaDebt || inv.wasDebt);
       const hasInvoiceCash = txIds.has(String(inv.id));
 
       if (inv.paymentStatus === 'paid' && !hasInvoiceCash && !paidThroughDebt) {
@@ -1488,7 +1614,7 @@ const Storage = {
       }
       (inv.products || []).forEach(item => {
         if (item.cost == null) {
-          const dbp = AppState.productsDB.find(p => p.id === item.productId || p.name === item.name);
+          const dbp = AppState.productsDB.find(p => String(p.id) === String(item.productId) || p.name === item.name);
           item.cost = Number(dbp?.cost || 0);
         }
       });
@@ -1536,7 +1662,7 @@ const Storage = {
   },
   backup() {
     const data = {
-      app: 'HAFID DOUCHE', version: 6, exportedAt: new Date().toISOString(),
+      app: 'HAFID DOUCHE', version: 7, exportedAt: new Date().toISOString(),
       settings: AppState.settings, productsDB: AppState.productsDB,
       invoices: AppState.invoices, debts: AppState.debts,
       expenses: AppState.expenses, cashTransactions: AppState.cashTransactions,
@@ -1699,7 +1825,7 @@ const Rooms = {
 
     // Any products added during an accidental session are returned to stock.
     (room.products || []).forEach(item => {
-      const product = AppState.productsDB.find(p => p.id === item.productId);
+      const product = AppState.productsDB.find(p => String(p.id) === String(item.productId));
       if (product) product.qty = Number(product.qty || 0) + Number(item.qty || 1);
     });
 
@@ -1725,7 +1851,7 @@ const Rooms = {
     const finalSec = room.elapsedSeconds;
     const entry = room.entryTime, exit = Date.now();
     const showerPrice = Helpers.getShowerPrice(finalSec);
-    room.products.forEach(item => { if (item.cost == null) { const dbp = AppState.productsDB.find(p => p.id === item.productId); item.cost = Number(dbp?.cost || 0); } });
+    room.products.forEach(item => { if (item.cost == null) { const dbp = AppState.productsDB.find(p => String(p.id) === String(item.productId)); item.cost = Number(dbp?.cost || 0); } });
     const productsSum = room.products.reduce((a, p) => a + p.price * (p.qty || 1), 0);
     const total = showerPrice + productsSum;
     const invoice = {
@@ -1749,7 +1875,7 @@ const Rooms = {
   addProductToRoom(roomId, product) {
     if (product.qty <= 0) { Helpers.showToast('❌ المخزون غير كافٍ', 'error'); return false; }
     const room = AppState.roomsState[roomId];
-    const existing = room.products.find(p => p.productId === product.id);
+    const existing = room.products.find(p => String(p.productId) === String(product.id));
     if (existing) existing.qty = (existing.qty || 1) + 1;
     else room.products.push({ productId: product.id, name: product.name, cost: Number(product.cost || 0), price: product.price, image: product.image || '', qty: 1 });
     product.qty--;
@@ -1781,7 +1907,7 @@ const Rooms = {
       return true;
     }
 
-    const dbProduct = AppState.productsDB.find(p => p.id === item.productId);
+    const dbProduct = AppState.productsDB.find(p => String(p.id) === String(item.productId));
     if (dbProduct) dbProduct.qty = Number(dbProduct.qty || 0) + 1;
 
     const currentQty = Number(item.qty || 1);
@@ -1859,7 +1985,7 @@ const UI = {
         <span style="font-size:1.8rem;">🔧</span>
         <span class="room-label-empty">غرفة ${String(roomId).padStart(2,'0')}</span>
         <span class="room-sub-empty">قيد الصيانة</span>
-        <span class="room-sub-empty" style="color:var(--amber);max-width:95%;text-align:center;">${room.maintenanceReason || 'صيانة عامة'}</span>`;
+        <span class="room-sub-empty" style="color:var(--amber);max-width:95%;text-align:center;">${Helpers.escapeHtml(room.maintenanceReason || 'صيانة عامة')}</span>`;
       return wrapper;
     }
 
@@ -2061,6 +2187,9 @@ const UI = {
         AppState.editingProductId = null;
         AppState.selectorRoomId = null;
         AppState.activeCategory = 'الكل';
+        AppState.directSaleCart = [];
+        AppState.directSaleCategory = 'الكل';
+        if (AppState.directSaleScannerInstance) { try { AppState.directSaleScannerInstance.stop(); } catch(e) {} AppState.directSaleScannerInstance = null; }
         AppState.waitingCount = 0;
         if (AppState.chartInstance) { AppState.chartInstance.destroy(); AppState.chartInstance = null; }
 
@@ -2078,7 +2207,7 @@ const UI = {
         Debts.render(); Finance.renderCashbox(); Finance.renderExpenses();
 
         // 9) close any modal that might reference now-deleted data
-        ['modalRoom', 'modalInvoice', 'modalProductSelector'].forEach(id => this.closeModal(id));
+        ['modalRoom', 'modalInvoice', 'modalProductSelector', 'modalDirectSale'].forEach(id => this.closeModal(id));
         this.closeModal('modalSettings');
 
         Helpers.showToast('✅ تم إعادة ضبط جميع البيانات بنجاح', 'success');
@@ -2110,12 +2239,17 @@ const UI = {
     const customer = clean(inv.customerName || '', 70);
     if (customer) lines.push(`الزبون: ${customer}`);
 
-    lines.push(
-      `الغرفة: ${String(inv.roomId ?? '').padStart(2, '0')}`,
-      `التاريخ: ${dateText}`,
-      `المدة: ${Helpers.formatTime(Number(inv.durationSec || 0))}`,
-      `الدوش: ${Number(inv.showerPrice || 0).toFixed(0)} دج`
-    );
+    if (inv.saleType === 'direct') {
+      lines.push(`العملية: بيع مباشر`, `التاريخ: ${dateText}`);
+    } else {
+      lines.push(
+        `العملية: دوش`,
+        `الغرفة: ${String(inv.roomId ?? '').padStart(2, '0')}`,
+        `التاريخ: ${dateText}`,
+        `المدة: ${Helpers.formatTime(Number(inv.durationSec || 0))}`,
+        `الدوش: ${Number(inv.showerPrice || 0).toFixed(0)} دج`
+      );
+    }
 
     const products = Array.isArray(inv.products) ? inv.products : [];
     products.slice(0, 10).forEach((p, i) => {
@@ -2151,12 +2285,22 @@ const UI = {
   },
 
   showInvoiceModal(invoice) {
+    const isDirectSale = invoice.saleType === 'direct';
     document.getElementById('invNum').textContent = '#' + (invoice.number || invoice.id);
-    document.getElementById('invRoomNum').textContent = String(invoice.roomId).padStart(2, '0');
-    document.getElementById('invEntryTime').textContent = Helpers.formatDateTime(invoice.entryTime);
-    document.getElementById('invExitTime').textContent = Helpers.formatDateTime(invoice.exitTime);
-    document.getElementById('invDuration').textContent = Helpers.formatTime(invoice.durationSec);
-    document.getElementById('invShowerPrice').textContent = invoice.showerPrice.toFixed(0) + ' دج';
+    document.getElementById('invOperationType').textContent = isDirectSale ? '🛒 بيع مباشر' : '🚿 دوش';
+    const directDateRow = document.getElementById('invDirectDateRow');
+    if (directDateRow) directDateRow.style.display = isDirectSale ? 'flex' : 'none';
+    const directDate = document.getElementById('invDirectDate');
+    if (directDate) directDate.textContent = Helpers.formatDateTime(invoice.date);
+    document.getElementById('invRoomNum').textContent = isDirectSale ? '—' : String(invoice.roomId).padStart(2, '0');
+    document.getElementById('invEntryTime').textContent = Helpers.formatDateTime(invoice.entryTime || invoice.date);
+    document.getElementById('invExitTime').textContent = Helpers.formatDateTime(invoice.exitTime || invoice.date);
+    document.getElementById('invDuration').textContent = Helpers.formatTime(invoice.durationSec || 0);
+    document.getElementById('invShowerPrice').textContent = Number(invoice.showerPrice || 0).toFixed(0) + ' دج';
+    ['invRoomRow','invEntryRow','invExitRow','invDurationRow','invShowerRow'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = isDirectSale ? 'none' : 'flex';
+    });
     const items = document.getElementById('invoiceItems');
     items.innerHTML = '';
     if (invoice.products && invoice.products.length) {
@@ -2288,9 +2432,15 @@ const UI = {
       line(y, true);
       y += 35;
 
-      row('الغرفة', String(inv.roomId).padStart(2, '0'), y, true); y += rowH;
-      row('المدة', Helpers.formatTime(inv.durationSec), y, true); y += rowH;
-      row('الدوش', `${Number(inv.showerPrice || 0).toFixed(0)} دج`, y, true); y += rowH;
+      const isDirectSale = inv.saleType === 'direct';
+      if (isDirectSale) {
+        row('العملية', 'بيع مباشر', y, true); y += rowH;
+      } else {
+        row('العملية', 'دوش', y, true); y += rowH;
+        row('الغرفة', String(inv.roomId).padStart(2, '0'), y, true); y += rowH;
+        row('المدة', Helpers.formatTime(inv.durationSec), y, true); y += rowH;
+        row('الدوش', `${Number(inv.showerPrice || 0).toFixed(0)} دج`, y, true); y += rowH;
+      }
 
       if (products.length) {
         line(y - 8, true); y += 20;
@@ -2388,6 +2538,216 @@ const UI = {
       console.error(e);
       Helpers.showToast('❌ خطأ في إنشاء الفاتورة', 'error');
     }
+  },
+
+  // ---------- DIRECT SALE (NO SHOWER) ----------
+  openDirectSale() {
+    AppState.directSaleCart = [];
+    AppState.directSaleCategory = 'الكل';
+    const search = document.getElementById('directSaleSearchInput');
+    const customer = document.getElementById('directSaleCustomer');
+    if (search) search.value = '';
+    if (customer) customer.value = '';
+    this.renderDirectSaleCategories();
+    this.renderDirectSaleProducts();
+    this.renderDirectSaleCart();
+    this.openModal('modalDirectSale');
+  },
+  renderDirectSaleCategories() {
+    const wrap = document.getElementById('directSaleCategoryChips');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    Helpers.getCategories().forEach(cat => {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (cat === AppState.directSaleCategory ? ' active' : '');
+      chip.textContent = cat;
+      chip.addEventListener('click', () => {
+        AppState.directSaleCategory = cat;
+        this.renderDirectSaleCategories();
+        this.renderDirectSaleProducts();
+      });
+      wrap.appendChild(chip);
+    });
+  },
+  _directSaleCartQty(productId) {
+    const item = (AppState.directSaleCart || []).find(x => String(x.productId) === String(productId));
+    return Number(item?.qty || 0);
+  },
+  renderDirectSaleProducts() {
+    const grid = document.getElementById('directSaleProductGrid');
+    if (!grid) return;
+    const f = (document.getElementById('directSaleSearchInput')?.value || '').trim().toLowerCase();
+    const list = AppState.productsDB.filter(p =>
+      (!f || String(p.name || '').toLowerCase().includes(f) || String(p.barcode || '').toLowerCase().includes(f)) &&
+      (AppState.directSaleCategory === 'الكل' || (p.category || 'غير مصنف') === AppState.directSaleCategory)
+    );
+    grid.innerHTML = '';
+    if (!list.length) { grid.innerHTML = '<div class="empty-note" style="grid-column:1/-1;">لا توجد نتائج</div>'; return; }
+    list.forEach(p => {
+      // Ensure every product has a stable id, including old/imported inventories.
+      if (!p.id) p.id = Helpers.generateId();
+      const productIndex = AppState.productsDB.indexOf(p);
+      const available = Math.max(0, Number(p.qty || 0) - this._directSaleCartQty(p.id));
+
+      // Real <button> instead of a div + JS listener: more reliable on Android/WebView.
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'pcard' + (available <= 0 ? ' oos' : '');
+      card.disabled = available <= 0;
+      card.setAttribute('aria-label', 'إضافة ' + String(p.name || 'منتج'));
+      card.innerHTML = `
+        ${p.image ? `<img class="pimg" src="${Helpers.escapeHtml(p.image)}">` : `<div class="pimg ph">📦</div>`}
+        <span class="pname">${Helpers.escapeHtml(p.name)}</span>
+        <span class="pdetail">${Number(p.price || 0).toFixed(0)} دج</span>
+        <span class="direct-sale-plus">+</span>`;
+      card.onclick = () => this.addDirectSaleProductAt(productIndex);
+      grid.appendChild(card);
+    });
+  },
+  addDirectSaleProductAt(productIndex) {
+    const index = Number(productIndex);
+    const p = AppState.productsDB[index];
+    if (!p) {
+      Helpers.showToast('❌ تعذر العثور على المنتج', 'error');
+      return;
+    }
+    if (!p.id) p.id = Helpers.generateId();
+    this.addDirectSaleProduct(p.id);
+  },
+  addDirectSaleProduct(productId) {
+    const p = AppState.productsDB.find(x => String(x.id) === String(productId));
+    if (!p) return;
+    const currentQty = this._directSaleCartQty(productId);
+    if (currentQty >= Number(p.qty || 0)) {
+      Helpers.showToast('❌ لا توجد كمية إضافية من ' + p.name, 'error');
+      return;
+    }
+    let item = AppState.directSaleCart.find(x => String(x.productId) === String(productId));
+    if (item) item.qty += 1;
+    else AppState.directSaleCart.push({ productId: p.id, name: p.name, cost: Number(p.cost || 0), price: Number(p.price || 0), image: p.image || '', qty: 1 });
+    this.renderDirectSaleCart();
+    this.renderDirectSaleProducts();
+    Helpers.showToast('✅ أضيف إلى السلة: ' + p.name, 'success');
+    if (navigator.vibrate) navigator.vibrate(35);
+  },
+  changeDirectSaleQty(productId, delta) {
+    const item = AppState.directSaleCart.find(x => String(x.productId) === String(productId));
+    if (!item) return;
+    const p = AppState.productsDB.find(x => String(x.id) === String(productId));
+    const next = Number(item.qty || 0) + Number(delta || 0);
+    if (next <= 0) AppState.directSaleCart = AppState.directSaleCart.filter(x => String(x.productId) !== String(productId));
+    else if (!p || next <= Number(p.qty || 0)) item.qty = next;
+    else return Helpers.showToast('❌ الكمية المتوفرة: ' + Number(p.qty || 0), 'error');
+    this.renderDirectSaleCart();
+    this.renderDirectSaleProducts();
+  },
+  removeDirectSaleProduct(productId) {
+    AppState.directSaleCart = AppState.directSaleCart.filter(x => String(x.productId) !== String(productId));
+    this.renderDirectSaleCart();
+    this.renderDirectSaleProducts();
+  },
+  clearDirectSaleCart() {
+    AppState.directSaleCart = [];
+    this.renderDirectSaleCart();
+    this.renderDirectSaleProducts();
+  },
+  renderDirectSaleCart() {
+    const list = document.getElementById('directSaleCartList');
+    const totalEl = document.getElementById('directSaleTotal');
+    const checkout = document.getElementById('directSaleCheckoutBtn');
+    if (!list || !totalEl) return;
+    const cart = AppState.directSaleCart || [];
+    if (!cart.length) list.innerHTML = '<div class="empty-note">السلة فارغة — اختر منتجاً أو امسح الباركود</div>';
+    else list.innerHTML = cart.map(item => `
+      <div class="direct-sale-cart-row">
+        <div><div class="sale-name">${Helpers.escapeHtml(item.name)}</div><div class="sale-sub">${Number(item.price || 0).toFixed(0)} دج × ${Number(item.qty || 1)} = ${(Number(item.price || 0) * Number(item.qty || 1)).toFixed(0)} دج</div></div>
+        <div class="direct-sale-qty">
+          <button class="remove" type="button" onclick="UI.removeDirectSaleProduct('${item.productId}')">🗑</button>
+          <button type="button" onclick="UI.changeDirectSaleQty('${item.productId}',-1)">−</button>
+          <strong>${Number(item.qty || 1)}</strong>
+          <button type="button" onclick="UI.changeDirectSaleQty('${item.productId}',1)">+</button>
+        </div>
+      </div>`).join('');
+    const total = cart.reduce((sum,item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0);
+    totalEl.textContent = total.toFixed(0) + ' دج';
+    if (checkout) checkout.disabled = !cart.length;
+  },
+  checkoutDirectSale() {
+    const cart = (AppState.directSaleCart || []).filter(x => Number(x.qty || 0) > 0);
+    if (!cart.length) return Helpers.showToast('⚠️ أضف منتجاً إلى السلة أولاً', 'warning');
+    for (const item of cart) {
+      const p = AppState.productsDB.find(x => String(x.id) === String(item.productId));
+      if (!p || Number(p.qty || 0) < Number(item.qty || 0)) {
+        return Helpers.showToast('❌ المخزون غير كافٍ للمنتج: ' + item.name, 'error');
+      }
+    }
+    const now = Date.now();
+    const products = cart.map(item => ({ ...item, qty: Number(item.qty || 1) }));
+    const total = products.reduce((sum,item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0);
+    const customerName = String(document.getElementById('directSaleCustomer')?.value || '').trim();
+    products.forEach(item => {
+      const p = AppState.productsDB.find(x => String(x.id) === String(item.productId));
+      if (p) p.qty = Math.max(0, Number(p.qty || 0) - Number(item.qty || 0));
+    });
+    const invoice = {
+      id: 'inv_' + now,
+      number: Helpers.nextInvoiceNumber(),
+      saleType: 'direct',
+      roomId: null,
+      entryTime: now,
+      exitTime: now,
+      durationSec: 0,
+      showerPrice: 0,
+      products: JSON.parse(JSON.stringify(products)),
+      productsSum: total,
+      total,
+      paymentStatus: 'pending',
+      paidAmount: 0,
+      paidAt: null,
+      customerName,
+      date: new Date(now).toISOString()
+    };
+    AppState.invoices.push(invoice);
+    AppState.directSaleCart = [];
+    Storage.save();
+    this.updateLowStockBadge();
+    this.updateHomeStats();
+    this.renderSales();
+    this.renderInvoicesList();
+    this.updateDashboardStats();
+    this.closeModal('modalDirectSale');
+    Helpers.playSound('beep');
+    this.showInvoiceModal(invoice);
+    const low = products.map(item => AppState.productsDB.find(x => String(x.id) === String(item.productId))).filter(p => p && p.qty <= p.minQty);
+    if (low.length) Helpers.showToast('⚠️ مخزون منخفض: ' + low.map(p => p.name + ' (' + p.qty + ')').join('، '), 'warning');
+    else Helpers.showToast('🛒 تم إنشاء فاتورة البيع المباشر', 'success');
+  },
+  toggleDirectSaleScanner() {
+    const container = document.getElementById('directSaleScannerContainer');
+    const btn = document.getElementById('directSaleScanBtn');
+    if (!container || !btn) return;
+    if (container.style.display === 'none') {
+      container.style.display = 'block'; btn.textContent = '⏹ إيقاف الكاميرا'; this.startDirectSaleScanner();
+    } else {
+      container.style.display = 'none'; btn.textContent = '📷 قراءة الباركود تلقائياً'; this._barcodeReadLock = false;
+      if (AppState.directSaleScannerInstance) {
+        const sc = AppState.directSaleScannerInstance; AppState.directSaleScannerInstance = null;
+        sc.stop().catch(() => {}).finally(() => { try { sc.clear(); } catch(e) {} });
+      }
+    }
+  },
+  startDirectSaleScanner() {
+    if (AppState.directSaleScannerInstance) {
+      const old = AppState.directSaleScannerInstance; AppState.directSaleScannerInstance = null;
+      old.stop().catch(() => {}).finally(() => { try { old.clear(); } catch(e) {} });
+    }
+    this._barcodeReadLock = false;
+    const reader = document.getElementById('directSaleScannerReader'); if (reader) reader.innerHTML = '';
+    try {
+      const scanner = this._makeBarcodeScanner('directSaleScannerReader'); AppState.directSaleScannerInstance = scanner;
+      scanner.start({ facingMode:'environment' }, this._barcodeConfig(), decodedText => this._onAutomaticBarcode('direct-sale', decodedText, scanner), () => {})
+        .catch(err => this._liveBarcodeError('direct-sale', err));
+    } catch(e) { this._liveBarcodeError('direct-sale', e); }
   },
 
   // ---------- PRODUCT SELECTOR ----------
@@ -2525,6 +2885,7 @@ const UI = {
       return;
     }
     if (isProduct) this.toggleProductFormScanner();
+    else if (mode === 'direct-sale') this.toggleDirectSaleScanner();
     else this.toggleScanner();
   },
   _onAutomaticBarcode(mode, decodedText, scanner) {
@@ -2534,6 +2895,7 @@ const UI = {
     this._barcodeReadLock = true;
 
     const isProduct = mode === 'product';
+    const isDirectSale = mode === 'direct-sale';
     if (navigator.vibrate) navigator.vibrate(80);
     try { Helpers.playSound('beep'); } catch (e) {}
 
@@ -2543,9 +2905,21 @@ const UI = {
         field.value = code;
         field.dispatchEvent(new Event('input', { bubbles: true }));
       }
-      const duplicate = AppState.productsDB.find(p => p.barcode === code && p.id !== AppState.editingProductId);
+      const duplicate = AppState.productsDB.find(p => p.barcode === code && String(p.id) !== String(AppState.editingProductId));
       if (duplicate) Helpers.showToast('⚠️ هذا الباركود مسجل للمنتج: ' + duplicate.name, 'warning');
       else Helpers.showToast('✅ تم التقاط الرقم تلقائياً: ' + code, 'success');
+    } else if (isDirectSale) {
+      const product = AppState.productsDB.find(p => String(p.barcode || '') === code);
+      if (product) {
+        this.addDirectSaleProduct(product.id);
+      } else {
+        const field = document.getElementById('directSaleSearchInput');
+        if (field) field.value = code;
+        AppState.directSaleCategory = 'الكل';
+        this.renderDirectSaleCategories();
+        this.renderDirectSaleProducts();
+        Helpers.showToast('📷 تم قراءة ' + code + ' — المنتج غير مسجل بعد', 'warning');
+      }
     } else {
       const field = document.getElementById('productSearchInput');
       if (field) field.value = code;
@@ -2567,6 +2941,12 @@ const UI = {
           const b = document.getElementById('prodScanBtn');
           if (c) c.style.display = 'none';
           if (b) b.textContent = '📷 قراءة تلقائية';
+        } else if (isDirectSale) {
+          AppState.directSaleScannerInstance = null;
+          const c = document.getElementById('directSaleScannerContainer');
+          const b = document.getElementById('directSaleScanBtn');
+          if (c) c.style.display = 'none';
+          if (b) b.textContent = '📷 قراءة الباركود تلقائياً';
         } else {
           AppState.scannerInstance = null;
           const c = document.getElementById('scannerContainer');
@@ -2580,12 +2960,19 @@ const UI = {
   _liveBarcodeError(mode, err) {
     console.warn('Automatic live barcode scanner failed:', err);
     const isProduct = mode === 'product';
+    const isDirectSale = mode === 'direct-sale';
     if (isProduct) {
       AppState.productFormScannerInstance = null;
       const c = document.getElementById('prodScannerContainer');
       const b = document.getElementById('prodScanBtn');
       if (c) c.style.display = 'none';
       if (b) b.textContent = '📷 قراءة تلقائية';
+    } else if (isDirectSale) {
+      AppState.directSaleScannerInstance = null;
+      const c = document.getElementById('directSaleScannerContainer');
+      const b = document.getElementById('directSaleScanBtn');
+      if (c) c.style.display = 'none';
+      if (b) b.textContent = '📷 قراءة الباركود تلقائياً';
     } else {
       AppState.scannerInstance = null;
       const c = document.getElementById('scannerContainer');
@@ -2712,6 +3099,14 @@ const UI = {
       document.getElementById('scannerContainer').style.display = 'none';
       document.getElementById('toggleScannerBtn').textContent = '📷 قراءة تلقائية';
     }
+    if (id === 'modalDirectSale' && AppState.directSaleScannerInstance) {
+      AppState.directSaleScannerInstance.stop().catch(() => {});
+      AppState.directSaleScannerInstance = null;
+      const c = document.getElementById('directSaleScannerContainer');
+      const b = document.getElementById('directSaleScanBtn');
+      if (c) c.style.display = 'none';
+      if (b) b.textContent = '📷 قراءة الباركود تلقائياً';
+    }
     if (id === 'modalProductsList' && AppState.productFormScannerInstance) {
       AppState.productFormScannerInstance.stop().catch(() => {});
       AppState.productFormScannerInstance = null;
@@ -2750,7 +3145,7 @@ const UI = {
 
     // top room
     const roomCounts = {};
-    AppState.invoices.forEach(i => { roomCounts[i.roomId] = (roomCounts[i.roomId] || 0) + 1; });
+    AppState.invoices.filter(i => i.saleType !== 'direct' && i.roomId != null).forEach(i => { roomCounts[i.roomId] = (roomCounts[i.roomId] || 0) + 1; });
     const topRoomEntry = Object.entries(roomCounts).sort((a, b) => b[1] - a[1])[0];
     document.getElementById('dashTopRoom').textContent = topRoomEntry ? 'غرفة ' + String(topRoomEntry[0]).padStart(2, '0') + ' (' + topRoomEntry[1] + ')' : '--';
 
@@ -2834,9 +3229,12 @@ const UI = {
     const div = document.createElement('div');
     div.className = 'list-row';
     div.style.cursor = 'pointer';
+    const direct = inv.saleType === 'direct';
+    const title = direct ? `🛒 بيع مباشر · ${inv.number || ''}` : `غرفة ${String(inv.roomId).padStart(2,'0')} · ${inv.number || ''}`;
+    const detail = direct ? `${Helpers.formatDateShort(inv.date)} · منتجات فقط` : `${Helpers.formatDateShort(inv.date)} · ${Helpers.formatTime(inv.durationSec)}`;
     div.innerHTML = `
-      <div class="li"><span class="name">غرفة ${String(inv.roomId).padStart(2,'0')} · ${inv.number || ''}</span>
-      <span class="sub">${Helpers.formatDateShort(inv.date)} · ${Helpers.formatTime(inv.durationSec)} · ${inv.paymentStatus === 'paid' ? '✅ مدفوعة' : inv.paymentStatus === 'debt' ? '💳 دين' : '⏳ انتظار الدفع'}</span></div>
+      <div class="li"><span class="name">${title}</span>
+      <span class="sub">${detail} · ${inv.paymentStatus === 'paid' ? '✅ مدفوعة' : inv.paymentStatus === 'debt' ? '💳 دين' : '⏳ انتظار الدفع'}</span></div>
       <span class="amount">${(inv.total || 0).toFixed(0)} دج</span>`;
     div.addEventListener('click', () => this.showInvoiceModal(inv));
     return div;
@@ -2865,7 +3263,9 @@ const UI = {
       list = list.filter(inv =>
         (inv.number || '').toLowerCase().includes(q) ||
         Helpers.formatDateShort(inv.date).toLowerCase().includes(q) ||
-        String(inv.roomId).includes(q)
+        String(inv.roomId ?? '').includes(q) ||
+        String(inv.customerName || '').toLowerCase().includes(q) ||
+        (inv.saleType === 'direct' && 'بيع مباشر'.includes(q))
       );
     }
     if (!list.length) { container.innerHTML = '<div class="empty-note">لا توجد نتائج</div>'; return; }
@@ -3043,10 +3443,10 @@ const UI = {
     if (cost < 0 || price <= 0 || qty < 0 || minQty < 0) { Helpers.showToast('❌ تحقق من الأسعار والكميات: لا تقبل القيم السالبة', 'error'); return; }
     if (cost > price) { Helpers.showToast('⚠️ سعر الشراء أكبر من سعر البيع', 'warning'); }
     if (AppState.editingProductId) {
-      if (barcode && AppState.productsDB.some(p => p.barcode === barcode && p.id !== AppState.editingProductId)) {
+      if (barcode && AppState.productsDB.some(p => p.barcode === barcode && String(p.id) !== String(AppState.editingProductId))) {
         Helpers.showToast('❌ الباركود موجود مسبقاً', 'error'); return;
       }
-      const existing = AppState.productsDB.find(p => p.id === AppState.editingProductId);
+      const existing = AppState.productsDB.find(p => String(p.id) === String(AppState.editingProductId));
       if (existing) Object.assign(existing, { name, barcode: barcode || existing.barcode, category: category || existing.category, cost, price, qty, minQty, image: this._tempImage });
       Helpers.showToast('✅ تم تحديث المنتج', 'success');
     } else {
@@ -3061,11 +3461,11 @@ const UI = {
     this.renderInventory();
   },
   editProduct(id) {
-    const p = AppState.productsDB.find(pr => pr.id === id);
+    const p = AppState.productsDB.find(pr => String(pr.id) === String(id));
     if (p) this.showProductForm(p);
   },
   quickAddStock(id) {
-    const p = AppState.productsDB.find(pr => pr.id === id);
+    const p = AppState.productsDB.find(pr => String(pr.id) === String(id));
     if (!p) return;
     const val = prompt('➕ الكمية المراد إضافتها للمخزون:', '10');
     if (val === null) return;
@@ -3082,14 +3482,14 @@ const UI = {
     const usedInActiveRoom = Object.values(AppState.roomsState).some(r =>
       (r.status === 'busy' || r.status === 'paused') &&
       Array.isArray(r.products) &&
-      r.products.some(item => item.productId === id)
+      r.products.some(item => String(item.productId) === String(id))
     );
     if (usedInActiveRoom) {
       Helpers.showToast('⚠️ لا يمكن حذف المنتج وهو مضاف لغرفة نشطة. أزله من الغرفة أولاً.', 'warning');
       return;
     }
     this.showConfirm('🗑', 'حذف المنتج', 'هل تريد حذف هذا المنتج نهائياً؟', () => {
-      AppState.productsDB = AppState.productsDB.filter(p => p.id !== id);
+      AppState.productsDB = AppState.productsDB.filter(p => String(p.id) !== String(id));
       Storage.save();
       this.renderProductsAdmin();
       this.updateLowStockBadge();
@@ -3122,12 +3522,18 @@ const UI = {
       try {
         const data = JSON.parse(e.target.result);
         if (!Array.isArray(data)) throw new Error('not array');
-        const cleaned = data.map(p => ({
-          id: p.id || Helpers.generateId(), barcode: String(p.barcode || ''),
-          name: String(p.name || '').trim(), category: String(p.category || 'غير مصنف').trim(),
-          cost: Math.max(0, Number(p.cost || 0)), price: Math.max(0, Number(p.price || 0)),
-          qty: Math.max(0, parseInt(p.qty || 0)), minQty: Math.max(0, parseInt(p.minQty ?? 5)), image: p.image || ''
-        })).filter(p => p.name && p.price > 0);
+        const usedIds = new Set();
+        const cleaned = data.map(p => {
+          let id = String(p.id ?? '').trim();
+          if (!/^[A-Za-z0-9_-]{1,80}$/.test(id) || usedIds.has(id)) id = Helpers.generateId();
+          usedIds.add(id);
+          return {
+            id, barcode: String(p.barcode || '').trim(),
+            name: String(p.name || '').trim(), category: String(p.category || 'غير مصنف').trim(),
+            cost: Math.max(0, Number(p.cost || 0)), price: Math.max(0, Number(p.price || 0)),
+            qty: Math.max(0, parseInt(p.qty || 0)), minQty: Math.max(0, parseInt(p.minQty ?? 5)), image: p.image || ''
+          };
+        }).filter(p => p.name && p.price > 0);
         if (!cleaned.length && data.length) throw new Error('invalid products');
         const barcodes = cleaned.map(p => p.barcode).filter(Boolean);
         if (new Set(barcodes).size !== barcodes.length) throw new Error('duplicate barcode');
@@ -3164,7 +3570,7 @@ const UI = {
     const ready = Object.values(AppState.roomsState).filter(r => r.status === 'ready');
     sel.innerHTML = ready.length ? ready.map(r => `<option value="${r.id}">غرفة ${String(r.id).padStart(2,'0')}</option>`).join('') : '<option value="">لا توجد غرفة شاغرة</option>';
     const maint = Object.values(AppState.roomsState).filter(r => r.status === 'maintenance');
-    list.innerHTML = maint.length ? maint.map(r => `<div class="list-row"><div class="li"><span class="name">🔧 غرفة ${String(r.id).padStart(2,'0')}</span><span class="sub">${r.maintenanceReason || 'صيانة عامة'}</span></div><button class="btn btn-primary btn-sm" type="button" onclick="UI.finishRoomMaintenance(${r.id})">✅ إرجاع للخدمة</button></div>`).join('') : '<div class="empty-note">لا توجد غرف قيد الصيانة</div>';
+    list.innerHTML = maint.length ? maint.map(r => `<div class="list-row"><div class="li"><span class="name">🔧 غرفة ${String(r.id).padStart(2,'0')}</span><span class="sub">${Helpers.escapeHtml(r.maintenanceReason || 'صيانة عامة')}</span></div><button class="btn btn-primary btn-sm" type="button" onclick="UI.finishRoomMaintenance(${r.id})">✅ إرجاع للخدمة</button></div>`).join('') : '<div class="empty-note">لا توجد غرف قيد الصيانة</div>';
   },
   setRoomMaintenance() {
     const roomId = parseInt(document.getElementById('maintenanceRoomSelect').value);
@@ -3215,13 +3621,17 @@ const Finance = {
   },
   markInvoiceDebt() {
     const inv = AppState.currentInvoice; if (!inv || inv.paymentStatus !== 'pending') return;
-    const raw = prompt('👤 اسم الزبون صاحب الدين:'); if (raw === null) return;
-    const customer = raw.trim(); if (!customer) return Helpers.showToast('❌ اسم الزبون مطلوب', 'error');
+    let customer = String(inv.customerName || '').trim();
+    if (!customer) {
+      const raw = prompt('👤 اسم الزبون صاحب الدين:'); if (raw === null) return;
+      customer = raw.trim();
+    }
+    if (!customer) return Helpers.showToast('❌ اسم الزبون مطلوب', 'error');
     inv.paymentStatus = 'debt'; inv.customerName = customer; inv.paidAmount = 0; inv.wasDebt = true;
     const debt = {
       id: Date.now(), customer, amount: Number(inv.total || 0), remaining: Number(inv.total || 0),
-      note: 'فاتورة ' + (inv.number || '') + ' · غرفة ' + String(inv.roomId).padStart(2,'0'),
-      invoiceId: inv.id, invoiceNumber: inv.number, roomId: inv.roomId, durationSec: inv.durationSec,
+      note: inv.saleType === 'direct' ? ('فاتورة ' + (inv.number || '') + ' · بيع مباشر') : ('فاتورة ' + (inv.number || '') + ' · غرفة ' + String(inv.roomId).padStart(2,'0')),
+      invoiceId: inv.id, invoiceNumber: inv.number, roomId: inv.roomId, durationSec: inv.durationSec, saleType: inv.saleType || 'shower',
       showerPrice: Number(inv.showerPrice || 0), products: JSON.parse(JSON.stringify(inv.products || [])),
       createdAt: new Date().toISOString(), payments: []
     };
@@ -3281,6 +3691,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById('btnDashboard').addEventListener('click', () => { UI.updateDashboardStats(); UI.openModal('modalDashboard'); });
   document.getElementById('btnSales').addEventListener('click', () => { UI.renderSales(); UI.openModal('modalSales'); });
+  document.getElementById('btnDirectSale').addEventListener('click', () => UI.openDirectSale());
   document.getElementById('btnCashbox').addEventListener('click', () => { Finance.renderCashbox(); UI.openModal('modalCashbox'); });
   document.getElementById('btnExpenses').addEventListener('click', () => { Finance.renderExpenses(); UI.openModal('modalExpenses'); });
   document.getElementById('btnInvoices').addEventListener('click', () => { UI.renderInvoicesList(); UI.openModal('modalInvoicesList'); });
@@ -3454,7 +3865,7 @@ const Debts = {
           <div class="debt-info-box"><span class="k">المبلغ الأصلي</span><span class="v">${original.toLocaleString('ar-DZ')} دج</span></div>
           <div class="debt-info-box"><span class="k">المبلغ المتبقي</span><span class="v">${Number(d.remaining).toLocaleString('ar-DZ')} دج</span></div>
           <div class="debt-info-box"><span class="k">رقم الفاتورة</span><span class="v">${this.escape(invoiceNumber || 'دين يدوي')}</span></div>
-          <div class="debt-info-box"><span class="k">الغرفة</span><span class="v">${roomId ? 'غرفة '+String(roomId).padStart(2,'0') : '--'}</span></div>
+          <div class="debt-info-box"><span class="k">العملية</span><span class="v">${(d.saleType === 'direct' || inv?.saleType === 'direct') ? '🛒 بيع مباشر' : (roomId ? 'غرفة '+String(roomId).padStart(2,'0') : '--')}</span></div>
         </div>
         ${detailsHtml}
         ${noteHtml}
@@ -3479,5 +3890,16 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 </script>
+
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .then(reg => reg.update().catch(() => {}))
+      .catch(err => console.warn('Service worker registration failed:', err));
+  });
+}
+</script>
+
 </body>
 </html>

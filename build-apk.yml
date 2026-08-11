@@ -1,0 +1,491 @@
+name: Build Hafid Douche APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - ".github/workflows/build-apk.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK
+        run: |
+          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Create Android project
+        shell: bash
+        run: |
+          set -e
+          mkdir -p androidapp/app/src/main/java/com/hafiddouche/pro
+
+          cat > androidapp/settings.gradle <<'EOF'
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+          rootProject.name = "HafidDouchePro"
+          include(":app")
+          EOF
+
+          cat > androidapp/build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application' version '8.7.3' apply false
+          }
+          EOF
+
+          cat > androidapp/app/build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application'
+          }
+
+          android {
+              namespace 'com.hafiddouche.pro'
+              compileSdk 35
+
+              defaultConfig {
+                  applicationId 'com.hafiddouche.pro'
+                  minSdk 24
+                  targetSdk 35
+                  versionCode 1
+                  versionName '1.0'
+              }
+
+              buildTypes {
+                  debug {
+                      debuggable false
+                  }
+              }
+
+              compileOptions {
+                  sourceCompatibility JavaVersion.VERSION_17
+                  targetCompatibility JavaVersion.VERSION_17
+              }
+          }
+          EOF
+
+          cat > androidapp/app/src/main/AndroidManifest.xml <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+              <uses-permission android:name="android.permission.INTERNET" />
+              <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+              <uses-permission android:name="android.permission.CAMERA" />
+              <uses-permission
+                  android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+                  android:maxSdkVersion="28" />
+
+              <uses-feature
+                  android:name="android.hardware.camera"
+                  android:required="false" />
+
+              <application
+                  android:allowBackup="true"
+                  android:label="Hafid Douche Pro"
+                  android:usesCleartextTraffic="false"
+                  android:theme="@style/AppTheme">
+
+                  <activity
+                      android:name=".MainActivity"
+                      android:screenOrientation="portrait"
+                      android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+              </application>
+          </manifest>
+          EOF
+
+          mkdir -p androidapp/app/src/main/res/values
+          cat > androidapp/app/src/main/res/values/styles.xml <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <style name="AppTheme" parent="android:style/Theme.Material.NoActionBar">
+                  <item name="android:fontFamily">sans</item>
+                  <item name="android:windowActionModeOverlay">true</item>
+                  <item name="android:colorAccent">#19D7B1</item>
+                  <item name="android:navigationBarColor">#07131C</item>
+                  <item name="android:statusBarColor">#07131C</item>
+                  <item name="android:windowLightStatusBar">false</item>
+              </style>
+          </resources>
+          EOF
+
+          cat > androidapp/app/src/main/java/com/hafiddouche/pro/MainActivity.java <<'EOF'
+          package com.hafiddouche.pro;
+
+          import android.Manifest;
+          import android.app.Activity;
+          import android.app.DownloadManager;
+          import android.content.ContentValues;
+          import android.content.Context;
+          import android.content.Intent;
+          import android.content.pm.PackageManager;
+          import android.database.Cursor;
+          import android.net.Uri;
+          import android.os.Build;
+          import android.os.Bundle;
+          import android.os.Environment;
+          import android.provider.MediaStore;
+          import android.util.Base64;
+          import android.view.View;
+          import android.webkit.CookieManager;
+          import android.webkit.DownloadListener;
+          import android.webkit.JavascriptInterface;
+          import android.webkit.MimeTypeMap;
+          import android.webkit.PermissionRequest;
+          import android.webkit.URLUtil;
+          import android.webkit.ValueCallback;
+          import android.webkit.WebChromeClient;
+          import android.webkit.WebResourceRequest;
+          import android.webkit.WebSettings;
+          import android.webkit.WebView;
+          import android.webkit.WebViewClient;
+          import android.widget.Toast;
+
+          import java.io.File;
+          import java.io.FileOutputStream;
+          import java.io.OutputStream;
+          import java.util.ArrayList;
+          import java.util.List;
+
+          public class MainActivity extends Activity {
+
+              private static final String APP_URL =
+                      "https://ossamabergoug8-byte.github.io/hafid-douche-pro/";
+
+              private static final int REQ_CAMERA = 101;
+              private static final int REQ_FILE = 102;
+              private static final int REQ_STORAGE = 103;
+
+              private WebView webView;
+              private PermissionRequest pendingWebPermission;
+              private ValueCallback<Uri[]> fileCallback;
+
+              @Override
+              protected void onCreate(Bundle savedInstanceState) {
+                  super.onCreate(savedInstanceState);
+
+                  webView = new WebView(this);
+                  webView.setBackgroundColor(0xFF07131C);
+                  setContentView(webView);
+
+                  WebSettings s = webView.getSettings();
+                  s.setJavaScriptEnabled(true);
+                  s.setDomStorageEnabled(true);
+                  s.setDatabaseEnabled(true);
+                  s.setAllowContentAccess(true);
+                  s.setAllowFileAccess(true);
+                  s.setMediaPlaybackRequiresUserGesture(false);
+                  s.setLoadWithOverviewMode(true);
+                  s.setUseWideViewPort(true);
+                  s.setBuiltInZoomControls(false);
+                  s.setDisplayZoomControls(false);
+                  s.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                      s.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+                  }
+
+                  webView.addJavascriptInterface(new AndroidBridge(this), "Android");
+
+                  webView.setWebViewClient(new WebViewClient() {
+                      @Override
+                      public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                          Uri uri = request.getUrl();
+                          String scheme = uri.getScheme();
+                          if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
+                              return false;
+                          }
+                          try {
+                              startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                          } catch (Exception ignored) {}
+                          return true;
+                      }
+                  });
+
+                  webView.setWebChromeClient(new WebChromeClient() {
+                      @Override
+                      public void onPermissionRequest(PermissionRequest request) {
+                          runOnUiThread(() -> handleWebPermission(request));
+                      }
+
+                      @Override
+                      public boolean onShowFileChooser(
+                              WebView webView,
+                              ValueCallback<Uri[]> filePathCallback,
+                              FileChooserParams fileChooserParams) {
+
+                          if (fileCallback != null) {
+                              fileCallback.onReceiveValue(null);
+                          }
+                          fileCallback = filePathCallback;
+
+                          try {
+                              Intent intent = fileChooserParams.createIntent();
+                              startActivityForResult(intent, REQ_FILE);
+                              return true;
+                          } catch (Exception e) {
+                              fileCallback = null;
+                              Toast.makeText(MainActivity.this,
+                                      "تعذر فتح اختيار الملفات",
+                                      Toast.LENGTH_SHORT).show();
+                              return false;
+                          }
+                      }
+                  });
+
+                  webView.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> {
+                      String filename = URLUtil.guessFileName(url, contentDisposition, mimeType);
+
+                      if (url != null && url.startsWith("blob:")) {
+                          downloadBlob(url, filename, mimeType);
+                          return;
+                      }
+
+                      if (url != null && url.startsWith("data:")) {
+                          new AndroidBridge(MainActivity.this)
+                                  .saveBase64File(url, filename, mimeType);
+                          return;
+                      }
+
+                      try {
+                          DownloadManager.Request req = new DownloadManager.Request(Uri.parse(url));
+                          req.setMimeType(mimeType);
+                          req.addRequestHeader("User-Agent", userAgent);
+                          String cookies = CookieManager.getInstance().getCookie(url);
+                          if (cookies != null) req.addRequestHeader("Cookie", cookies);
+                          req.setTitle(filename);
+                          req.setDescription("Hafid Douche Pro");
+                          req.setNotificationVisibility(
+                                  DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                          req.setDestinationInExternalPublicDir(
+                                  Environment.DIRECTORY_DOWNLOADS, filename);
+
+                          DownloadManager dm =
+                                  (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                          dm.enqueue(req);
+                          Toast.makeText(this, "⬇️ بدأ التحميل", Toast.LENGTH_SHORT).show();
+                      } catch (Exception e) {
+                          Toast.makeText(this, "تعذر تحميل الملف", Toast.LENGTH_SHORT).show();
+                      }
+                  });
+
+                  if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P &&
+                          checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                  != PackageManager.PERMISSION_GRANTED) {
+                      requestPermissions(
+                              new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                              REQ_STORAGE);
+                  }
+
+                  webView.loadUrl(APP_URL);
+              }
+
+              private void handleWebPermission(PermissionRequest request) {
+                  List<String> wanted = new ArrayList<>();
+
+                  for (String resource : request.getResources()) {
+                      if (PermissionRequest.RESOURCE_VIDEO_CAPTURE.equals(resource)) {
+                          wanted.add(resource);
+                      }
+                  }
+
+                  if (wanted.isEmpty()) {
+                      request.deny();
+                      return;
+                  }
+
+                  if (checkSelfPermission(Manifest.permission.CAMERA)
+                          == PackageManager.PERMISSION_GRANTED) {
+                      request.grant(wanted.toArray(new String[0]));
+                  } else {
+                      pendingWebPermission = request;
+                      requestPermissions(new String[]{Manifest.permission.CAMERA}, REQ_CAMERA);
+                  }
+              }
+
+              @Override
+              public void onRequestPermissionsResult(
+                      int requestCode, String[] permissions, int[] grantResults) {
+                  super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+                  if (requestCode == REQ_CAMERA && pendingWebPermission != null) {
+                      if (grantResults.length > 0 &&
+                              grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                          pendingWebPermission.grant(
+                                  new String[]{PermissionRequest.RESOURCE_VIDEO_CAPTURE});
+                      } else {
+                          pendingWebPermission.deny();
+                      }
+                      pendingWebPermission = null;
+                  }
+              }
+
+              @Override
+              protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+                  super.onActivityResult(requestCode, resultCode, data);
+
+                  if (requestCode == REQ_FILE && fileCallback != null) {
+                      Uri[] result = WebChromeClient.FileChooserParams
+                              .parseResult(resultCode, data);
+                      fileCallback.onReceiveValue(result);
+                      fileCallback = null;
+                  }
+              }
+
+              private void downloadBlob(String blobUrl, String filename, String mimeType) {
+                  String safeUrl = js(blobUrl);
+                  String safeName = js(filename == null ? "download" : filename);
+                  String safeMime = js(mimeType == null ? "application/octet-stream" : mimeType);
+
+                  String script =
+                          "(function(){" +
+                          "fetch('" + safeUrl + "')" +
+                          ".then(r=>r.blob())" +
+                          ".then(b=>{" +
+                          "var fr=new FileReader();" +
+                          "fr.onloadend=function(){" +
+                          "Android.saveBase64File(fr.result,'" + safeName + "','" + safeMime + "');" +
+                          "};" +
+                          "fr.readAsDataURL(b);" +
+                          "})" +
+                          ".catch(()=>{});" +
+                          "})();";
+
+                  webView.evaluateJavascript(script, null);
+              }
+
+              private String js(String s) {
+                  return s.replace("\\", "\\\\")
+                          .replace("'", "\\'")
+                          .replace("\n", "\\n")
+                          .replace("\r", "");
+              }
+
+              public class AndroidBridge {
+                  private final Context context;
+
+                  AndroidBridge(Context context) {
+                      this.context = context;
+                  }
+
+                  @JavascriptInterface
+                  public void saveBase64File(String dataUrl, String filename, String mimeType) {
+                      try {
+                          int comma = dataUrl.indexOf(',');
+                          if (comma < 0) return;
+
+                          String base64 = dataUrl.substring(comma + 1);
+                          byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
+
+                          String name = (filename == null || filename.trim().isEmpty())
+                                  ? "hafid_download"
+                                  : filename;
+
+                          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                              ContentValues values = new ContentValues();
+                              values.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
+                              values.put(MediaStore.MediaColumns.MIME_TYPE,
+                                      mimeType == null ? "application/octet-stream" : mimeType);
+                              values.put(MediaStore.MediaColumns.RELATIVE_PATH,
+                                      Environment.DIRECTORY_DOWNLOADS + "/HafidDouche");
+
+                              Uri uri = context.getContentResolver().insert(
+                                      MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+
+                              if (uri != null) {
+                                  try (OutputStream os =
+                                               context.getContentResolver().openOutputStream(uri)) {
+                                      if (os != null) os.write(bytes);
+                                  }
+                              }
+                          } else {
+                              File dir = Environment.getExternalStoragePublicDirectory(
+                                      Environment.DIRECTORY_DOWNLOADS);
+                              File file = new File(dir, name);
+                              try (FileOutputStream fos = new FileOutputStream(file)) {
+                                  fos.write(bytes);
+                              }
+                          }
+
+                          runOnUiThread(() ->
+                                  Toast.makeText(MainActivity.this,
+                                          "✅ تم حفظ الملف في Downloads",
+                                          Toast.LENGTH_LONG).show());
+
+                      } catch (Exception e) {
+                          runOnUiThread(() ->
+                                  Toast.makeText(MainActivity.this,
+                                          "❌ تعذر حفظ الملف",
+                                          Toast.LENGTH_LONG).show());
+                      }
+                  }
+              }
+
+              @Override
+              public void onBackPressed() {
+                  if (webView != null && webView.canGoBack()) {
+                      webView.goBack();
+                  } else {
+                      super.onBackPressed();
+                  }
+              }
+
+              @Override
+              protected void onDestroy() {
+                  if (webView != null) {
+                      webView.loadUrl("about:blank");
+                      webView.stopLoading();
+                      webView.destroy();
+                  }
+                  super.onDestroy();
+              }
+          }
+          EOF
+
+      - name: Build APK
+        run: |
+          gradle -p androidapp assembleDebug --no-daemon
+          cp androidapp/app/build/outputs/apk/debug/app-debug.apk Hafid-Douche-Pro.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Hafid-Douche-Pro-APK
+          path: Hafid-Douche-Pro.apk
+          retention-days: 90

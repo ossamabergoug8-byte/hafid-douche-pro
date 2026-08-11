@@ -2745,7 +2745,7 @@ const UI = {
     const reader = document.getElementById('directSaleScannerReader'); if (reader) reader.innerHTML = '';
     try {
       const scanner = this._makeBarcodeScanner('directSaleScannerReader'); AppState.directSaleScannerInstance = scanner;
-      scanner.start({ facingMode:'environment' }, this._barcodeConfig(), decodedText => this._onAutomaticBarcode('direct-sale', decodedText, scanner), () => {})
+      scanner.start({ facingMode:'environment' }, this._barcodeConfig('direct-sale'), decodedText => this._onAutomaticBarcode('direct-sale', decodedText, scanner), () => {})
         .catch(err => this._liveBarcodeError('direct-sale', err));
     } catch(e) { this._liveBarcodeError('direct-sale', e); }
   },
@@ -2860,15 +2860,20 @@ const UI = {
     }
     return new Html5Qrcode(readerId);
   },
-  _barcodeConfig() {
-    // A wide scan window is much better for EAN/UPC/Code128 than a square QR box.
-    const w = Math.max(230, Math.min(340, (window.innerWidth || 360) - 80));
-    return {
-      fps: 24,
-      qrbox: { width: w, height: 105 },
+  _barcodeConfig(mode) {
+    // Product registration already scans well with a narrow guide box.
+    // In selling screens, scan the FULL camera frame because Android WebView
+    // can report a viewfinder size that does not match the CSS guide box.
+    const base = {
+      fps: mode === 'product' ? 20 : 14,
       aspectRatio: 1.777778,
-      disableFlip: true
+      disableFlip: false
     };
+    if (mode === 'product') {
+      const w = Math.max(230, Math.min(340, (window.innerWidth || 360) - 80));
+      base.qrbox = { width: w, height: 115 };
+    }
+    return base;
   },
   _cleanBarcode(value) {
     return String(value ?? '').trim().replace(/\s+/g, '');
@@ -2925,37 +2930,59 @@ const UI = {
       if (field) field.value = code;
       AppState.activeCategory = 'الكل';
       this.renderCategoryChips();
-      this.filterProducts();
       const product = AppState.productsDB.find(p => String(p.barcode || '') === code);
-      if (product) Helpers.showToast('✅ تم التعرف على: ' + product.name, 'success');
-      else Helpers.showToast('📷 تم قراءة ' + code + ' — المنتج غير مسجل بعد', 'warning');
+      if (product) {
+        // When scanning from a room, sell/add the item immediately instead of
+        // only filtering the product list and waiting for another tap.
+        if (AppState.selectorRoomId != null && AppState.roomsState[AppState.selectorRoomId]) {
+          Rooms.addProductToRoom(AppState.selectorRoomId, product);
+          if (field) field.value = '';
+          this.renderProductGrid('');
+          this.updateLowStockBadge();
+        } else {
+          this.filterProducts();
+          Helpers.showToast('✅ تم التعرف على: ' + product.name, 'success');
+        }
+      } else {
+        this.filterProducts();
+        Helpers.showToast('📷 تم قراءة ' + code + ' — المنتج غير مسجل بعد', 'warning');
+      }
     }
 
-    Promise.resolve(scanner && scanner.stop ? scanner.stop() : null)
-      .catch(() => {})
-      .finally(() => {
-        try { if (scanner && scanner.clear) scanner.clear(); } catch (e) {}
-        if (isProduct) {
-          AppState.productFormScannerInstance = null;
-          const c = document.getElementById('prodScannerContainer');
-          const b = document.getElementById('prodScanBtn');
-          if (c) c.style.display = 'none';
-          if (b) b.textContent = '📷 قراءة تلقائية';
-        } else if (isDirectSale) {
-          AppState.directSaleScannerInstance = null;
-          const c = document.getElementById('directSaleScannerContainer');
-          const b = document.getElementById('directSaleScanBtn');
-          if (c) c.style.display = 'none';
-          if (b) b.textContent = '📷 قراءة الباركود تلقائياً';
-        } else {
-          AppState.scannerInstance = null;
-          const c = document.getElementById('scannerContainer');
-          const b = document.getElementById('toggleScannerBtn');
-          if (c) c.style.display = 'none';
-          if (b) b.textContent = '📷 قراءة تلقائية';
-        }
-        setTimeout(() => { this._barcodeReadLock = false; }, 350);
-      });
+    // Hide the scanner UI immediately after a successful decode. Some Android
+    // WebViews keep Html5Qrcode.stop() pending for a while; waiting for it made
+    // the animated scan line look as if nothing had happened.
+    try { if (scanner && scanner.pause) scanner.pause(true); } catch (e) {}
+    const finishUi = () => {
+      if (isProduct) {
+        AppState.productFormScannerInstance = null;
+        const c = document.getElementById('prodScannerContainer');
+        const b = document.getElementById('prodScanBtn');
+        if (c) c.style.display = 'none';
+        if (b) b.textContent = '📷 قراءة تلقائية';
+      } else if (isDirectSale) {
+        AppState.directSaleScannerInstance = null;
+        const c = document.getElementById('directSaleScannerContainer');
+        const b = document.getElementById('directSaleScanBtn');
+        if (c) c.style.display = 'none';
+        if (b) b.textContent = '📷 قراءة الباركود تلقائياً';
+      } else {
+        AppState.scannerInstance = null;
+        const c = document.getElementById('scannerContainer');
+        const b = document.getElementById('toggleScannerBtn');
+        if (c) c.style.display = 'none';
+        if (b) b.textContent = '📷 قراءة تلقائية';
+      }
+    };
+    finishUi();
+
+    let stopResult = null;
+    try { stopResult = scanner && scanner.stop ? scanner.stop() : null; } catch (e) {}
+    Promise.resolve(stopResult).catch(() => {}).finally(() => {
+      try { if (scanner && scanner.clear) scanner.clear(); } catch (e) {}
+    });
+    // Never leave the read lock stuck if stop() is slow or never resolves.
+    setTimeout(() => { this._barcodeReadLock = false; }, 500);
   },
   _liveBarcodeError(mode, err) {
     console.warn('Automatic live barcode scanner failed:', err);
@@ -3015,7 +3042,7 @@ const UI = {
       AppState.scannerInstance = scanner;
       scanner.start(
         { facingMode: 'environment' },
-        this._barcodeConfig(),
+        this._barcodeConfig('selector'),
         (decodedText) => this._onAutomaticBarcode('selector', decodedText, scanner),
         () => {}
       ).catch(err => this._liveBarcodeError('selector', err));
@@ -3388,7 +3415,7 @@ const UI = {
       AppState.productFormScannerInstance = scanner;
       scanner.start(
         { facingMode: 'environment' },
-        this._barcodeConfig(),
+        this._barcodeConfig('product'),
         (decodedText) => this._onAutomaticBarcode('product', decodedText, scanner),
         () => {}
       ).catch(err => this._liveBarcodeError('product', err));

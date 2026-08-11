@@ -41,7 +41,6 @@ jobs:
         run: |
           set -e
           mkdir -p androidapp/app/src/main/java/com/hafiddouche/pro
-          mkdir -p androidapp/app/src/main/res/drawable
 
           cat > androidapp/settings.gradle <<'EOF'
           pluginManagement {
@@ -114,8 +113,6 @@ jobs:
 
               <application
                   android:allowBackup="true"
-                  android:icon="@drawable/app_icon"
-                  android:roundIcon="@drawable/app_icon"
                   android:label="Hafid Douche Pro"
                   android:usesCleartextTraffic="false"
                   android:theme="@style/AppTheme">
@@ -132,8 +129,6 @@ jobs:
               </application>
           </manifest>
           EOF
-
-          cp app-icon.png androidapp/app/src/main/res/drawable/app_icon.png
 
           mkdir -p androidapp/app/src/main/res/values
           cat > androidapp/app/src/main/res/values/styles.xml <<'EOF'
